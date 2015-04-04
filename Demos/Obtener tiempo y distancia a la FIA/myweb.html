@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tiempo y distancia</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script type="text/javascript" src="js/time.js"></script>
+  </head>
+  <body>
+  
+<strong>Tiempo y Distancia a la FIA</strong>
+<hr>
+<label>Ingresen la Lat y Lon de la ubicaci&oacute;n que quieran (sus casas por ejemplo) <br>
+y veran el tiempo promedio que les toma llegar a la FIA en Carro, los datos van a variar seg&uacute;n <br>
+la hora porque toma en cuenta el tr&aacute;fico, variable importante para determinar si la entrega se <br>
+puede dar o no (por default le puse las coordenadas de la USMP Virtual)</label>
+<br>
+<br>
+<label>Latitud</label><br>
+<input id="latitud" value="-12.092084"><br>
+<label>Longitud</label><br>
+<input id="longitud" value="-77.037334"><br>
+<br>
+
+<div id="go" onclick="calcRoute()">Obtener tiempo y distancia</div>
+<br>
+<div id="tiempo"></div>
+<div id="distancia"></div>
+
+
+  </body>
+</html>

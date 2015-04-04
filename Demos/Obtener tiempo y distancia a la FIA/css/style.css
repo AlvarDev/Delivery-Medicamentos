@@ -1,0 +1,15 @@
+*{
+	font-family: Arial;
+}
+input{
+	padding: 10px;
+}
+#go{
+	width: 200px;
+	color: #fff;
+	background: rgb(22, 78, 179);
+	padding: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
