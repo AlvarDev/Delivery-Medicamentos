@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:src="@drawable/fondo04"
+        android:contentDescription="@string/app_name"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:gravity="center"
+            android:layout_gravity="end"
+            android:textStyle="bold"
+            android:drawableTop="@drawable/logo"
+            android:textSize="21sp"
+            android:textColor="@color/bg_celeste"
+            android:background="@color/bg_blanco"
+            android:layout_marginBottom="50dp"/>
+
+        <EditText
+            android:id="@+id/eteUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete"
+            android:hint="@string/h_usuario"/>
+
+        <EditText
+            android:id="@+id/etePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/h_contra"/>
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:background="@color/bg_boton"
+            android:text="@string/btn_iniciar_sesion"/>
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_registrarse"/>
+
+        <Button
+            android:id="@+id/btnForgetPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bg_boton"
+            android:textStyle="bold"
+            android:background="@color/bg_blanco"
+            android:text="@string/btn_olvidar_contra"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

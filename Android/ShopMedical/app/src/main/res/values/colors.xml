@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_celeste">#5abfdb</color>
+    <color name="bg_boton">#095594</color>
+    <color name="white">#fff</color>
+    <color name="bg_blanco">#36000000</color>
+</resources>

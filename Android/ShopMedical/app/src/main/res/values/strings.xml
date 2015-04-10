@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Shop Medical</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <!--Login-->
+    <string name="btn_iniciar_sesion">Iniciar Sesión</string>
+    <string name="btn_registrarse">Registrarse</string>
+    <string name="btn_olvidar_contra">¿Olvidaste contraseña?</string>
+    <string name="h_contra">Contraseña</string>
+    <string name="h_usuario">Usuario</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+    
+</resources>
