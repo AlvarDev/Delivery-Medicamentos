@@ -1,12 +1,21 @@
 package com.alvardev.demos.shopmedical;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.Toast;
+
+import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
 
 
-public class DashboardActivity extends ActionBarActivity {
+public class DashboardActivity extends BaseActionBarActivity{
+
+    private static final String TAG = "DashboardActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,26 +23,40 @@ public class DashboardActivity extends ActionBarActivity {
         setContentView(R.layout.activity_dashboard);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String q = intent.getStringExtra(SearchManager.QUERY);
+            if(q.equals("apronax")){
+                setResultList();
+            }else {
+                Toast.makeText(getApplicationContext(), q+" no esta disponible", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    private void setResultList(){
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_dashboard, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return item.getItemId() == R.id.action_search || super.onOptionsItemSelected(item);
     }
 }
