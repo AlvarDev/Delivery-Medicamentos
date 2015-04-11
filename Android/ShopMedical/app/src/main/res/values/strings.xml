@@ -13,4 +13,34 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     
+    <!--Register-->
+    <string name="s_register">Registrar Cliente</string>
+    <string name="s_name">*Nombre</string>
+    <string name="s_latname">*Apellido</string>
+    <string name="s_user">*Usuario</string>
+    <string name="s_password">*Contraseña</string>
+    <string name="s_dni">*DNI</string>
+    <string name="s_ruc">RUC</string>
+    <string name="s_nombre_razon_social">Nombre/Razón Social</string>
+    <string name="s_direccion">*Dirección</string>
+    <string name="s_distrito">*Distrito</string>
+    <string name="s_correo">Correo</string>
+    <string name="s_celular">*Teléfono Celular</string>
+    <string name="btn_save">Guardar</string>
+    <string-array name="distritos">
+        <item>Seleccionar</item>
+        <item>Breña</item>
+        <item>Jesús Maria</item>
+        <item>Pueblo Libre</item>
+        <item>San Isidro</item>
+        <item>Lincer</item>
+        <item>Miraflores</item>
+        <item>La Molina</item>
+    </string-array>
+
+    <!--DashboardActivity-->
+    <string name="s_presentacion">Presentación de la Farmacia</string>
+    <string name="action_search">Búsqueda...</string>
+
+
 </resources>

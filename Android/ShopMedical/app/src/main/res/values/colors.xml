@@ -4,4 +4,5 @@
     <color name="bg_boton">#095594</color>
     <color name="white">#fff</color>
     <color name="bg_blanco">#36000000</color>
+    <color name="txt_color">#ff454545</color>
 </resources>

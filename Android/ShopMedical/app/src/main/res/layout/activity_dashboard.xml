@@ -3,6 +3,31 @@
     android:layout_height="match_parent"
     tools:context="com.alvardev.demos.deliverymedicamentos.DashboardActivity">
 
+    <LinearLayout
+        android:id="@+id/llaOferta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/apronax"
+            android:contentDescription="@string/app_name"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:textColor="@color/txt_color"
+            android:gravity="center"
+            android:text="@string/s_presentacion"/>
+
+        </LinearLayout>
+
+    <ListView
+        android:id="@+id/lviResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
