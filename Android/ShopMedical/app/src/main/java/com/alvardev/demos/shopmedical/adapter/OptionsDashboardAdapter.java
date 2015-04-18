@@ -50,8 +50,15 @@ public class OptionsDashboardAdapter extends BaseAdapter{
         }
 
         OptionEntity option = (OptionEntity) getItem(position);
+
         holder.iviOptionImage.setImageResource(option.getImage());
         holder.tviOptionText.setText(option.getText());
+
+        if(option.isSelected()){
+            holder.tviOptionText.setTextColor(context.getResources().getColor(R.color.bg_boton));
+        }else {
+            holder.tviOptionText.setTextColor(context.getResources().getColor(R.color.txt_color));
+        }
 
         return convertView;
     }

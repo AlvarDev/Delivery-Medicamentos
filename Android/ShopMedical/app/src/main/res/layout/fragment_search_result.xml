@@ -5,10 +5,64 @@
     android:animateLayoutChanges="true"
     tools:context="com.alvardev.demos.shopmedical.view.fragment.SearchResultFragment">
 
+    <LinearLayout
+        android:id="@+id/llaOtrasOpciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_celeste">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnMarca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_boton"
+                android:textColor="@color/white"
+                android:text="@string/btn_marca" />
+
+            <View
+                android:id="@+id/viewMarca"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnGenerico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_boton"
+                android:textColor="@color/white"
+                android:text="@string/btn_generico" />
+
+            <View
+                android:id="@+id/viewGenerico"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/bg_boton"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/lviResult"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llaOtrasOpciones"/>
 
 </RelativeLayout>
 

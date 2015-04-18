@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.alvardev.demos.shopmedical.R;
@@ -31,6 +32,10 @@ public class SearchResultFragment extends Fragment {
     private MedicamentosAdapter adapter;
 
     @InjectView(R.id.lviResult) ListView lviResult;
+    @InjectView(R.id.btnMarca) Button btnMarca;
+    @InjectView(R.id.viewMarca) View viewMarca;
+    @InjectView(R.id.btnGenerico) Button btnGenerico;
+    @InjectView(R.id.viewGenerico) View viewGenerico;
 
     public static SearchResultFragment newInstance(String param1, String param2) {
         SearchResultFragment fragment = new SearchResultFragment();
@@ -67,6 +72,7 @@ public class SearchResultFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setResultList();
+        setComponents();
     }
 
     private void setResultList(){
@@ -80,6 +86,25 @@ public class SearchResultFragment extends Fragment {
             }
         });
     }
+
+    public void setComponents(){
+        btnMarca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewMarca.setBackgroundColor(getResources().getColor(R.color.white));
+                viewGenerico.setBackgroundColor(getResources().getColor(R.color.bg_boton));
+            }
+        });
+
+        btnGenerico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewGenerico.setBackgroundColor(getResources().getColor(R.color.white));
+                viewMarca.setBackgroundColor(getResources().getColor(R.color.bg_boton));
+            }
+        });
+    }
+
 
     public void showNoticeDialog(int position) {
 

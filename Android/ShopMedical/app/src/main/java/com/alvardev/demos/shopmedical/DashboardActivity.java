@@ -3,7 +3,6 @@ package com.alvardev.demos.shopmedical;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -11,49 +10,37 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alvardev.demos.shopmedical.adapter.MedicamentosAdapter;
 import com.alvardev.demos.shopmedical.adapter.OptionsDashboardAdapter;
-import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
 import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
 import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
 import com.alvardev.demos.shopmedical.view.fragment.SearchResultFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
-
 public class DashboardActivity extends BaseActionBarActivity
-        implements PedidoDialogFragment.PedidoDialogListener, DrawerLayout.DrawerListener{
+        implements PedidoDialogFragment.PedidoDialogListener{
 
     private static final String TAG = "DashboardActivity";
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-
+    private List<OptionEntity> options;
+    private OptionsDashboardAdapter adapter;
+    private int currentSelected;
 
     private SearchResultFragment searchResultFragment = SearchResultFragment.newInstance(null,null);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +48,14 @@ public class DashboardActivity extends BaseActionBarActivity
         setContentView(R.layout.activity_dashboard);
         getSupportActionBar().setTitle("Buscar...");
         setDrawer(savedInstanceState);
-
     }
-
-
-
 
     private void setDrawer(Bundle savedInstanceState) {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dlaOptions);
         mDrawerList = (ListView) findViewById(R.id.lviOptions);
 
-        List<OptionEntity> options = new ArrayList<OptionEntity>();
-
-        OptionsDashboardAdapter adapter = new OptionsDashboardAdapter(this, options);
+        options = StaticData.getOptionsList();
+        adapter = new OptionsDashboardAdapter(this, options);
 
         LinearLayout header = (LinearLayout) getLayoutInflater().inflate(R.layout.layout_header, null);
         TextView tviUserName = (TextView)header.findViewById(R.id.tviUserName);
@@ -96,34 +78,13 @@ public class DashboardActivity extends BaseActionBarActivity
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         );
-        mDrawerLayout.setDrawerListener(this);
 
         if (savedInstanceState == null) {
+            currentSelected = StaticData.SEARCH_RESULT;
             new ChangeFragmentsTask(null).execute(StaticData.SEARCH_RESULT);
         }
     }
 
-
-    @Override
-    public void onDrawerSlide(View view, float slideOffset) {
-        mDrawerLayout.findViewById(R.id.content).setTranslationX(view.getWidth() * slideOffset);
-    }
-
-    @Override
-    public void onDrawerOpened(View view) {
-        invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-    }
-
-    @Override
-    public void onDrawerClosed(View view) {
-        //getSupportActionBar().setTitle(mTitle);
-        // invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-    }
-
-    @Override
-    public void onDrawerStateChanged(int i) {
-
-    }
 
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -138,10 +99,6 @@ public class DashboardActivity extends BaseActionBarActivity
         super.onPostCreate(savedInstanceState);
             mDrawerToggle.syncState();
     }
-
-
-
-
 
 
     @Override
@@ -225,8 +182,14 @@ public class DashboardActivity extends BaseActionBarActivity
 
 
     private void closeDrawer(int position){
-        mDrawerList.setItemChecked(position, true);
+
+        position = position > 0 ? position-1:0;
+
+        options.get(currentSelected).setSelected(false);
+        options.get(position).setSelected(true);
+        currentSelected = position;
         mDrawerLayout.closeDrawer(mDrawerList);
+        adapter.notifyDataSetChanged();
     }
 
 
