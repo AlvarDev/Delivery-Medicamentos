@@ -2,12 +2,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context="com.alvardev.demos.deliverymedicamentos.RegisterActivity">
 
     <TextView
@@ -21,105 +23,101 @@
 
     <TextView
         style="@style/TextViewStyle"
-        android:text="@string/s_name"/>
-
-    <EditText
-        style="@style/EditTextStyle"
-        android:inputType="textPersonName"/>
-
-    <TextView
-        style="@style/TextViewStyle"
-        android:text="@string/s_latname"/>
-
-    <EditText
-        style="@style/EditTextStyle"
-        android:inputType="textPersonName"/>
-
-    <TextView
-        style="@style/TextViewStyle"
-        android:text="@string/s_user"/>
-
-    <EditText
-        style="@style/EditTextStyle"
-        android:inputType="textPersonName"/>
-
-    <TextView
-        style="@style/TextViewStyle"
-        android:text="@string/s_password"/>
-
-    <EditText
-        style="@style/EditTextStyle"
-        android:inputType="textPassword"/>
-
-    <TextView
-        style="@style/TextViewStyle"
+        android:textColor="@color/txt_color"
         android:text="@string/s_dni"/>
 
     <EditText
+        android:id="@+id/etedni"
         style="@style/EditTextStyle"
         android:inputType="number"
         android:maxLength="8"/>
 
-    <TextView
-        style="@style/TextViewStyle"
-        android:text="@string/s_ruc"/>
-
-    <EditText
-        style="@style/EditTextStyle"
-        android:maxLength="11"
-        android:inputType="number"/>
-
-    <TextView
-        style="@style/TextViewStyle"
-        android:text="@string/s_nombre_razon_social"/>
-
-    <EditText
-        style="@style/EditTextStyle"
-        android:inputType="textPersonName"/>
-
-    <TextView
-        style="@style/TextViewStyle"
-        android:text="@string/s_direccion"/>
-
-    <EditText
-        style="@style/EditTextStyle"
-        android:inputType="textPersonName"/>
-
-    <TextView
-        style="@style/TextViewStyle"
-        android:text="@string/s_distrito"/>
-
-    <Spinner
-        android:id="@+id/spiDistritos"
+    <LinearLayout
+        android:id="@+id/llaData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp"/>
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <TextView
-        style="@style/TextViewStyle"
-        android:text="@string/s_correo"/>
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@string/s_name"/>
 
-    <EditText
-        style="@style/EditTextStyle"
-        android:inputType="textEmailAddress"/>
+        <TextView
+            android:id="@+id/tviName"
+            style="@style/EditTextStyle"
+            android:padding="12dp"/>
 
-    <TextView
-        style="@style/TextViewStyle"
-        android:text="@string/s_celular"/>
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@string/s_latname"/>
 
-    <EditText
-        style="@style/EditTextStyle"
-        android:inputType="number"/>
+        <TextView
+            android:id="@+id/tviLastName"
+            style="@style/EditTextStyle"
+            android:padding="12dp"/>
 
-    <Button
-        android:id="@+id/btnSaveRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/btn_save"
-        android:background="@color/bg_boton"
-        android:textColor="@color/white"/>
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@string/s_user"/>
+
+        <EditText
+            android:id="@+id/eteUsuario"
+            style="@style/EditTextStyle"
+            android:inputType="textPersonName"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@string/s_password"/>
+
+        <EditText
+            android:id="@+id/eteContra"
+            style="@style/EditTextStyle"
+            android:inputType="textPassword"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@string/s_direccion"/>
+
+        <EditText
+            android:id="@+id/eteDireccion"
+            style="@style/EditTextStyle"
+            android:inputType="textPersonName"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@string/s_distrito"/>
+
+        <Spinner
+            android:id="@+id/spiDistritos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@string/s_correo"/>
+
+        <EditText
+            android:id="@+id/eteCorreo"
+            style="@style/EditTextStyle"
+            android:inputType="textEmailAddress"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@string/s_celular"/>
+
+        <EditText
+            android:id="@+id/eteTelefono"
+            style="@style/EditTextStyle"
+            android:inputType="number"/>
+
+        <Button
+            android:id="@+id/btnSaveRegister"
+            android:text="@string/btn_save"
+            style="@style/ButtonStyle"/>
+    </LinearLayout>
 
 </LinearLayout>
 </ScrollView>

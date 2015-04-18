@@ -3,12 +3,12 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:animateLayoutChanges="true"
-    tools:context="com.alvardev.demos.deliverymedicamentos.DashboardActivity">
+    tools:context="com.alvardev.demos.shopmedical.view.fragment.SearchResultFragment">
 
-    <LinearLayout
-        android:id="@+id/content"
-        android:orientation="vertical"
+    <ListView
+        android:id="@+id/lviResult"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
+
