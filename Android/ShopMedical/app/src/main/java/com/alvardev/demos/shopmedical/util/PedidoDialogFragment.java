@@ -90,7 +90,7 @@ public class PedidoDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    PedidoDialogListener mListener;
+    private PedidoDialogListener mListener;
 
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
@@ -105,7 +105,7 @@ public class PedidoDialogFragment extends DialogFragment {
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
-                    + " must implement NoticeDialogListener");
+                    + " must implement PedidoDialogListener");
         }
     }
 

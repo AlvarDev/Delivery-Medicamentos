@@ -76,7 +76,7 @@ public class SearchResultFragment extends Fragment {
         lviResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                //showNoticeDialog(position);
+                showNoticeDialog(position);
             }
         });
     }
@@ -89,7 +89,7 @@ public class SearchResultFragment extends Fragment {
         // Create an instance of the dialog fragment and show it
         DialogFragment dialog = new PedidoDialogFragment();
         dialog.setArguments(bundle);
-        //dialog.show(getSupportFragmentManager(), "PedidoDialogFragment");
+        dialog.show(getFragmentManager(), "PedidoDialogFragment");
     }
 
     private void updateItemAtPosition(int position, int cantidad) {
@@ -98,6 +98,5 @@ public class SearchResultFragment extends Fragment {
         //lMedicamentosSelected.add(medicamentosList.get(position));
         adapter.notifyDataSetChanged();
     }
-
 
 }

@@ -10,6 +10,7 @@
     <style name="MyActionBar"
         parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/bg_boton</item>
+        <!--<item name="android:icon">@android:color/transparent</item>-->
     </style>
 
     <style name="TextViewStyle" >
