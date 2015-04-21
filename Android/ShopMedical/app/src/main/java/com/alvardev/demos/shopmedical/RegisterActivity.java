@@ -34,8 +34,6 @@ public class RegisterActivity extends BaseActionBarActivity {
     @InjectView(R.id.eteCorreo) EditText eteCorreo;
     @InjectView(R.id.eteTelefono) EditText eteTelefono;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +41,7 @@ public class RegisterActivity extends BaseActionBarActivity {
         getSupportActionBar().hide();
         ButterKnife.inject(this);
         setComponents();
+        connectGet("Contacto",100);
     }
 
     private void setComponents(){
@@ -99,9 +98,6 @@ public class RegisterActivity extends BaseActionBarActivity {
 
     }
 
-
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -109,4 +105,11 @@ public class RegisterActivity extends BaseActionBarActivity {
         startActivity(intent);
         finish();
     }
+
+
+    @Override
+    protected void onRESTResultado(int code, String result, int accion) {
+
+    }
+
 }

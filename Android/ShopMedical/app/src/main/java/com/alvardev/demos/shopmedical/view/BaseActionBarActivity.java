@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 
 import com.alvardev.demos.shopmedical.http.HttpMethod;
 import com.alvardev.demos.shopmedical.http.RestJsonService;
@@ -37,7 +38,7 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
 
     public void connectGet(String peticion, int accion){
 
-        String url = "http://www.alvardev.com";
+        String url = ""+peticion;
 
         Intent intentServicio = new Intent(this, RestJsonService.class);
 
@@ -99,6 +100,10 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
 
         intentServicio.putExtras(parametros);
         startService(intentServicio);
+    }
+
+    public void generalError(String msn){
+        Log.e("HttpClient",msn);
     }
 
 

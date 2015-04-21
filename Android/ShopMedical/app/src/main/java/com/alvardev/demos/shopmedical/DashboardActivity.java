@@ -192,5 +192,10 @@ public class DashboardActivity extends BaseActionBarActivity
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onRESTResultado(int code, String result, int accion) {
+
+    }
+
 
 }
