@@ -9,6 +9,7 @@
         android:id="@+id/llaOtrasOpciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:background="@color/bg_celeste">
 
         <LinearLayout
