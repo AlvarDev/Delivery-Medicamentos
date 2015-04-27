@@ -1,0 +1,239 @@
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px; 
+}
+#form{
+ margin: 0 auto;
+ box-shadow: 5px 5px 0 #AAA;
+ position:absolute;
+ top:190px;
+ left:65%;
+ float: right;
+ height: auto;
+ width: auto;
+ padding:25px;
+ background-color:#F2F2F2; 
+ border-radius:30px; 
+}
+#usuarioSession{
+ float: right;
+ height: auto;
+ width: auto;
+ padding-right:35px;
+ padding-top:5px;
+ background-color:transparent; 
+ vertical-align:middle;
+ 
+}
+
+#headerLogin{
+	width:100%;
+	height:80px;
+	background-color:#003;
+	opacity:0.5;
+}
+#headerinicio{
+	width:100%;
+	height:80px;
+	color: #fff;
+  	background-color: #5bc0de;
+ 	border-color: #46b8da;
+}
+
+#cuerpo{
+	height:100%;
+	width:100%;
+	margin: 0 auto;
+ 	padding: 20 15%;
+ 	
+}
+#cuerpoPedidos{
+	height:auto;
+	width:auto;
+	margin: 0 auto;
+ 	padding: 30px;
+ 	text-align:center;
+ 	
+}
+#logo{
+	position:absolute;
+	top:10px;
+	left:20px;
+	height:60px;
+	float:left;
+	width:230px;
+}
+#logoinicio{
+	left:20px;
+	top: 0px;
+	height:60px;
+	float:left;
+	width:230px;
+}
+
+#piepagina{
+	margin-top:10px;
+	color:white;
+	font-style:italic;
+	text-align:center;
+}
+
+#contenedor-pie {
+width: 100%;
+background-color:black;
+position: absolute;
+bottom: 0 !importante;
+bottom: -1px;
+height: 40px;
+}
+
+#header h1 {
+  width:auto;
+  font-weight: bold;
+  font-size: 35px;
+ 
+  text-shadow: 0 1px 0 #ccc, 
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.2),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.5);
+  color: black;
+    text-align: center;
+  }
+#header h2 {
+  width:auto;
+  font-weight: bold;
+  font-size: 25px;
+  font-family:"Lucida Calligraphy";
+  text-shadow: 0 1px 0 #ccc, 
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.2),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.5);
+  color: black;
+    text-align: left;
+  }
+  
+  #tablapedido{
+  	width: 1325px;
+  	height:auto;
+  	padding:25px;
+  	margin: 0 auto;
+  	text-align: center;
+  }
+ 
+ #tabladetalle{
+  	width: 1000px;
+  	padding:25px;
+  	margin: 0 auto;
+  	text-align: center;
+  }
+ 
+  #iniciologin h2 {
+  width:auto;
+  font-weight: bold;
+  font-size: 28px;
+  font-family:"Lucida Calligraphy";
+  text-shadow: 0 1px 0 #ccc, 
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.2),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.5);
+  color: black;
+  text-align: center;
+  }
+  
+  #headers h1 {
+  width:auto;
+  font-weight: bold;
+  font-size: 45px;
+  font-family:"Lucida Calligraphy";
+  text-shadow: 0 1px 0 #ccc, 
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.2),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.5);
+  color: black;
+    text-align: left;
+  }
+  
+  #headers h2 {
+  width:auto;
+  font-weight: bold;
+  font-size: 25px;
+  font-family:"Lucida Calligraphy";
+  text-shadow: 0 1px 0 #ccc, 
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.2),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.5);
+  color: black;
+    text-align: left;
+  }
+ 
+ #modulo{
+ 	
+	font-size:17px;
+	width:300px;
+ }
+  #submodulo{
+ 	
+	font-size:14px;
+	width:300px;
+ }
+ .selectbox{
+	border-color: black; 
+	border-radius:10px; 
+	width:250px; 
+	height:22px;
+	text-align: center;
+	font-family: "Lucida Calligraphy";
+	font-size:13px;
+	outline:0px;
+}
+  
+  .textbox{
+	
+	border-radius:10px;
+	text-align:center;
+	font-family: "Lucida Calligraphy";
+	font-size:13px;
+	outline:0px;
+}
