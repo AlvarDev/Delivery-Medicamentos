@@ -1,6 +1,8 @@
 package beans;
 
-public class UsuarioBean {
+import java.io.Serializable;
+
+public class UsuarioBean implements Serializable{
 	int codUsuario;
 	String usuario;
 	String clave;
@@ -50,4 +52,12 @@ public class UsuarioBean {
 	public void setPersona(PersonaBean persona) {
 		this.persona = persona;
 	}
+	@Override
+	public String toString() {
+		return "UsuarioBean [codUsuario=" + codUsuario + ", usuario=" + usuario
+				+ ", clave=" + clave + ", codRol=" + codRol + ", estado="
+				+ estado + ", rol=" + rol + ", persona=" + persona + "]";
+	}
+	
+	
 }

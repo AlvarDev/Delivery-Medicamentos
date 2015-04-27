@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
 
 import butterknife.ButterKnife;
@@ -70,15 +71,24 @@ public class RegisterActivity extends BaseActionBarActivity {
             }
         });
 
-
-
         btnSaveRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Sus datos se guardaron correctamente", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(),DashboardActivity.class);
-                startActivity(intent);
-                finish();
+
+                UserEntity user = new UserEntity();
+                user.setNombre(tviName.getText().toString());
+                user.setApellido(tviLastName.getText().toString());
+                user.setDni(etedni.getText().toString());
+
+                user.setUsuario(eteUsuario.getText().toString());
+                user.setDistritoID(spiDistritos.getSelectedItemPosition());
+                user.setDireccion(eteDireccion.getText().toString());
+                user.setCorreo(eteCorreo.getText().toString());
+                user.setTelefono(eteTelefono.getText().toString());
+
+                if(validateRegister(user)){
+                    Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -89,14 +99,60 @@ public class RegisterActivity extends BaseActionBarActivity {
         tviLastName.setText("Sosa Vargas");
         etedni.setEnabled(false);
 
-        eteUsuario.setText("sandysv");
-        eteContra.setText("sistemas");
-        spiDistritos.setSelection(4);
-        eteDireccion.setText("Av. Jorge Basadre Nro 595");
-        eteCorreo.setText("sandysv@gmail.com");
-        eteTelefono.setText("986216560");
+        //eteUsuario.setText("sandysv");
+        //eteContra.setText("sistemas");
+        //spiDistritos.setSelection(4);
+        //eteDireccion.setText("Av. Jorge Basadre Nro 595");
+        //eteCorreo.setText("sandysv@gmail.com");
+        //eteTelefono.setText("986216560");
 
     }
+
+    public boolean validateRegister(UserEntity user){
+
+        eteUsuario.setError(null);
+        eteContra.setError(null);
+        eteDireccion.setError(null);
+        eteCorreo.setError(null);
+        eteTelefono.setError(null);
+
+
+        if(user.getUsuario().isEmpty()){
+            eteUsuario.setError(getString(R.string.error_field));
+            return false;
+        }
+
+        if(eteContra.getText().toString().isEmpty()){
+            eteContra.setError(getString(R.string.error_field));
+            return false;
+        }
+
+        if(user.getDistritoID() == 0){
+            Toast.makeText(getApplicationContext(), "Seleccione un distrito", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(user.getDireccion().isEmpty()){
+            eteDireccion.setError(getString(R.string.error_field));
+            return false;
+        }
+
+        if(user.getCorreo().isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(user.getCorreo()).matches()){
+            eteCorreo.setError(getString(R.string.error_field));
+            return false;
+        }
+
+
+
+        if(user.getTelefono().isEmpty()){
+            eteTelefono.setError(getString(R.string.error_field));
+            return false;
+        }
+
+
+        return true;
+    }
+
 
     @Override
     public void onBackPressed() {
