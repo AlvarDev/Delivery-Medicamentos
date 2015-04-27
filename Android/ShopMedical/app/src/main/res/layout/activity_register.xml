@@ -77,15 +77,6 @@
 
         <TextView
             style="@style/TextViewStyle"
-            android:text="@string/s_direccion"/>
-
-        <EditText
-            android:id="@+id/eteDireccion"
-            style="@style/EditTextStyle"
-            android:inputType="textPersonName"/>
-
-        <TextView
-            style="@style/TextViewStyle"
             android:text="@string/s_distrito"/>
 
         <Spinner
@@ -94,6 +85,15 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@string/s_direccion"/>
+
+        <EditText
+            android:id="@+id/eteDireccion"
+            style="@style/EditTextStyle"
+            android:inputType="textPersonName"/>
 
         <TextView
             style="@style/TextViewStyle"

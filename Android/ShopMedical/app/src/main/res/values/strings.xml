@@ -37,11 +37,13 @@
         <item>Jesús Maria</item>
         <item>Pueblo Libre</item>
         <item>San Isidro</item>
-        <item>Lincer</item>
+        <item>Lince</item>
         <item>Miraflores</item>
         <item>La Molina</item>
     </string-array>
     <string name="input_dni">Obtener Datos</string>
+    <string name="error_field">Ingrese este campo</string>
+
 
     <!--DashboardActivity-->
     <string name="s_presentacion">Presentación de la Farmacia</string>
