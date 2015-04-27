@@ -15,7 +15,8 @@ public class MySQLDaoFactory extends DAOFactory{
 		try {
 		
 			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://localhost:3306/bd_farmacia";
+//			String url = "jdbc:mysql://localhost:3306/bd_farmacia";
+			String url = "jdbc:mysql://mysql26311-farmacia.jelastic.websolute.net.br/";
 			String user = "root";
 			String password ="root";
 			con = DriverManager.getConnection(url,user,password);
