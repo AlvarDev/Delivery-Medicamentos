@@ -75,7 +75,7 @@ public class RegisterActivity extends BaseActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                UserEntity user = new UserEntity();
+                /*UserEntity user = new UserEntity();
                 user.setNombre(tviName.getText().toString());
                 user.setApellido(tviLastName.getText().toString());
                 user.setDni(etedni.getText().toString());
@@ -88,7 +88,7 @@ public class RegisterActivity extends BaseActionBarActivity {
 
                 if(validateRegister(user)){
                     Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
 
@@ -127,15 +127,15 @@ public class RegisterActivity extends BaseActionBarActivity {
             return false;
         }
 
-        if(user.getDistritoID() == 0){
-            Toast.makeText(getApplicationContext(), "Seleccione un distrito", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+        //if(user.getDistritoID() == 0){
+        //    Toast.makeText(getApplicationContext(), "Seleccione un distrito", Toast.LENGTH_SHORT).show();
+        //    return false;
+        //}
 
-        if(user.getDireccion().isEmpty()){
-            eteDireccion.setError(getString(R.string.error_field));
-            return false;
-        }
+        //if(user.getDireccion().isEmpty()){
+        //    eteDireccion.setError(getString(R.string.error_field));
+        //    return false;
+        //}
 
         if(user.getCorreo().isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(user.getCorreo()).matches()){
             eteCorreo.setError(getString(R.string.error_field));
@@ -144,10 +144,10 @@ public class RegisterActivity extends BaseActionBarActivity {
 
 
 
-        if(user.getTelefono().isEmpty()){
-            eteTelefono.setError(getString(R.string.error_field));
-            return false;
-        }
+        //if(user.getTelefono().isEmpty()){
+        //    eteTelefono.setError(getString(R.string.error_field));
+        //    return false;
+        //}
 
 
         return true;

@@ -1,6 +1,7 @@
 package com.alvardev.demos.shopmedical.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -16,6 +17,7 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
 
     private boolean doingRest;
     private ResultReceiver resultReceiver;
+    private static final String NAME_PREFERENCE = "com.alvardev.demos.shopmedical.preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +107,22 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
     public void generalError(String msn){
         Log.e("HttpClient",msn);
     }
+
+    public String getPreference(String llave) {
+
+        SharedPreferences preferencias = this.getSharedPreferences(NAME_PREFERENCE, MODE_PRIVATE);
+        return preferencias.getString(llave, "");
+    }
+
+    public void savePreference(String llave, String valor) {
+
+        SharedPreferences preferencias = this.getSharedPreferences(NAME_PREFERENCE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString(llave, valor);
+        editor.commit();
+
+    }
+
 
 
     protected abstract void onRESTResultado(int code, String result, int accion);

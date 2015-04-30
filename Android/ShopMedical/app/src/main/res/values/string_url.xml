@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="url_login">http://172.28.4.72:8085/SistemaFarmacia/loginAndroid</string>
+
+
+</resources>
