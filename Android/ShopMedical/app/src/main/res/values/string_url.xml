@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="url_login">http://172.28.4.72:8085/SistemaFarmacia/loginAndroid</string>
-
-
+    <string name="url_login">http://farmacia.jelastic.websolute.net.br/loginAndroid</string>
+    <string name="url_get_distritos">http://farmacia.jelastic.websolute.net.br/distrito</string>
+    <string name="url_get_dni">http://farmacia.jelastic.websolute.net.br/validaDNI?dni=</string>
+    <string name="url_post_register">http://farmacia.jelastic.websolute.net.br/regUserA</string>
 </resources>

@@ -38,9 +38,7 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
         };
     }
 
-    public void connectGet(String peticion, int accion){
-
-        String url = ""+peticion;
+    public void connectGet(String url, int accion){
 
         Intent intentServicio = new Intent(this, RestJsonService.class);
 
@@ -119,7 +117,7 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
         SharedPreferences preferencias = this.getSharedPreferences(NAME_PREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString(llave, valor);
-        editor.commit();
+        editor.apply();
 
     }
 

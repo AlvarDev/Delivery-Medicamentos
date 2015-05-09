@@ -39,7 +39,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textAutoComplete"
-            android:text="@string/temp_user"
             android:hint="@string/h_usuario"/>
 
         <EditText
@@ -47,7 +46,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:text="@string/temp_pas"
             android:hint="@string/h_contra"/>
 
         <Button

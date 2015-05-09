@@ -11,10 +11,10 @@ public class UserEntity implements Serializable{
 	private String apellidoMaterno;
 	private String dni;
 	private String fechaNacimiento;
-	private int celular;
+	private String celular;
 	private String direccion;
 	private String correo;
-	private int codDitrito;
+	private int codDistrito;
 	private long latitud;
 	private long longitud;
 	
@@ -24,228 +24,160 @@ public class UserEntity implements Serializable{
 	private String clave;
 	private int codRol;
 	private int estado;
-	/**
-	 * @return the codPersona
-	 */
-	public int getCodPersona() {
-		return codPersona;
-	}
-	/**
-	 * @param codPersona the codPersona to set
-	 */
-	public void setCodPersona(int codPersona) {
-		this.codPersona = codPersona;
-	}
-	/**
-	 * @return the nombres
-	 */
-	public String getNombres() {
-		return nombres;
-	}
-	/**
-	 * @param nombres the nombres to set
-	 */
-	public void setNombres(String nombres) {
-		this.nombres = nombres;
-	}
-	/**
-	 * @return the apellidoPaterno
-	 */
-	public String getApellidoPaterno() {
-		return apellidoPaterno;
-	}
-	/**
-	 * @param apellidoPaterno the apellidoPaterno to set
-	 */
-	public void setApellidoPaterno(String apellidoPaterno) {
-		this.apellidoPaterno = apellidoPaterno;
-	}
-	/**
-	 * @return the apellidoMaterno
-	 */
-	public String getApellidoMaterno() {
-		return apellidoMaterno;
-	}
-	/**
-	 * @param apellidoMaterno the apellidoMaterno to set
-	 */
-	public void setApellidoMaterno(String apellidoMaterno) {
-		this.apellidoMaterno = apellidoMaterno;
-	}
-	/**
-	 * @return the dni
-	 */
-	public String getDni() {
-		return dni;
-	}
-	/**
-	 * @param dni the dni to set
-	 */
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
-	/**
-	 * @return the fechaNacimiento
-	 */
-	public String getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-	/**
-	 * @param fechaNacimiento the fechaNacimiento to set
-	 */
-	public void setFechaNacimiento(String fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
-	/**
-	 * @return the celular
-	 */
-	public int getCelular() {
-		return celular;
-	}
-	/**
-	 * @param celular the celular to set
-	 */
-	public void setCelular(int celular) {
-		this.celular = celular;
-	}
-	/**
-	 * @return the direccion
-	 */
-	public String getDireccion() {
-		return direccion;
-	}
-	/**
-	 * @param direccion the direccion to set
-	 */
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-	/**
-	 * @return the correo
-	 */
-	public String getCorreo() {
-		return correo;
-	}
-	/**
-	 * @param correo the correo to set
-	 */
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-	/**
-	 * @return the codDitrito
-	 */
-	public int getCodDitrito() {
-		return codDitrito;
-	}
-	/**
-	 * @param codDitrito the codDitrito to set
-	 */
-	public void setCodDitrito(int codDitrito) {
-		this.codDitrito = codDitrito;
-	}
-	/**
-	 * @return the latitud
-	 */
-	public long getLatitud() {
-		return latitud;
-	}
-	/**
-	 * @param latitud the latitud to set
-	 */
-	public void setLatitud(long latitud) {
-		this.latitud = latitud;
-	}
-	/**
-	 * @return the longitud
-	 */
-	public long getLongitud() {
-		return longitud;
-	}
-	/**
-	 * @param longitud the longitud to set
-	 */
-	public void setLongitud(long longitud) {
-		this.longitud = longitud;
-	}
-	/**
-	 * @return the codigoPostal
-	 */
-	
-	public int getCodUsuario() {
-		return codUsuario;
-	}
-	/**
-	 * @param codUsuario the codUsuario to set
-	 */
-	public void setCodUsuario(int codUsuario) {
-		this.codUsuario = codUsuario;
-	}
-	/**
-	 * @return the usuario
-	 */
-	public String getUsuario() {
-		return usuario;
-	}
-	/**
-	 * @param usuario the usuario to set
-	 */
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-	/**
-	 * @return the clave
-	 */
-	public String getClave() {
-		return clave;
-	}
-	/**
-	 * @param clave the clave to set
-	 */
-	public void setClave(String clave) {
-		this.clave = clave;
-	}
-	/**
-	 * @return the codRol
-	 */
-	public int getCodRol() {
-		return codRol;
-	}
-	/**
-	 * @param codRol the codRol to set
-	 */
-	public void setCodRol(int codRol) {
-		this.codRol = codRol;
-	}
-	/**
-	 * @return the estado
-	 */
-	public int getEstado() {
-		return estado;
-	}
-	/**
-	 * @param estado the estado to set
-	 */
-	public void setEstado(int estado) {
-		this.estado = estado;
-	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+
+
+    public UserEntity() {
+    }
+
+    public int getCodPersona() {
+        return codPersona;
+    }
+
+    public void setCodPersona(int codPersona) {
+        this.codPersona = codPersona;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public int getCodDistrito() {
+        return codDistrito;
+    }
+
+    public void setCodDistrito(int codDistrito) {
+        this.codDistrito = codDistrito;
+    }
+
+    public long getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(long latitud) {
+        this.latitud = latitud;
+    }
+
+    public long getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(long longitud) {
+        this.longitud = longitud;
+    }
+
+    public int getCodUsuario() {
+        return codUsuario;
+    }
+
+    public void setCodUsuario(int codUsuario) {
+        this.codUsuario = codUsuario;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public int getCodRol() {
+        return codRol;
+    }
+
+    public void setCodRol(int codRol) {
+        this.codRol = codRol;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
 
     @Override
     public String toString() {
-        return "BeanUsuarioAndroid{" +
+        return "UserEntity{" +
                 "codPersona=" + codPersona +
                 ", nombres='" + nombres + '\'' +
                 ", apellidoPaterno='" + apellidoPaterno + '\'' +
                 ", apellidoMaterno='" + apellidoMaterno + '\'' +
                 ", dni='" + dni + '\'' +
                 ", fechaNacimiento='" + fechaNacimiento + '\'' +
-                ", celular=" + celular +
+                ", celular='" + celular + '\'' +
                 ", direccion='" + direccion + '\'' +
                 ", correo='" + correo + '\'' +
-                ", codDitrito=" + codDitrito +
+                ", codDistrito=" + codDistrito +
                 ", latitud=" + latitud +
                 ", longitud=" + longitud +
                 ", codUsuario=" + codUsuario +

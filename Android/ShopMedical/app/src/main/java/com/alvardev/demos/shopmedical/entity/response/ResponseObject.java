@@ -1,12 +1,16 @@
 package com.alvardev.demos.shopmedical.entity.response;
 
+import com.alvardev.demos.shopmedical.entity.DistritoEntity;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class ResponseObject implements Serializable {
 
 	private boolean success;
 	private Object object;
 	private String mensaje;
+    private List<DistritoEntity> listaD;
 
     public ResponseObject() {
     }
@@ -35,12 +39,22 @@ public class ResponseObject implements Serializable {
         this.mensaje = mensaje;
     }
 
+    public List<DistritoEntity> getListaD() {
+        return listaD;
+    }
+
+    public void setListaD(List<DistritoEntity> listaD) {
+        this.listaD = listaD;
+    }
+
     @Override
     public String toString() {
         return "ResponseObject{" +
                 "success=" + success +
                 ", object=" + object +
                 ", mensaje='" + mensaje + '\'' +
+                ", listaD=" + listaD +
                 '}';
     }
 }
+

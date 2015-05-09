@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class OptionEntity implements Serializable{
 
+    private int idOption;
     private int image;
     private String text;
     private boolean selected;
@@ -11,10 +12,19 @@ public class OptionEntity implements Serializable{
     public OptionEntity() {
     }
 
-    public OptionEntity(int image, String text) {
+    public OptionEntity(int idOption, int image, String text) {
+        this.idOption = idOption;
         this.image = image;
         this.text = text;
         this.selected = false;
+    }
+
+    public int getIdOption() {
+        return idOption;
+    }
+
+    public void setIdOption(int idOption) {
+        this.idOption = idOption;
     }
 
     public int getImage() {
@@ -44,7 +54,8 @@ public class OptionEntity implements Serializable{
     @Override
     public String toString() {
         return "OptionEntity{" +
-                "image=" + image +
+                "idOption=" + idOption +
+                ", image=" + image +
                 ", text='" + text + '\'' +
                 ", selected=" + selected +
                 '}';

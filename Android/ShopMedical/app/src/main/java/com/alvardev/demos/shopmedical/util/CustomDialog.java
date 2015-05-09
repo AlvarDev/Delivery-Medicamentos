@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +17,7 @@ import com.alvardev.demos.shopmedical.R;
 
 public class CustomDialog {
 
+    private static final String TAG = "CustomDialog";
     private Dialog dialog;
     private boolean done;
 
@@ -48,5 +50,31 @@ public class CustomDialog {
 
         return dialog;
     }
+
+
+    public Dialog cerrarSesionDialog(final Context context){
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage("¿Seguro que desea cerrar sesión?")
+                .setPositiveButton("Si", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.i(TAG,"cerrando sesión...");
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.i(TAG,"no cerras sesion");
+                    }
+                });
+
+
+        dialog = builder.create();
+
+        return dialog;
+    }
+
 
 }

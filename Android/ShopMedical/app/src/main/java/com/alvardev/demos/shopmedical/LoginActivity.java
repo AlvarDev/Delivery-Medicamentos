@@ -38,6 +38,16 @@ public class LoginActivity extends BaseActionBarActivity {
         ButterKnife.inject(this);
         setComponents();
 
+        String userString = getPreference("user");
+        if(!userString.isEmpty()){
+            UserEntity user = new Gson().fromJson(userString, UserEntity.class);
+            Intent intent = new Intent(this, DashboardActivity.class);
+            startActivity(intent);
+            Toast.makeText(getApplicationContext(), "Bienvenido "+ user.getNombres(), Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+
     }
 
     private void setComponents(){
@@ -69,7 +79,7 @@ public class LoginActivity extends BaseActionBarActivity {
     }
 
     private void loginSuccess(UserEntity user){
-        //savePreference("user", new Gson().toJson(user));
+        savePreference("user", new Gson().toJson(user));
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);
         Toast.makeText(getApplicationContext(), "Bienvenido "+ user.getNombres(), Toast.LENGTH_SHORT).show();

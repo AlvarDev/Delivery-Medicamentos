@@ -21,23 +21,35 @@
         android:textColor="@color/bg_boton"
         android:gravity="center"/>
 
-    <TextView
-        style="@style/TextViewStyle"
-        android:textColor="@color/txt_color"
-        android:text="@string/s_dni"/>
 
-    <EditText
-        android:id="@+id/etedni"
-        style="@style/EditTextStyle"
-        android:inputType="number"
-        android:maxLength="8"/>
+        <TextView
+            style="@style/TextViewStyle"
+            android:textColor="@color/txt_color"
+            android:text="@string/s_dni_input"/>
+
+        <EditText
+            android:id="@+id/etedni"
+            style="@style/EditTextStyle"
+            android:inputType="number"
+            android:maxLength="8"/>
+
+
 
     <LinearLayout
         android:id="@+id/llaData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
+
+        <!--<TextView
+            style="@style/TextViewStyle"
+            android:text="@string/s_dni"/>
+
+        <TextView
+            android:id="@+id/tviDNI"
+            style="@style/EditTextStyle"
+            android:padding="12dp"/>-->
 
         <TextView
             style="@style/TextViewStyle"
@@ -75,7 +87,7 @@
             style="@style/EditTextStyle"
             android:inputType="textPassword"/>
 
-        <TextView
+        <!--<TextView
             style="@style/TextViewStyle"
             android:text="@string/s_distrito"/>
 
@@ -94,6 +106,7 @@
             android:id="@+id/eteDireccion"
             style="@style/EditTextStyle"
             android:inputType="textPersonName"/>
+            -->
 
         <TextView
             style="@style/TextViewStyle"

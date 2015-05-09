@@ -1,8 +1,6 @@
 package com.alvardev.demos.shopmedical;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
+import android.app.Dialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -10,22 +8,25 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.adapter.OptionsDashboardAdapter;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
+import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
 import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
-import com.alvardev.demos.shopmedical.view.fragment.SearchResultFragment;
+import com.alvardev.demos.shopmedical.view.fragment.ActualizarInformacionFragment;
+import com.alvardev.demos.shopmedical.view.fragment.BuscarMedicamentoFragment;
+import com.alvardev.demos.shopmedical.view.fragment.CarritoComprasFragment;
+import com.alvardev.demos.shopmedical.view.fragment.PedidosFragment;
+import com.alvardev.demos.shopmedical.view.fragment.SintomasFrecuentesFragment;
 
 import java.util.List;
 
@@ -40,13 +41,20 @@ public class DashboardActivity extends BaseActionBarActivity
     private OptionsDashboardAdapter adapter;
     private int currentSelected;
 
-    private SearchResultFragment searchResultFragment = SearchResultFragment.newInstance(null,null);
+    //private SearchResultFragment searchResultFragment = SearchResultFragment.newInstance(null,null);
+    private BuscarMedicamentoFragment buscarMedicamentoFragment = BuscarMedicamentoFragment.newInstance(null,null);
+    private CarritoComprasFragment carritoComprasFragment = CarritoComprasFragment.newInstance(null,null);
+    private SintomasFrecuentesFragment sintomasFrecuentesFragment = SintomasFrecuentesFragment.newInstance(null,null);
+    private PedidosFragment pedidosProcesoFragment = PedidosFragment.newInstance(null,null);
+    private PedidosFragment historialPedidosFragment = PedidosFragment.newInstance(null,null);
+    private ActualizarInformacionFragment actualizarInformacionFragment = ActualizarInformacionFragment.newInstance(null,null);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        getSupportActionBar().setTitle("Buscar...");
+        getSupportActionBar().setTitle("Buscar Medicamento");
         setDrawer(savedInstanceState);
     }
 
@@ -80,8 +88,8 @@ public class DashboardActivity extends BaseActionBarActivity
         );
 
         if (savedInstanceState == null) {
-            currentSelected = StaticData.SEARCH_RESULT;
-            new ChangeFragmentsTask(null).execute(StaticData.SEARCH_RESULT);
+            currentSelected = StaticData.BUSCAR_MEDICAMENTO;
+            //new ChangeFragmentsTask(null).execute(StaticData.SEARCH_RESULT);
         }
     }
 
@@ -90,7 +98,14 @@ public class DashboardActivity extends BaseActionBarActivity
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            new ChangeFragmentsTask(null).execute(position);
+            position = position > 0 ? position-1:0;
+
+            if(options.get(position).getIdOption() == StaticData.CERRAR_SESION){
+                Dialog dialogOk = new CustomDialog().cerrarSesionDialog(DashboardActivity.this);
+                dialogOk.show();
+            }else{
+                new ChangeFragmentsTask(null).execute(position);
+            }
         }
     }
 
@@ -102,31 +117,8 @@ public class DashboardActivity extends BaseActionBarActivity
 
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String q = intent.getStringExtra(SearchManager.QUERY);
-            Toast.makeText(getApplicationContext(), "search: "+q, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_dashboard, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return item.getItemId() == R.id.action_search || mDrawerToggle.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item);
     }
 
     @Override
@@ -166,10 +158,19 @@ public class DashboardActivity extends BaseActionBarActivity
     private void changeScreen(Bundle bundle, int option) {
 
         switch (option){
-            case StaticData.SEARCH_RESULT:
-                changeFragment(bundle, searchResultFragment);
+            case StaticData.BUSCAR_MEDICAMENTO:
+                changeFragment(bundle,buscarMedicamentoFragment);
                 break;
-
+            case StaticData.CARRITO_DE_COMPRAS:
+                break;
+            case StaticData.SINTOMAS_FRECUENTES:
+                break;
+            case StaticData.PEDIDOS_EN_PROCESO:
+                break;
+            case StaticData.HISTORIAL_DE_PEDIDO:
+                break;
+            case StaticData.ACTUALIZAR_INFORMACION:
+                break;
             default:
                 break;
         }

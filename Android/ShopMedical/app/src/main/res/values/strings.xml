@@ -19,16 +19,17 @@
     
     <!--Register-->
     <string name="s_register">Registrar Cliente</string>
+    <string name="s_dni">*DNI</string>
     <string name="s_name">*Nombre</string>
-    <string name="s_latname">*Apellido</string>
+    <string name="s_latname">*Apellidos</string>
     <string name="s_user">*Usuario</string>
     <string name="s_password">*Contraseña</string>
-    <string name="s_dni">*Ingrese su DNI por favor</string>
+    <string name="s_dni_input">*Ingrese su DNI por favor</string>
     <string name="s_ruc">RUC</string>
     <string name="s_nombre_razon_social">Nombre/Razón Social</string>
     <string name="s_direccion">*Dirección</string>
     <string name="s_distrito">*Distrito</string>
-    <string name="s_correo">Correo</string>
+    <string name="s_correo">*Correo</string>
     <string name="s_celular">*Teléfono Celular</string>
     <string name="btn_save">Guardar</string>
     <string-array name="distritos">
@@ -47,12 +48,20 @@
 
     <!--DashboardActivity-->
     <string name="s_presentacion">Presentación de la Farmacia</string>
-    <string name="action_search">Búsqueda...</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
     <!-- SearchFragment-->
     <string name="btn_marca">Marca</string>
     <string name="btn_generico">Generico</string>
+
+    <!-- Buscar Medicamento -->
+    <string name="s_mayor_presicion">Para una mejor precisión en nuestra busqueda por favor indiquenos hacia donde va el pedido</string>
+    <string name="b_ubicacion_actual">Usar mi ubicación actual</string>
+
+    <string name="action_search">Buscar</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
