@@ -4,30 +4,31 @@ import java.io.Serializable;
 
 public class UserEntity implements Serializable{
 
-	//Atributos propios de la persona
-	private int codPersona;
-	private String nombres;
-	private String apellidoPaterno;
-	private String apellidoMaterno;
-	private String dni;
-	private String fechaNacimiento;
-	private String celular;
-	private String direccion;
-	private String correo;
-	private int codDistrito;
-	private long latitud;
-	private long longitud;
-	
-	//Atributos propios del usuario
-	private int codUsuario;
-	private String usuario;
-	private String clave;
-	private int codRol;
-	private int estado;
+    //Atributos propios de la persona
+    private int codPersona;
+    private String nombres;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    private String dni;
+    private String fechaNacimiento;
+    private String celular;
+    private String direccion;
+    private String correo;
+    private String latlong;
+    private String referencia;
 
+    //Atributos propios del usuario
+    private int codUsuario;
+    private String usuario;
+    private String clave;
+    private int estado;
+    private int codRol;
+    private String descripcion;
 
-    public UserEntity() {
-    }
+    //Atributos del distrito
+
+    private int codDistrito;
+    private String distrito;
 
     public int getCodPersona() {
         return codPersona;
@@ -101,28 +102,20 @@ public class UserEntity implements Serializable{
         this.correo = correo;
     }
 
-    public int getCodDistrito() {
-        return codDistrito;
+    public String getLatlong() {
+        return latlong;
     }
 
-    public void setCodDistrito(int codDistrito) {
-        this.codDistrito = codDistrito;
+    public void setLatlong(String latlong) {
+        this.latlong = latlong;
     }
 
-    public long getLatitud() {
-        return latitud;
+    public String getReferencia() {
+        return referencia;
     }
 
-    public void setLatitud(long latitud) {
-        this.latitud = latitud;
-    }
-
-    public long getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(long longitud) {
-        this.longitud = longitud;
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 
     public int getCodUsuario() {
@@ -149,6 +142,14 @@ public class UserEntity implements Serializable{
         this.clave = clave;
     }
 
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
     public int getCodRol() {
         return codRol;
     }
@@ -157,12 +158,28 @@ public class UserEntity implements Serializable{
         this.codRol = codRol;
     }
 
-    public int getEstado() {
-        return estado;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setEstado(int estado) {
-        this.estado = estado;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public int getCodDistrito() {
+        return codDistrito;
+    }
+
+    public void setCodDistrito(int codDistrito) {
+        this.codDistrito = codDistrito;
+    }
+
+    public String getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
     }
 
     @Override
@@ -177,14 +194,16 @@ public class UserEntity implements Serializable{
                 ", celular='" + celular + '\'' +
                 ", direccion='" + direccion + '\'' +
                 ", correo='" + correo + '\'' +
-                ", codDistrito=" + codDistrito +
-                ", latitud=" + latitud +
-                ", longitud=" + longitud +
+                ", latlong='" + latlong + '\'' +
+                ", referencia='" + referencia + '\'' +
                 ", codUsuario=" + codUsuario +
                 ", usuario='" + usuario + '\'' +
                 ", clave='" + clave + '\'' +
-                ", codRol=" + codRol +
                 ", estado=" + estado +
+                ", codRol=" + codRol +
+                ", descripcion='" + descripcion + '\'' +
+                ", codDistrito=" + codDistrito +
+                ", distrito='" + distrito + '\'' +
                 '}';
     }
 }

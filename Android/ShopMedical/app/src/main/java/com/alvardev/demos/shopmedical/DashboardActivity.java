@@ -1,10 +1,10 @@
 package com.alvardev.demos.shopmedical;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -18,8 +18,8 @@ import android.widget.TextView;
 
 import com.alvardev.demos.shopmedical.adapter.OptionsDashboardAdapter;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
+import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
-import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
 import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
 import com.alvardev.demos.shopmedical.view.fragment.ActualizarInformacionFragment;
@@ -27,11 +27,12 @@ import com.alvardev.demos.shopmedical.view.fragment.BuscarMedicamentoFragment;
 import com.alvardev.demos.shopmedical.view.fragment.CarritoComprasFragment;
 import com.alvardev.demos.shopmedical.view.fragment.PedidosFragment;
 import com.alvardev.demos.shopmedical.view.fragment.SintomasFrecuentesFragment;
+import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
+import com.google.gson.Gson;
 
 import java.util.List;
 
-public class DashboardActivity extends BaseActionBarActivity
-        implements PedidoDialogFragment.PedidoDialogListener{
+public class DashboardActivity extends BaseActionBarActivity implements SesionDialogInterface{
 
     private static final String TAG = "DashboardActivity";
     private DrawerLayout mDrawerLayout;
@@ -40,6 +41,7 @@ public class DashboardActivity extends BaseActionBarActivity
     private List<OptionEntity> options;
     private OptionsDashboardAdapter adapter;
     private int currentSelected;
+    private UserEntity user;
 
     //private SearchResultFragment searchResultFragment = SearchResultFragment.newInstance(null,null);
     private BuscarMedicamentoFragment buscarMedicamentoFragment = BuscarMedicamentoFragment.newInstance(null,null);
@@ -55,6 +57,8 @@ public class DashboardActivity extends BaseActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         getSupportActionBar().setTitle("Buscar Medicamento");
+        String userString = getPreference("user");
+        user = new Gson().fromJson(userString, UserEntity.class);
         setDrawer(savedInstanceState);
     }
 
@@ -67,7 +71,7 @@ public class DashboardActivity extends BaseActionBarActivity
 
         LinearLayout header = (LinearLayout) getLayoutInflater().inflate(R.layout.layout_header, null);
         TextView tviUserName = (TextView)header.findViewById(R.id.tviUserName);
-        tviUserName.setText("Sandy Sosa Vargas");
+        tviUserName.setText(user.getNombres()+" "+user.getApellidoPaterno() + " "+user.getApellidoMaterno());
         mDrawerList.addHeaderView(header);
         // set up the drawer's list view with items and click listener
         mDrawerList.setAdapter(adapter);
@@ -89,18 +93,15 @@ public class DashboardActivity extends BaseActionBarActivity
 
         if (savedInstanceState == null) {
             currentSelected = StaticData.BUSCAR_MEDICAMENTO;
-            //new ChangeFragmentsTask(null).execute(StaticData.SEARCH_RESULT);
+            new ChangeFragmentsTask(null).execute(StaticData.BUSCAR_MEDICAMENTO);
         }
     }
-
 
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            position = position > 0 ? position-1:0;
-
-            if(options.get(position).getIdOption() == StaticData.CERRAR_SESION){
+            if(position == StaticData.CERRAR_SESION){
                 Dialog dialogOk = new CustomDialog().cerrarSesionDialog(DashboardActivity.this);
                 dialogOk.show();
             }else{
@@ -119,16 +120,6 @@ public class DashboardActivity extends BaseActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return mDrawerToggle.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog, int cantidad, int position) {
-
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-
     }
 
 
@@ -162,14 +153,19 @@ public class DashboardActivity extends BaseActionBarActivity
                 changeFragment(bundle,buscarMedicamentoFragment);
                 break;
             case StaticData.CARRITO_DE_COMPRAS:
+                changeFragment(bundle,carritoComprasFragment);
                 break;
             case StaticData.SINTOMAS_FRECUENTES:
+                changeFragment(bundle,sintomasFrecuentesFragment);
                 break;
             case StaticData.PEDIDOS_EN_PROCESO:
+                changeFragment(bundle,pedidosProcesoFragment);
                 break;
             case StaticData.HISTORIAL_DE_PEDIDO:
+                changeFragment(bundle,historialPedidosFragment);
                 break;
             case StaticData.ACTUALIZAR_INFORMACION:
+                changeFragment(bundle,actualizarInformacionFragment);
                 break;
             default:
                 break;
@@ -183,14 +179,27 @@ public class DashboardActivity extends BaseActionBarActivity
 
 
     private void closeDrawer(int position){
-
         position = position > 0 ? position-1:0;
-
         options.get(currentSelected).setSelected(false);
         options.get(position).setSelected(true);
         currentSelected = position;
         mDrawerLayout.closeDrawer(mDrawerList);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void cerrarSesionPositive() {
+        Log.i(TAG,"cerrando sesión...");
+        savePreference("user", null);
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void cerrarSesionNegative() {
+        Log.i(TAG,"no cerras sesion");
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     @Override

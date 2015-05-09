@@ -13,7 +13,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alvardev.demos.shopmedical.LoginActivity;
 import com.alvardev.demos.shopmedical.R;
+import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
 
 public class CustomDialog {
 
@@ -60,13 +62,15 @@ public class CustomDialog {
                 .setPositiveButton("Si", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.i(TAG,"cerrando sesión...");
+                        SesionDialogInterface mListener = (SesionDialogInterface)context;
+                        mListener.cerrarSesionPositive();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.i(TAG,"no cerras sesion");
+                        SesionDialogInterface mListener = (SesionDialogInterface)context;
+                        mListener.cerrarSesionNegative();
                     }
                 });
 

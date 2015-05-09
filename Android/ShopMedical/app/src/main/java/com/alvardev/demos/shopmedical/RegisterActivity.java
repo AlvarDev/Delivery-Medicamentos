@@ -88,8 +88,7 @@ public class RegisterActivity extends BaseActionBarActivity {
                 user.setClave(eteContra.getText().toString());
                 user.setCorreo(eteCorreo.getText().toString());
                 user.setCelular(eteTelefono.getText().toString());
-                user.setLatitud(0);
-                user.setLongitud(0);
+                user.setLatlong("");
                 user.setCodRol(3);
 
                 if(validateRegister(user)){
