@@ -25,6 +25,7 @@
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
+            android:scrollbars="none"
             android:background="@color/white"/>
 
 

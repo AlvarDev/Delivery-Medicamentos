@@ -29,6 +29,7 @@ public class LoginActivity extends BaseActionBarActivity {
     @InjectView(R.id.btnLogin) Button btnLogin;
     @InjectView(R.id.eteUser) EditText eteUser;
     @InjectView(R.id.etePassword) EditText etePassword;
+    @InjectView(R.id.btnForgetPass) Button btnForgetPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +77,18 @@ public class LoginActivity extends BaseActionBarActivity {
 
             }
         });
+        btnForgetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ForgetPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loginSuccess(UserEntity user){
+        String userString = eteUser.getText().toString();
+        user.setUsuario(userString);
         savePreference("user", new Gson().toJson(user));
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);

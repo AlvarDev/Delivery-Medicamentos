@@ -51,9 +51,16 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
+    <!--ForgetPasswordActivity-->
+    <string name="s_forget_indication">Introduzca el nombre de usuario y le enviaremos una nueva contraseña</string>
+    <string name="b_enviar">Enviar</string>
+
     <!-- SearchFragment-->
     <string name="btn_marca">Marca</string>
     <string name="btn_generico">Generico</string>
+
+    <!--Actualizar Información Personal-->
+    <string name="s_update_informacion">Actualizar Información Personal</string>
 
     <!-- Buscar Medicamento -->
     <string name="s_mayor_presicion">Para una mejor precisión en nuestra busqueda por favor indiquenos hacia donde va el pedido</string>
@@ -63,5 +70,6 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_forget_password">ForgetPasswordActivity</string>
 
 </resources>

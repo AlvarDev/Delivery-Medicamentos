@@ -1,10 +1,93 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.alvardev.demos.shopmedical.view.fragment.ActualizarInformacionFragment">
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:animateLayoutChanges="true"
+tools:context="com.alvardev.demos.shopmedical.view.fragment.ActualizarInformacionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="Actualizar informacion" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/s_update_informacion"
+        android:textSize="21sp"
+        android:padding="16dp"
+        android:textColor="@color/bg_boton"
+        android:gravity="center"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/s_dni"/>
+
+    <TextView
+        android:id="@+id/tviDNIUpdate"
+        style="@style/EditTextStyle"
+        android:padding="12dp"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/s_name"/>
+
+    <TextView
+        android:id="@+id/tviNameUpdate"
+        style="@style/EditTextStyle"
+        android:padding="12dp"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/s_latname"/>
+
+    <TextView
+        android:id="@+id/tviLastNameUpdate"
+        style="@style/EditTextStyle"
+        android:padding="12dp"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/s_user"/>
+
+    <EditText
+        android:id="@+id/eteUsuarioUpdate"
+        style="@style/EditTextStyle"
+        android:inputType="textPersonName"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/s_password"/>
+
+    <EditText
+        android:id="@+id/eteContraUpdate"
+        style="@style/EditTextStyle"
+        android:inputType="textPassword"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/s_correo"/>
+
+    <EditText
+        android:id="@+id/eteCorreoUpdate"
+        style="@style/EditTextStyle"
+        android:inputType="textEmailAddress"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/s_celular"/>
+
+    <EditText
+        android:id="@+id/eteTelefonoUpdate"
+        style="@style/EditTextStyle"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:text="@string/btn_save"
+        style="@style/ButtonStyle"/>
+
+    </LinearLayout>
+</ScrollView>
