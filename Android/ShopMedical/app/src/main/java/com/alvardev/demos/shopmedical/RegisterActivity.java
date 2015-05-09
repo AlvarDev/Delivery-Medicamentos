@@ -219,8 +219,9 @@ public class RegisterActivity extends BaseActionBarActivity {
                     case POST_REGISTER_USER:
                         if(response.isSuccess()){
                             Toast.makeText(getApplicationContext(), "Sus datos se guardaron satisfactoriamente", Toast.LENGTH_SHORT).show();
-                            savePreference("user", new Gson().toJson(user));
-                            Intent intent = new Intent(this, DashboardActivity.class);
+                            Log.i(TAG,"[-------------------]");
+                            //savePreference("user", new Gson().toJson(user));
+                            Intent intent = new Intent(this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }else{

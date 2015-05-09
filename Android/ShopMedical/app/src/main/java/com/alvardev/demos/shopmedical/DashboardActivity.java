@@ -15,10 +15,13 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.adapter.OptionsDashboardAdapter;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
 import com.alvardev.demos.shopmedical.entity.UserEntity;
+import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
+import com.alvardev.demos.shopmedical.http.HttpCode;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
@@ -27,12 +30,17 @@ import com.alvardev.demos.shopmedical.view.fragment.BuscarMedicamentoFragment;
 import com.alvardev.demos.shopmedical.view.fragment.CarritoComprasFragment;
 import com.alvardev.demos.shopmedical.view.fragment.PedidosFragment;
 import com.alvardev.demos.shopmedical.view.fragment.SintomasFrecuentesFragment;
+import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
-public class DashboardActivity extends BaseActionBarActivity implements SesionDialogInterface{
+public class DashboardActivity extends BaseActionBarActivity
+        implements SesionDialogInterface, DashboardInterface{
 
     private static final String TAG = "DashboardActivity";
     private DrawerLayout mDrawerLayout;
@@ -42,6 +50,7 @@ public class DashboardActivity extends BaseActionBarActivity implements SesionDi
     private OptionsDashboardAdapter adapter;
     private int currentSelected;
     private UserEntity user;
+    private UserEntity userTemp;
 
     //private SearchResultFragment searchResultFragment = SearchResultFragment.newInstance(null,null);
     private BuscarMedicamentoFragment buscarMedicamentoFragment = BuscarMedicamentoFragment.newInstance(null,null);
@@ -96,6 +105,8 @@ public class DashboardActivity extends BaseActionBarActivity implements SesionDi
             new ChangeFragmentsTask(null).execute(StaticData.BUSCAR_MEDICAMENTO);
         }
     }
+
+
 
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -202,8 +213,59 @@ public class DashboardActivity extends BaseActionBarActivity implements SesionDi
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
+
+
+    @Override
+    public void updateInformation(UserEntity user){
+
+        userTemp = user;
+
+        try {
+            connectPost(
+                    getString(R.string.url_update_user),
+                    new JSONObject(new Gson().toJson(userTemp)),
+                    StaticData.ACTUALIZAR_INFORMACION);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     @Override
     protected void onRESTResultado(int code, String result, int accion) {
+
+        HttpCode codigo = HttpCode.forValue(code);
+
+        switch (codigo) {
+            case OK:
+                ResponseObject response = new Gson().fromJson(result,ResponseObject.class);
+                switch (accion){
+                    case StaticData.ACTUALIZAR_INFORMACION:
+                        if(response.isSuccess()){
+                            Toast.makeText(getApplicationContext(), "Sus datos se guardaron satisfactoriamente", Toast.LENGTH_SHORT).show();
+                            user = userTemp;
+                            savePreference("user", new Gson().toJson(user));
+                        }else{
+                            Toast.makeText(getApplicationContext(), response.getMensaje(), Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                }
+                break;
+            case BAD_REQUEST:
+                generalError("BAD REQUEST");
+                break;
+            case ERROR:
+                generalError("ERROR");
+                break;
+            case TIMEOUT:
+                generalError("TIME OUT");
+                break;
+            default:
+                generalError("DEFAULT");
+                break;
+        }
 
     }
 

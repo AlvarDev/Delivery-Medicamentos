@@ -89,6 +89,7 @@ public class LoginActivity extends BaseActionBarActivity {
     private void loginSuccess(UserEntity user){
         String userString = eteUser.getText().toString();
         user.setUsuario(userString);
+        user.setCodUsuario(user.getCodPersona());
         savePreference("user", new Gson().toJson(user));
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);

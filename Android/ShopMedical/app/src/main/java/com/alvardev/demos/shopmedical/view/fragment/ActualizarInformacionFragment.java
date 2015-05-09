@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.http.HttpMethod;
 import com.alvardev.demos.shopmedical.http.RestJsonService;
+import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -37,14 +39,17 @@ public class ActualizarInformacionFragment extends Fragment {
     private String mParam2;
 
     private UserEntity user;
+    private DashboardInterface mListener;
 
     @InjectView(R.id.tviDNIUpdate) TextView tviDNIUpdate;
     @InjectView(R.id.tviNameUpdate) TextView tviNameUpdate;
     @InjectView(R.id.tviLastNameUpdate) TextView tviLastNameUpdate;
+
     @InjectView(R.id.eteUsuarioUpdate) EditText eteUsuarioUpdate;
     @InjectView(R.id.eteContraUpdate) EditText eteContraUpdate;
     @InjectView(R.id.eteCorreoUpdate) EditText eteCorreoUpdate;
     @InjectView(R.id.eteTelefonoUpdate) EditText eteTelefonoUpdate;
+    @InjectView(R.id.btnUpdate) Button btnUpdate;
 
 
     public static ActualizarInformacionFragment newInstance(String param1, String param2) {
@@ -87,7 +92,10 @@ public class ActualizarInformacionFragment extends Fragment {
         getActivity().setTitle(getString(R.string.s_update_informacion));
         String userString = getPreference("user");
         user = new Gson().fromJson(userString, UserEntity.class);
+        setComponents();
+    }
 
+    public void setComponents(){
         tviDNIUpdate.setText(user.getDni());
         tviNameUpdate.setText(user.getNombres());
         tviLastNameUpdate.setText(user.getApellidoPaterno()+" "+user.getApellidoPaterno()+" "+user.getApellidoMaterno());
@@ -95,6 +103,70 @@ public class ActualizarInformacionFragment extends Fragment {
         //eteContraUpdate;
         eteCorreoUpdate.setText(user.getCorreo());
         eteTelefonoUpdate.setText(user.getCelular());
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                user.setUsuario(eteUsuarioUpdate.getText().toString());
+                user.setClave(eteContraUpdate.getText().toString());
+                user.setCorreo(eteCorreoUpdate.getText().toString());
+                user.setCelular(eteTelefonoUpdate.getText().toString());
+
+                if(validateUpdate(user)){
+                    mListener.updateInformation(user);
+                }
+
+            }
+        });
+    }
+
+    public boolean validateUpdate(UserEntity user){
+
+        eteUsuarioUpdate.setError(null);
+        eteContraUpdate.setError(null);
+        eteCorreoUpdate.setError(null);
+        eteTelefonoUpdate.setError(null);
+
+        if(user.getUsuario().isEmpty()){
+            eteUsuarioUpdate.setError(getString(R.string.error_field));
+            return false;
+        }
+
+        if(user.getClave().isEmpty()){
+            eteContraUpdate.setError(getString(R.string.error_field));
+            return false;
+        }
+
+        if(user.getCorreo().isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(user.getCorreo()).matches()){
+            eteCorreoUpdate.setError(getString(R.string.error_field));
+            return false;
+        }
+
+        if(user.getCelular().isEmpty()){
+            eteTelefonoUpdate.setError(getString(R.string.error_field));
+            return false;
+        }
+
+        return true;
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (DashboardInterface) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement DashboardInterface");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     public String getPreference(String llave) {
@@ -102,18 +174,6 @@ public class ActualizarInformacionFragment extends Fragment {
         SharedPreferences preferencias = getActivity().getSharedPreferences(NAME_PREFERENCE, Activity.MODE_PRIVATE);
         return preferencias.getString(llave, "");
     }
-
-    public void savePreference(String llave, String valor) {
-
-        SharedPreferences preferencias = getActivity().getSharedPreferences(NAME_PREFERENCE, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferencias.edit();
-        editor.putString(llave, valor);
-        editor.apply();
-
-    }
-
-
-
 
 
 }
