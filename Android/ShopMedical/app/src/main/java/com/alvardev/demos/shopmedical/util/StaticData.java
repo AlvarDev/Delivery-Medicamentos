@@ -31,6 +31,18 @@ public class StaticData {
         medicamentos.add(new MedicamentoEntity("Apronax 275mg", "tableta", 10.00, 0, false, false));
         medicamentos.add(new MedicamentoEntity("Apronax 100mg", "tableta", 10.00, 0, false, false));
         medicamentos.add(new MedicamentoEntity("Apronax Gel 5.5%", "Crema - Ungüento", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax 275mg", "tableta", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax 100mg", "tableta", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax Gel 5.5%", "Crema - Ungüento", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax 275mg", "tableta", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax 100mg", "tableta", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax Gel 5.5%", "Crema - Ungüento", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax 275mg", "tableta", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax 100mg", "tableta", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax Gel 5.5%", "Crema - Ungüento", 10.00, 0, false, false));
 
         return medicamentos;
     }
@@ -38,7 +50,7 @@ public class StaticData {
     public static List<OptionEntity> getOptionsList(){
         List<OptionEntity> options = new ArrayList<OptionEntity>();
 
-        options.add(new OptionEntity(BUSCAR_MEDICAMENTO, R.drawable.logo,"Buscar Medicamentos"));
+        options.add(new OptionEntity(BUSCAR_MEDICAMENTO, R.drawable.buscar,"Buscar Medicamentos"));
         options.add(new OptionEntity(CARRITO_DE_COMPRAS, R.drawable.logo,"Carrito de Compras"));
         options.add(new OptionEntity(SINTOMAS_FRECUENTES, R.drawable.logo,"Sintomas Frecuentes"));
         options.add(new OptionEntity(PEDIDOS_EN_PROCESO, R.drawable.logo,"Pedidos en Proceso"));

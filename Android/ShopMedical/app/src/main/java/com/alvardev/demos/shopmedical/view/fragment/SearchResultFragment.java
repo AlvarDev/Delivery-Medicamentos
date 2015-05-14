@@ -1,34 +1,43 @@
 package com.alvardev.demos.shopmedical.view.fragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.adapter.MedicamentosAdapter;
 import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
+import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
 import com.alvardev.demos.shopmedical.util.StaticData;
+import com.alvardev.demos.shopmedical.view.interfaces.PedidoInterface;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class SearchResultFragment extends Fragment {
+public class SearchResultFragment extends Fragment implements PedidoInterface{
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "SearchResultFragment";
 
     private String mParam1;
     private String mParam2;
 
     private List<MedicamentoEntity> medicamentos;
+    private List<MedicamentoEntity> medicamentosMarca;
+    private List<MedicamentoEntity> medicamentosGenerico;
     private MedicamentosAdapter adapter;
 
     @InjectView(R.id.lviResult) ListView lviResult;
@@ -64,7 +73,7 @@ public class SearchResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search_result, container, false);
-        ButterKnife.inject(this,view);
+        ButterKnife.inject(this, view);
         return view;
     }
 
@@ -81,8 +90,21 @@ public class SearchResultFragment extends Fragment {
         lviResult.setAdapter(adapter);
         lviResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                showNoticeDialog(position);
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+                //showNoticeDialog(position);
+                ImageView addItem = (ImageView) view.findViewById(R.id.addCarrito);
+                addItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getCantItem(position);
+                    }
+                });
+
+
+                Dialog dialogOk = new CustomDialog().descriptionDialog(getActivity(), "this is a message");
+                dialogOk.show();
+
+
             }
         });
     }
@@ -106,7 +128,7 @@ public class SearchResultFragment extends Fragment {
     }
 
 
-    public void showNoticeDialog(int position) {
+    public void getCantItem(int position) {
 
         Bundle bundle=new Bundle();
         bundle.putInt("position", position);
@@ -117,11 +139,12 @@ public class SearchResultFragment extends Fragment {
         dialog.show(getFragmentManager(), "PedidoDialogFragment");
     }
 
-    private void updateItemAtPosition(int position, int cantidad) {
+
+    @Override
+    public void updateItemAtPosition(int position, int cantidad) {
         medicamentos.get(position).setCantidad(cantidad);
-        medicamentos.get(position).setSelected(true);
+        medicamentos.get(position).setSelected(cantidad!=0);
         //lMedicamentosSelected.add(medicamentosList.get(position));
         adapter.notifyDataSetChanged();
     }
-
 }

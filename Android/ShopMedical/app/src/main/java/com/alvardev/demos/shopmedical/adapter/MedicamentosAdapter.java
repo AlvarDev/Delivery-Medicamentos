@@ -42,7 +42,7 @@ public class MedicamentosAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.row_medicamento, null);
             holder = new ViewHolder();
-            holder.carrito = (ImageView) convertView.findViewById(R.id.carrito);
+            holder.carrito = (ImageView) convertView.findViewById(R.id.addCarrito);
             holder.nombre = (TextView) convertView.findViewById(R.id.nombre);
             holder.cantidad = (TextView) convertView.findViewById(R.id.cantidad);
             holder.precio = (TextView) convertView.findViewById(R.id.precio);
@@ -59,9 +59,12 @@ public class MedicamentosAdapter extends BaseAdapter {
         holder.nombre.setText(medicamento.getNombre());
         if(medicamento.isSelected()){
             holder.nombre.setTextColor(context.getResources().getColor(R.color.verde));
+            holder.carrito.setImageResource(R.drawable.added);
         }else{
             holder.nombre.setTextColor(context.getResources().getColor(R.color.txt_color));
+            holder.carrito.setImageResource(R.drawable.add);
         }
+
         holder.cantidad.setText(""+medicamento.getCantidad());
         holder.precio.setText(""+medicamento.getPrecio());
         holder.presentacion.setText(medicamento.getPresentacion());

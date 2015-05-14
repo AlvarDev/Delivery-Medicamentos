@@ -61,11 +61,11 @@ public class PedidoDialogFragment extends DialogFragment {
         builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
-                if(cantidad>0){
+                //if(cantidad>0){
                     mListener.onDialogPositiveClick(PedidoDialogFragment.this,cantidad, position);
-                }else{
-                    Toast.makeText(getActivity().getApplicationContext(), "Ingrese una cantidad mayor a 0", Toast.LENGTH_SHORT).show();
-                }
+                //}else{
+                //    Toast.makeText(getActivity().getApplicationContext(), "Ingrese una cantidad mayor a 0", Toast.LENGTH_SHORT).show();
+                //}
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

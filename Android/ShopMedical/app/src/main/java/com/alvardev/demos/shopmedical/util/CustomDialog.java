@@ -69,8 +69,26 @@ public class CustomDialog {
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SesionDialogInterface mListener = (SesionDialogInterface)context;
+                        SesionDialogInterface mListener = (SesionDialogInterface) context;
                         mListener.cerrarSesionNegative();
+                    }
+                });
+
+
+        dialog = builder.create();
+
+        return dialog;
+    }
+
+    public Dialog descriptionDialog(final Context context, String description){
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(description)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
                     }
                 });
 

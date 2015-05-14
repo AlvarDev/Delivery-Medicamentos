@@ -63,7 +63,45 @@
         android:id="@+id/lviResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/llaOtrasOpciones"/>
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:scrollbars="none"
+        android:layout_below="@+id/llaOtrasOpciones"
+        android:layout_above="@+id/llaSearch"/>
+
+    <View
+        android:id="@+id/vieLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/plomo"
+        android:layout_above="@id/llaSearch"/>
+
+    <LinearLayout
+        android:id="@+id/llaSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:inputType="textPersonName"
+            android:hint="@string/action_search"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:src="@drawable/buscar"
+            android:contentDescription="@string/app_name"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
 

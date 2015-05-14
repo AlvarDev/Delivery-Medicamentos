@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,14 +24,17 @@ import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
 import com.alvardev.demos.shopmedical.http.HttpCode;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
+import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
 import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
 import com.alvardev.demos.shopmedical.view.fragment.ActualizarInformacionFragment;
 import com.alvardev.demos.shopmedical.view.fragment.BuscarMedicamentoFragment;
 import com.alvardev.demos.shopmedical.view.fragment.CarritoComprasFragment;
 import com.alvardev.demos.shopmedical.view.fragment.PedidosFragment;
+import com.alvardev.demos.shopmedical.view.fragment.SearchResultFragment;
 import com.alvardev.demos.shopmedical.view.fragment.SintomasFrecuentesFragment;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.PedidoInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
 import com.google.gson.Gson;
 
@@ -40,7 +44,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class DashboardActivity extends BaseActionBarActivity
-        implements SesionDialogInterface, DashboardInterface{
+        implements SesionDialogInterface, DashboardInterface, PedidoDialogFragment.PedidoDialogListener{
 
     private static final String TAG = "DashboardActivity";
     private DrawerLayout mDrawerLayout;
@@ -52,7 +56,7 @@ public class DashboardActivity extends BaseActionBarActivity
     private UserEntity user;
     private UserEntity userTemp;
 
-    //private SearchResultFragment searchResultFragment = SearchResultFragment.newInstance(null,null);
+    private SearchResultFragment searchResultFragment = SearchResultFragment.newInstance(null,null);
     private BuscarMedicamentoFragment buscarMedicamentoFragment = BuscarMedicamentoFragment.newInstance(null,null);
     private CarritoComprasFragment carritoComprasFragment = CarritoComprasFragment.newInstance(null,null);
     private SintomasFrecuentesFragment sintomasFrecuentesFragment = SintomasFrecuentesFragment.newInstance(null,null);
@@ -105,8 +109,6 @@ public class DashboardActivity extends BaseActionBarActivity
             new ChangeFragmentsTask(null).execute(StaticData.BUSCAR_MEDICAMENTO);
         }
     }
-
-
 
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -176,8 +178,10 @@ public class DashboardActivity extends BaseActionBarActivity
                 changeFragment(bundle,historialPedidosFragment);
                 break;
             case StaticData.ACTUALIZAR_INFORMACION:
-                changeFragment(bundle,actualizarInformacionFragment);
+                changeFragment(bundle, actualizarInformacionFragment);
                 break;
+            case  StaticData.SEARCH_RESULT:
+                changeFragment(bundle,searchResultFragment);
             default:
                 break;
         }
@@ -209,8 +213,19 @@ public class DashboardActivity extends BaseActionBarActivity
 
     @Override
     public void cerrarSesionNegative() {
-        Log.i(TAG,"no cerras sesion");
+        Log.i(TAG, "no cerras sesion");
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, int cantidad, int position) {
+        PedidoInterface mListener  = searchResultFragment;
+        mListener.updateItemAtPosition(position,cantidad);
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
     }
 
 
@@ -232,6 +247,11 @@ public class DashboardActivity extends BaseActionBarActivity
 
     }
 
+    @Override
+    public void goToSearchResult() {
+        new ChangeFragmentsTask(null).execute(StaticData.SEARCH_RESULT);
+    }
+
 
     @Override
     protected void onRESTResultado(int code, String result, int accion) {
@@ -244,11 +264,15 @@ public class DashboardActivity extends BaseActionBarActivity
                 switch (accion){
                     case StaticData.ACTUALIZAR_INFORMACION:
                         if(response.isSuccess()){
-                            Toast.makeText(getApplicationContext(), "Sus datos se guardaron satisfactoriamente", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),
+                                    "Sus datos se guardaron satisfactoriamente",
+                                    Toast.LENGTH_SHORT).show();
                             user = userTemp;
                             savePreference("user", new Gson().toJson(user));
                         }else{
-                            Toast.makeText(getApplicationContext(), response.getMensaje(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),
+                                    response.getMensaje(),
+                                    Toast.LENGTH_SHORT).show();
                         }
                         break;
                 }
