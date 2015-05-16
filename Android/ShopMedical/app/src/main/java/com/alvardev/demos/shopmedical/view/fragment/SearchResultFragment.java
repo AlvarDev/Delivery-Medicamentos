@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.adapter.MedicamentosAdapter;
+import com.alvardev.demos.shopmedical.entity.CarEntity;
 import com.alvardev.demos.shopmedical.entity.DireccionEntity;
 import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
@@ -40,6 +41,7 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
     private List<MedicamentoEntity> medicamentosMarca;
     private List<MedicamentoEntity> medicamentosGenerico;
     private MedicamentosAdapter adapter;
+    private CarEntity car;
 
     @InjectView(R.id.lviResult) ListView lviResult;
     @InjectView(R.id.btnMarca) Button btnMarca;
@@ -47,7 +49,7 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
     @InjectView(R.id.btnGenerico) Button btnGenerico;
     @InjectView(R.id.viewGenerico) View viewGenerico;
 
-    private DireccionEntity direction;
+
 
     public static SearchResultFragment newInstance(String param1, String param2) {
         SearchResultFragment fragment = new SearchResultFragment();
@@ -68,8 +70,8 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
         if (getArguments() != null) {
             //mParam1 = getArguments().getString(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
-            direction = (DireccionEntity) getArguments().getSerializable("direccion");
-            Log.i(TAG, "direction: "+direction.toString());
+            car = (CarEntity) getArguments().getSerializable("car");
+            Log.i(TAG, "car: "+car.toString());
         }
     }
 

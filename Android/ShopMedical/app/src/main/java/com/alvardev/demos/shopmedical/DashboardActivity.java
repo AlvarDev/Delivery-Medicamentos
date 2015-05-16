@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.adapter.OptionsDashboardAdapter;
+import com.alvardev.demos.shopmedical.entity.CarEntity;
 import com.alvardev.demos.shopmedical.entity.DireccionEntity;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
 import com.alvardev.demos.shopmedical.entity.UserEntity;
@@ -56,6 +57,7 @@ public class DashboardActivity extends BaseActionBarActivity
     private int currentSelected;
     private UserEntity user;
     private UserEntity userTemp;
+    private String carString;
 
     private SearchResultFragment searchResultFragment = SearchResultFragment.newInstance(null,null);
     private BuscarMedicamentoFragment buscarMedicamentoFragment = BuscarMedicamentoFragment.newInstance(null,null);
@@ -73,6 +75,7 @@ public class DashboardActivity extends BaseActionBarActivity
         getSupportActionBar().setTitle("Buscar Medicamento");
         String userString = getPreference("user");
         user = new Gson().fromJson(userString, UserEntity.class);
+        carString = getPreference("car");
         setDrawer(savedInstanceState);
     }
 
@@ -107,7 +110,15 @@ public class DashboardActivity extends BaseActionBarActivity
 
         if (savedInstanceState == null) {
             currentSelected = StaticData.BUSCAR_MEDICAMENTO;
-            new ChangeFragmentsTask(null).execute(StaticData.BUSCAR_MEDICAMENTO);
+            if(!carString.isEmpty()){
+                CarEntity car = new Gson().fromJson(carString, CarEntity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("car",car);
+                new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
+            }else {
+                new ChangeFragmentsTask(null).execute(StaticData.BUSCAR_MEDICAMENTO);
+            }
         }
     }
 
@@ -118,6 +129,13 @@ public class DashboardActivity extends BaseActionBarActivity
             if(position == StaticData.CERRAR_SESION){
                 Dialog dialogOk = new CustomDialog().cerrarSesionDialog(DashboardActivity.this);
                 dialogOk.show();
+            }else if(position == StaticData.BUSCAR_MEDICAMENTO && !carString.isEmpty()){
+
+                CarEntity car = new Gson().fromJson(carString, CarEntity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("car",car);
+                new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
             }else{
                 new ChangeFragmentsTask(null).execute(position);
             }
@@ -191,6 +209,7 @@ public class DashboardActivity extends BaseActionBarActivity
         if (args != null) fragment.setArguments(args);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+
     }
 
 
@@ -205,7 +224,7 @@ public class DashboardActivity extends BaseActionBarActivity
 
     @Override
     public void cerrarSesionPositive() {
-        Log.i(TAG,"cerrando sesión...");
+        Log.i(TAG, "cerrando sesión...");
         savePreference("user", null);
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
@@ -221,7 +240,7 @@ public class DashboardActivity extends BaseActionBarActivity
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, int cantidad, int position) {
         PedidoInterface mListener  = searchResultFragment;
-        mListener.updateItemAtPosition(position,cantidad);
+        mListener.updateItemAtPosition(position, cantidad);
     }
 
     @Override
@@ -248,14 +267,7 @@ public class DashboardActivity extends BaseActionBarActivity
 
     }
 
-    @Override
-    public void goToSearchResult(DireccionEntity direccion) {
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("direccion",direccion);
-        getSupportActionBar().setTitle("Pedido para: "+direccion.getNombre());
-        new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
-    }
 
 
     @Override
@@ -299,4 +311,20 @@ public class DashboardActivity extends BaseActionBarActivity
     }
 
 
+    @Override
+    public void goToSearchResult(DireccionEntity direccion) {
+        CarEntity car = new CarEntity();
+        car.setDirection(direccion);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("car",car);
+
+        getSupportActionBar().setTitle("Pedido para: "+direccion.getNombre());
+        new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
