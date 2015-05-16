@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:animateLayoutChanges="true"
     tools:context="com.alvardev.demos.shopmedical.view.fragment.CarritoComprasFragment">
 
     <TextView
@@ -18,8 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:padding="16dp"
         android:scrollbars="none"/>
 
     <LinearLayout

@@ -126,6 +126,7 @@ public class DashboardActivity extends BaseActionBarActivity
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            carString = getPreference("car");
             if(position == StaticData.CERRAR_SESION){
                 Dialog dialogOk = new CustomDialog().cerrarSesionDialog(DashboardActivity.this);
                 dialogOk.show();

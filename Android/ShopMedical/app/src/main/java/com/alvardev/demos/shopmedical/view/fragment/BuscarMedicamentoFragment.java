@@ -79,9 +79,6 @@ public class BuscarMedicamentoFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-
-
         setComponents();
 
     }

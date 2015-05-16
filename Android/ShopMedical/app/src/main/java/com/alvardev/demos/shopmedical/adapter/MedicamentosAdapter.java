@@ -12,17 +12,20 @@ import android.widget.TextView;
 
 import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
+import com.alvardev.demos.shopmedical.util.StaticData;
 
 import java.util.List;
 
 public class MedicamentosAdapter extends BaseAdapter {
 
-    Context context;
-    List<MedicamentoEntity> medicamentos;
+    private Context context;
+    private List<MedicamentoEntity> medicamentos;
+    private int state;
 
-    public MedicamentosAdapter(Context context, List<MedicamentoEntity> medicamentos) {
+    public MedicamentosAdapter(Context context, List<MedicamentoEntity> medicamentos, int state) {
         this.context = context;
         this.medicamentos = medicamentos;
+        this.state = state;
     }
 
     /*private view holder class*/
@@ -57,15 +60,31 @@ public class MedicamentosAdapter extends BaseAdapter {
 
 
         holder.nombre.setText(medicamento.getNombre());
+
         if(medicamento.isSelected()){
             holder.nombre.setTextColor(context.getResources().getColor(R.color.verde));
             holder.cantidad.setTextColor(context.getResources().getColor(R.color.verde));
-            holder.carrito.setImageResource(R.drawable.added);
+            if(state == StaticData.CARRITO_DE_COMPRAS){
+                holder.carrito.setImageResource(R.drawable.cancel);
+            }else{
+                holder.carrito.setImageResource(R.drawable.added);
+            }
+
         }else{
             holder.nombre.setTextColor(context.getResources().getColor(R.color.txt_color));
             holder.cantidad.setTextColor(context.getResources().getColor(R.color.txt_color));
             holder.carrito.setImageResource(R.drawable.add);
         }
+
+        /*switch (state){
+            case StaticData.SEARCH_RESULT:
+
+                break;
+            case StaticData.CARRITO_DE_COMPRAS:
+
+                break;
+        }*/
+
 
         holder.cantidad.setText(""+medicamento.getCantidad());
         holder.precio.setText(""+medicamento.getPrecio());

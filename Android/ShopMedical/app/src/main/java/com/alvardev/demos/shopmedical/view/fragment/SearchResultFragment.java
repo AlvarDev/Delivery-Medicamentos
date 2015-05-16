@@ -94,6 +94,16 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
         setComponents();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(adapter!=null){
+            adapter.notifyDataSetChanged();
+        }
+        Log.i(TAG,"here");
+    }
+
     private void setResultList(){
         medicamentos = StaticData.getMedicamentos();
 
@@ -108,7 +118,7 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
             }
         }
 
-        adapter =  new MedicamentosAdapter(getActivity(), medicamentos);
+        adapter =  new MedicamentosAdapter(getActivity(), medicamentos, StaticData.SEARCH_RESULT);
         lviResult.setAdapter(adapter);
         lviResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
