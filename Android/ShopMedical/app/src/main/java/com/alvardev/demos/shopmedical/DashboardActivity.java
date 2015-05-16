@@ -137,6 +137,14 @@ public class DashboardActivity extends BaseActionBarActivity
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("car",car);
                 new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
+            }else if(position == StaticData.PEDIDOS_EN_PROCESO){
+                Bundle bundle = new Bundle();
+                bundle.putInt("typePedido", StaticData.PEDIDOS_EN_PROCESO);
+                new ChangeFragmentsTask(bundle).execute(StaticData.PEDIDOS_EN_PROCESO);
+            }else if(position == StaticData.HISTORIAL_DE_PEDIDO){
+                Bundle bundle = new Bundle();
+                bundle.putInt("typePedido", StaticData.HISTORIAL_DE_PEDIDO);
+                new ChangeFragmentsTask(bundle).execute(StaticData.HISTORIAL_DE_PEDIDO);
             }else{
                 new ChangeFragmentsTask(null).execute(position);
             }
@@ -330,18 +338,13 @@ public class DashboardActivity extends BaseActionBarActivity
 
         switch (tipoDoc){
             case StaticData.BOLETA:
-                Toast.makeText(this, "Pedido enviado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
                 savePreference("car", null);
                 new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
                 break;
             case StaticData.FACTURA:
                 Intent intent = new Intent(this, RUCActivity.class);
                 startActivity(intent);
-                break;
-            case StaticData.FINISH:
-                Toast.makeText(getApplicationContext(), "Pedido enviado", Toast.LENGTH_SHORT).show();
-                savePreference("car", null);
-
                 break;
         }
 
@@ -352,7 +355,7 @@ public class DashboardActivity extends BaseActionBarActivity
         super.onResume();
         String doneRUC = getPreference("doneRUC");
         if(!doneRUC.isEmpty()){
-            Toast.makeText(this, "Pedido enviado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
             savePreference("car", null);
             savePreference("doneRUC",null);
             new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);

@@ -5,8 +5,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.alvardev.demos.shopmedical.R;
+import com.alvardev.demos.shopmedical.adapter.PedidosAdapter;
+import com.alvardev.demos.shopmedical.entity.PedidoEntity;
+import com.alvardev.demos.shopmedical.util.StaticData;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 public class PedidosFragment extends Fragment {
 
@@ -15,6 +25,10 @@ public class PedidosFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+
+    private int typePedido;
+
+    @InjectView(R.id.lviPedidos) ListView lviPedidos;
 
     public static PedidosFragment newInstance(String param1, String param2) {
         PedidosFragment fragment = new PedidosFragment();
@@ -33,8 +47,9 @@ public class PedidosFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //mParam1 = getArguments().getString(ARG_PARAM1);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
+            typePedido = getArguments().getInt("typePedido");
         }
     }
 
@@ -42,8 +57,27 @@ public class PedidosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pedidos, container, false);
+        View view = inflater.inflate(R.layout.fragment_pedidos, container, false);
+        ButterKnife.inject(this, view);
+        return view;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        List<PedidoEntity> pedidos = new ArrayList<PedidoEntity>();
+        switch (typePedido){
+            case StaticData.PEDIDOS_EN_PROCESO:
+                pedidos = StaticData.getPedidosPendientes();
+                break;
+            case StaticData.HISTORIAL_DE_PEDIDO:
+                pedidos = StaticData.getHistorialPedido();
+                break;
+        }
+
+        PedidosAdapter adapter = new PedidosAdapter(getActivity(), pedidos);
+        lviPedidos.setAdapter(adapter);
+
+    }
 }

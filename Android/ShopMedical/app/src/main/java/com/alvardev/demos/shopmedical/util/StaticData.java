@@ -4,6 +4,7 @@ package com.alvardev.demos.shopmedical.util;
 import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
+import com.alvardev.demos.shopmedical.entity.PedidoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,11 @@ public class StaticData {
     public static final int BOLETA = 8;
     public static final int FACTURA = 9;
     public static final int FINISH = 10;
+
+    public static final int PENDIENTE  = 11;
+    public static final int RECIBIDO = 12;
+    public static final int CANCELADO = 13;
+
 
     public static final String NAME_PREFERENCE = "com.alvardev.demos.shopmedical.preferences";
 
@@ -58,6 +64,24 @@ public class StaticData {
         options.add(new OptionEntity(CERRAR_SESION, R.drawable.logo,"Cerrar Sesión"));
 
         return options;
+    }
+
+    public static List<PedidoEntity> getPedidosPendientes(){
+        List<PedidoEntity> pedidosPendientes = new ArrayList<PedidoEntity>();
+
+        pedidosPendientes.add(new PedidoEntity("00000485", "13/04/2014 17:28","Boleta", PEDIDOS_EN_PROCESO, PENDIENTE));
+        pedidosPendientes.add(new PedidoEntity("00000484", "13/04/2014 17:20","Factura", PEDIDOS_EN_PROCESO, PENDIENTE));
+
+        return pedidosPendientes;
+    }
+
+    public static List<PedidoEntity> getHistorialPedido(){
+        List<PedidoEntity> pedidosPendientes = new ArrayList<PedidoEntity>();
+
+        pedidosPendientes.add(new PedidoEntity("00000485", "13/04/2014 17:28","Boleta", HISTORIAL_DE_PEDIDO, RECIBIDO));
+        pedidosPendientes.add(new PedidoEntity("00000484", "13/04/2014 17:20","Factura", HISTORIAL_DE_PEDIDO, CANCELADO));
+
+        return pedidosPendientes;
     }
 
 }
