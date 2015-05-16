@@ -82,6 +82,11 @@
     <string name="s_vuelto">Vuelto S/.:</string>
     <string name="b_enviar_pedido">Enviar Pedido</string>
     <string name="s_monto_invalido">Monto Invalido</string>
+    <string name="b_boleta">Boleta</string>
+    <string name="b_factura">Factura</string>
+    <string name="title_activity_ruc">RUCActivity</string>
+    <string name="s_comprobante_factura">Comprobante de Pago Factura</string>
+    <string name="s_ingrese_ruc">*Ingrese su RUC por favor</string>
 
 
 

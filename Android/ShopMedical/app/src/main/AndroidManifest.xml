@@ -48,14 +48,17 @@
         <activity
             android:name=".AddDirectionActivity"
             android:label="@string/title_activity_add_direction"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyClS8nwcpCVAGD9pC1LBD5su2sepRXtQlY"/>
+            android:value="AIzaSyClS8nwcpCVAGD9pC1LBD5su2sepRXtQlY" />
 
-
+        <activity
+            android:name=".RUCActivity"
+            android:label="@string/title_activity_ruc" >
+        </activity>
     </application>
 
 </manifest>

@@ -325,7 +325,37 @@ public class DashboardActivity extends BaseActionBarActivity
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public void goToPedidoProceso(int tipoDoc, String nro) {
+        //TODO Crear all to send
+
+        switch (tipoDoc){
+            case StaticData.BOLETA:
+                Toast.makeText(this, "Pedido enviado", Toast.LENGTH_SHORT).show();
+                savePreference("car", null);
+                new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
+                break;
+            case StaticData.FACTURA:
+                Intent intent = new Intent(this, RUCActivity.class);
+                startActivity(intent);
+                break;
+            case StaticData.FINISH:
+                Toast.makeText(getApplicationContext(), "Pedido enviado", Toast.LENGTH_SHORT).show();
+                savePreference("car", null);
+
+                break;
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String doneRUC = getPreference("doneRUC");
+        if(!doneRUC.isEmpty()){
+            Toast.makeText(this, "Pedido enviado", Toast.LENGTH_SHORT).show();
+            savePreference("car", null);
+            savePreference("doneRUC",null);
+            new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
+        }
     }
 }

@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.alvardev.demos.shopmedical.RUCActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/s_register"
+        android:textSize="21sp"
+        android:padding="16dp"
+        android:textColor="@color/bg_boton"
+        android:gravity="center"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:textColor="@color/txt_color"
+        android:text="@string/s_ingrese_ruc"/>
+
+    <EditText
+        android:id="@+id/eteRUC"
+        style="@style/EditTextStyle"
+        android:inputType="number"
+        android:maxLength="11"/>
+
+    <Button
+        android:id="@+id/btnGetRUC"
+        android:text="@string/btn_aceptar"
+        style="@style/ButtonStyle"/>
+
+</LinearLayout>

@@ -88,6 +88,7 @@ public class CarritoComprasFragment extends Fragment {
         setComponents();
     }
 
+
     private void setMedicines(){
         String carString =  getPreference("car");
         tviTotal.setText("Precio Total S/.00.00");
@@ -153,7 +154,8 @@ public class CarritoComprasFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (validatePedido(eteEfectivo.getText().toString())) {
-
+                    Dialog dialogOk = new CustomDialog().selectDocumentDialog(getActivity());
+                    dialogOk.show();
                 }
             }
         });

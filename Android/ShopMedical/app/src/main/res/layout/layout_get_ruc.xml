@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/eteRUC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_margin="16dp" />
+
+    <Button
+        android:id="@+id/btnGetRuc"
+        android:text="@string/btn_aceptar"
+        style="@style/ButtonStyle"/>
+
+</LinearLayout>
