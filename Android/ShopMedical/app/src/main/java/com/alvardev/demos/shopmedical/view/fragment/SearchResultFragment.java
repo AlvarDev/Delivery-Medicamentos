@@ -1,6 +1,8 @@
 package com.alvardev.demos.shopmedical.view.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -22,6 +24,7 @@ import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
 import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.interfaces.PedidoInterface;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -93,6 +96,18 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
 
     private void setResultList(){
         medicamentos = StaticData.getMedicamentos();
+
+        List<MedicamentoEntity> medicines = car.getMedicamentos();
+
+        for(MedicamentoEntity med : medicines){
+            for(int i=0; i<medicamentos.size();i++){
+                if(medicamentos.get(i).getSuperId().equals(med.getSuperId())){
+                    medicamentos.set(i,med);
+                    break;
+                }
+            }
+        }
+
         adapter =  new MedicamentosAdapter(getActivity(), medicamentos);
         lviResult.setAdapter(adapter);
         lviResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -149,9 +164,54 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
 
     @Override
     public void updateItemAtPosition(int position, int cantidad) {
-        medicamentos.get(position).setCantidad(cantidad);
-        medicamentos.get(position).setSelected(cantidad!=0);
+        this.medicamentos.get(position).setCantidad(cantidad);
+        this.medicamentos.get(position).setSelected(cantidad != 0);
+
+        String superId = this.medicamentos.get(position).getSuperId();
+        List<MedicamentoEntity> medicamentos = car.getMedicamentos();
+        boolean agregar = true;
+
+        for(int i=0; i<medicamentos.size();i++){
+            if(superId.equals(medicamentos.get(i).getSuperId())){
+                   if(cantidad == 0){
+                       medicamentos.remove(i);
+                   } else{
+                       medicamentos.get(i).setCantidad(cantidad);
+                   }
+                agregar = false;
+                break;
+            }
+        }
+
+        if(agregar && cantidad!=0){
+            medicamentos.add(this.medicamentos.get(position));
+        }
+
+        if(medicamentos.size()==0){
+            savePreference("car", null);
+        }else {
+            car.setMedicamentos(medicamentos);
+            savePreference("car", new Gson().toJson(car));
+        }
+        Log.i(TAG,"car: "+car.toString());
+
         //lMedicamentosSelected.add(medicamentosList.get(position));
         adapter.notifyDataSetChanged();
     }
+
+
+    public String getPreference(String llave) {
+        SharedPreferences preferencias = getActivity().getSharedPreferences(StaticData.NAME_PREFERENCE, Activity.MODE_PRIVATE);
+        return preferencias.getString(llave, "");
+    }
+
+    public void savePreference(String llave, String valor) {
+
+        SharedPreferences preferencias = getActivity().getSharedPreferences(StaticData.NAME_PREFERENCE, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString(llave, valor);
+        editor.apply();
+
+    }
+
 }

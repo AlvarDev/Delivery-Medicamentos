@@ -29,22 +29,15 @@ public class StaticData {
     public static List<MedicamentoEntity> getMedicamentos(){
         List<MedicamentoEntity> medicamentos = new ArrayList<MedicamentoEntity>();
 
-        medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 275mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 100mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax Gel 5.5%", "Crema - Ungüento", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 275mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 100mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax Gel 5.5%", "Crema - Ungüento", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 275mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 100mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax Gel 5.5%", "Crema - Ungüento", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 275mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax 100mg", "tableta", 10.00, 0, false, false));
-        medicamentos.add(new MedicamentoEntity("Apronax Gel 5.5%", "Crema - Ungüento", 10.00, 0, false, false));
+        medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false,"0001"));
+        medicamentos.add(new MedicamentoEntity("Apronax 275mg", "tableta", 10.00, 0, false, false,"0002"));
+        medicamentos.add(new MedicamentoEntity("Apronax 100mg", "tableta", 10.00, 0, false, false,"0003"));
+        medicamentos.add(new MedicamentoEntity("Apronax Gel 5.5%", "Crema - Ungüento", 10.00, 0, false, false,"0004"));
+        medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false,"0005"));
+        medicamentos.add(new MedicamentoEntity("Apronax 275mg", "tableta", 10.00, 0, false, false,"0006"));
+        medicamentos.add(new MedicamentoEntity("Apronax 100mg", "tableta", 10.00, 0, false, false,"0007"));
+        medicamentos.add(new MedicamentoEntity("Apronax Gel 5.5%", "Crema - Ungüento", 10.00, 0, false, false,"0008"));
+        medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false,"0009"));
 
         return medicamentos;
     }

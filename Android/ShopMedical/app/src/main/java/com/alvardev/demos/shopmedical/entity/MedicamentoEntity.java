@@ -10,17 +10,20 @@ public class MedicamentoEntity implements Serializable{
     private int cantidad;
     private boolean selected;
     private boolean restricted;
+    private String superId;
 
     public MedicamentoEntity() {
     }
 
-    public MedicamentoEntity(String nombre, String presentacion, double precio, int cantidad, boolean selected, boolean restricted) {
+    public MedicamentoEntity(String nombre, String presentacion, double precio,
+                             int cantidad, boolean selected, boolean restricted, String superId) {
         this.nombre = nombre;
         this.presentacion = presentacion;
         this.precio = precio;
         this.cantidad = cantidad;
         this.selected = selected;
         this.restricted = restricted;
+        this.superId = superId;
     }
 
     public String getNombre() {
@@ -71,6 +74,14 @@ public class MedicamentoEntity implements Serializable{
         this.restricted = restricted;
     }
 
+    public String getSuperId() {
+        return superId;
+    }
+
+    public void setSuperId(String superId) {
+        this.superId = superId;
+    }
+
     @Override
     public String toString() {
         return "MedicamentoEntity{" +
@@ -80,6 +91,7 @@ public class MedicamentoEntity implements Serializable{
                 ", cantidad=" + cantidad +
                 ", selected=" + selected +
                 ", restricted=" + restricted +
+                ", superId='" + superId + '\'' +
                 '}';
     }
 }
