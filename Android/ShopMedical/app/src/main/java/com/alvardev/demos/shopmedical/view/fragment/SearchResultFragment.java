@@ -94,16 +94,6 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
         setComponents();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if(adapter!=null){
-            adapter.notifyDataSetChanged();
-        }
-        Log.i(TAG,"here");
-    }
-
     private void setResultList(){
         medicamentos = StaticData.getMedicamentos();
 

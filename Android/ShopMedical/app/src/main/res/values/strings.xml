@@ -78,6 +78,10 @@
     <!--Carrito de Compras-->
     <string name="s_carrito_vacio">Carrito de Compras Vacío</string>
     <string name="s_incluye_igv">*Montos incluyen IGV </string>
+    <string name="s_efectivo_soles">Efectivo en Soles S/.:</string>
+    <string name="s_vuelto">Vuelto S/.:</string>
+    <string name="b_enviar_pedido">Enviar Pedido</string>
+    <string name="s_monto_invalido">Monto Invalido</string>
 
 
 

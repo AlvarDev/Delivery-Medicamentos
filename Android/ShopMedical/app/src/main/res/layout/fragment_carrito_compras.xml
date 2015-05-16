@@ -29,10 +29,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tviTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/plomo"/>
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:background="@color/txt_color"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -45,7 +49,62 @@
             android:paddingRight="16dp"
             android:gravity="end"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/s_efectivo_soles"/>
+
+            <EditText
+                android:id="@+id/eteEfectivo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:inputType="numberDecimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/s_vuelto"/>
+
+            <TextView
+                android:id="@+id/eteVuelto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="100dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnEnviarPedido"
+            android:text="@string/b_enviar_pedido"
+            style="@style/ButtonStyle"/>
 
     </LinearLayout>
 </LinearLayout>

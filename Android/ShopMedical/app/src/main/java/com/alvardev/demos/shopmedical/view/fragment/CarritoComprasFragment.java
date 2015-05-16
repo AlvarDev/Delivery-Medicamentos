@@ -5,12 +5,17 @@ import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.adapter.MedicamentosAdapter;
@@ -34,8 +39,14 @@ public class CarritoComprasFragment extends Fragment {
     private String mParam2;
 
     private MedicamentosAdapter adapter;
+    private double total;
 
     @InjectView(R.id.lviItemsAdded) ListView lviItemsAdded;
+    @InjectView(R.id.tviTotal) TextView tviTotal;
+    @InjectView(R.id.eteEfectivo) EditText eteEfectivo;
+    @InjectView(R.id.eteVuelto) TextView eteVuelto;
+    @InjectView(R.id.btnEnviarPedido) Button btnEnviarPedido;
+
 
     public static CarritoComprasFragment newInstance(String param1, String param2) {
         CarritoComprasFragment fragment = new CarritoComprasFragment();
@@ -72,15 +83,19 @@ public class CarritoComprasFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        total = 0;
         setMedicines();
+        setComponents();
     }
 
     private void setMedicines(){
         String carString =  getPreference("car");
+        tviTotal.setText("Precio Total S/.00.00");
         if(!carString.isEmpty()){
             final CarEntity car = new Gson().fromJson(carString, CarEntity.class);
             final List<MedicamentoEntity> medicamentos = car.getMedicamentos();
 
+            setTotal(medicamentos);
             adapter =  new MedicamentosAdapter(getActivity(), medicamentos, StaticData.CARRITO_DE_COMPRAS);
             lviItemsAdded.setAdapter(adapter);
             lviItemsAdded.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,17 +112,76 @@ public class CarritoComprasFragment extends Fragment {
                                 car.setMedicamentos(medicamentos);
                                 savePreference("car", new Gson().toJson(car));
                             }
-
                             adapter.notifyDataSetChanged();
+                            setTotal(medicamentos);
                         }
-                    });
 
+                    });
 
                     Dialog dialogOk = new CustomDialog().descriptionDialog(getActivity(), "this is a message");
                     dialogOk.show();
+
                 }
             });
         }
+    }
+
+    private void setTotal(List<MedicamentoEntity> medicamentos){
+        total = 0;
+        for(MedicamentoEntity med :  medicamentos){
+            total+=med.getPrecio()*med.getCantidad();
+        }
+        tviTotal.setText("Precio Total S/." + total);
+    }
+
+    private void setComponents(){
+
+        eteEfectivo.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                String efec = eteEfectivo.getText().toString();
+                if(!efec.isEmpty()){
+                    double efectivo = Double.parseDouble(efec);
+                    eteVuelto.setText(""+(efectivo-total));
+                }
+
+                return false;
+            }
+        });
+
+        btnEnviarPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (validatePedido(eteEfectivo.getText().toString())) {
+
+                }
+            }
+        });
+    }
+
+    private boolean validatePedido(String efec){
+
+        eteEfectivo.setError(null);
+
+        if(total == 0){
+            Toast.makeText(getActivity(), "Ingrese medicamentos" , Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(efec.isEmpty()){
+            eteEfectivo.setError(getString(R.string.error_field));
+            return false;
+        }
+
+        double efectivo = Double.parseDouble(efec);
+
+        if(efectivo<total){
+            eteEfectivo.setError(getString(R.string.s_monto_invalido));
+            return false;
+        }
+
+
+        return true;
     }
 
     public String getPreference(String llave) {
