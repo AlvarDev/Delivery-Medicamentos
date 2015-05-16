@@ -57,6 +57,7 @@
                 android:text="@string/s_name"/>
 
             <EditText
+                android:id="@+id/eteNameDirection"
                 style="@style/EditTextStyle"
                 android:inputType="textPostalAddress"/>
 
@@ -65,6 +66,7 @@
                 android:text="@string/s_direccion"/>
 
             <EditText
+                android:id="@+id/eteDirection"
                 style="@style/EditTextStyle"
                 android:inputType="textPostalAddress"/>
             <TextView
@@ -72,6 +74,7 @@
                 android:text="@string/s_referencia"/>
 
             <EditText
+                android:id="@+id/eteReferencia"
                 style="@style/EditTextStyle"
                 android:inputType="textPostalAddress"/>
 

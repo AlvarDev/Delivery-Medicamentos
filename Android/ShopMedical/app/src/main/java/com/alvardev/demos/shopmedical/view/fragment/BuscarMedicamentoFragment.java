@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.alvardev.demos.shopmedical.AddDirectionActivity;
 import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.entity.DireccionEntity;
+import com.alvardev.demos.shopmedical.entity.ListDirecciones;
 import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.google.gson.Gson;
@@ -79,6 +80,15 @@ public class BuscarMedicamentoFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
+
+
+        setComponents();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         String direccionesString = getPreference("direcciones");
         if(!direccionesString.isEmpty()){
             direcciones = new Gson().fromJson(direccionesString, ListDirecciones.class);
@@ -87,9 +97,6 @@ public class BuscarMedicamentoFragment extends Fragment {
             direcciones = new ListDirecciones();
             Log.i(TAG, "no directions");
         }
-
-        setComponents();
-
     }
 
     private void showDirecciones(List<DireccionEntity> direcciones){
@@ -155,28 +162,6 @@ public class BuscarMedicamentoFragment extends Fragment {
         editor.putString(llave, valor);
         editor.apply();
 
-    }
-
-    public class ListDirecciones implements Serializable{
-        private List<DireccionEntity> direcciones;
-
-        public ListDirecciones() {
-        }
-
-        public List<DireccionEntity> getDirecciones() {
-            return direcciones;
-        }
-
-        @Override
-        public String toString() {
-            return "ListDirecciones{" +
-                    "direcciones=" + direcciones +
-                    '}';
-        }
-
-        public void setDirecciones(List<DireccionEntity> direcciones) {
-            this.direcciones = direcciones;
-        }
     }
 
 
