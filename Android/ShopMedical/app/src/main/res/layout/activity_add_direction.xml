@@ -1,79 +1,88 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
+    android:orientation="vertical"
     tools:context="com.alvardev.demos.shopmedical.AddDirectionActivity">
 
-    <LinearLayout
+    <fragment
+        android:id="@+id/map_root"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:name="com.google.android.gms.maps.MapFragment"
+        tools:layout="@layout/loading" />
+
+    <!-- <TextView
+        android:id="@+id/tvuTitleDir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/bg_celeste"
+        android:text="@string/b_agregar_direccion"
+        android:padding="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="16dp"/>
+    -->
 
-        <TextView
-            android:id="@+id/tvuTitleDir"
+
+    <!--<TextView
+        style="@style/TextViewStyle"
+        android:text="@string/s_mapa"/>
+
+-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_celeste"
-            android:text="@string/b_agregar_direccion"
-            android:padding="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:layout_marginBottom="16dp"/>
+            android:orientation="vertical">
 
-        <TextView
-            style="@style/TextViewStyle"
-            android:text="@string/s_name"/>
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/s_distrito"/>
 
-        <EditText
-            style="@style/EditTextStyle"
-            android:inputType="textPostalAddress"/>
+            <Spinner
+                android:id="@+id/spiDistritos"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"/>
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/s_name"/>
 
-        <TextView
-            style="@style/TextViewStyle"
-            android:text="@string/s_direccion"/>
+            <EditText
+                style="@style/EditTextStyle"
+                android:inputType="textPostalAddress"/>
 
-        <EditText
-            style="@style/EditTextStyle"
-            android:inputType="textPostalAddress"/>
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/s_direccion"/>
 
-        <TextView
-            style="@style/TextViewStyle"
-            android:text="@string/s_distrito"/>
+            <EditText
+                style="@style/EditTextStyle"
+                android:inputType="textPostalAddress"/>
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/s_referencia"/>
 
-        <Spinner
-            android:id="@+id/spiDistritos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"/>
+            <EditText
+                style="@style/EditTextStyle"
+                android:inputType="textPostalAddress"/>
 
-        <TextView
-            style="@style/TextViewStyle"
-            android:text="@string/s_mapa"/>
-
-
-        <fragment
-            android:id="@+id/map_root"
-            android:padding="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:name="com.google.android.gms.maps.MapFragment"
-            tools:layout="@layout/loading" />
-
-        <TextView
-            style="@style/TextViewStyle"
-            android:text="@string/s_referencia"/>
-
-        <EditText
-            style="@style/EditTextStyle"
-            android:inputType="textPostalAddress"/>
-
-        <Button
-            android:id="@+id/btnSaveDirection"
-            android:text="@string/btn_save"
-            style="@style/ButtonStyle"/>
+            <Button
+                android:id="@+id/btnSaveDirection"
+                android:text="@string/btn_save"
+                style="@style/ButtonStyle"/>
 
 
-    </LinearLayout>
-</ScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
