@@ -119,7 +119,8 @@ public class CarritoComprasFragment extends Fragment {
 
                     });
 
-                    Dialog dialogOk = new CustomDialog().descriptionDialog(getActivity(), "this is a message");
+                    Dialog dialogOk = new CustomDialog().descriptionDialog(getActivity(),
+                            medicamentos.get(position).getDescripcionMedicamento());
                     dialogOk.show();
 
                 }

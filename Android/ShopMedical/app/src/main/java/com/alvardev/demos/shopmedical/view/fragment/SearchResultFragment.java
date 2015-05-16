@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -23,7 +24,9 @@ import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
 import com.alvardev.demos.shopmedical.util.StaticData;
+import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.PedidoInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.SearchInterface;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -31,7 +34,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class SearchResultFragment extends Fragment implements PedidoInterface{
+public class SearchResultFragment extends Fragment implements PedidoInterface, SearchInterface{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -45,14 +48,15 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
     private List<MedicamentoEntity> medicamentosGenerico;
     private MedicamentosAdapter adapter;
     private CarEntity car;
+    private DashboardInterface mListener;
 
     @InjectView(R.id.lviResult) ListView lviResult;
     @InjectView(R.id.btnMarca) Button btnMarca;
     @InjectView(R.id.viewMarca) View viewMarca;
     @InjectView(R.id.btnGenerico) Button btnGenerico;
     @InjectView(R.id.viewGenerico) View viewGenerico;
-
-
+    @InjectView(R.id.eteText) EditText eteText;
+    @InjectView(R.id.iviBuscar) View iviBuscar;
 
     public static SearchResultFragment newInstance(String param1, String param2) {
         SearchResultFragment fragment = new SearchResultFragment();
@@ -90,12 +94,12 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setResultList();
+        //setResultList();
         setComponents();
     }
 
-    private void setResultList(){
-        medicamentos = StaticData.getMedicamentos();
+    private void setResultList(List<MedicamentoEntity> medi){
+        medicamentos = medi;
 
         List<MedicamentoEntity> medicines = car.getMedicamentos();
 
@@ -123,7 +127,8 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
                 });
 
 
-                Dialog dialogOk = new CustomDialog().descriptionDialog(getActivity(), "this is a message");
+                Dialog dialogOk = new CustomDialog().descriptionDialog(getActivity(),
+                        medicamentos.get(position).getDescripcionMedicamento());
                 dialogOk.show();
 
 
@@ -147,6 +152,30 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
                 viewMarca.setBackgroundColor(getResources().getColor(R.color.bg_boton));
             }
         });
+
+        iviBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.searchMedicine(eteText.getText().toString(),"1");
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (DashboardInterface) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement DashboardInterface");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
 
@@ -214,4 +243,8 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
 
     }
 
+    @Override
+    public void getResultSearch(List<MedicamentoEntity> medi) {
+        setResultList(medi);
+    }
 }

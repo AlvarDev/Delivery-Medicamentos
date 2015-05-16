@@ -5,4 +5,5 @@
     <string name="url_get_dni">http://farmaciaa.jelasticlw.com.br/validaDNI?dni=</string>
     <string name="url_post_register">http://farmaciaa.jelasticlw.com.br/regUserA</string>
     <string name="url_update_user">http://farmaciaa.jelasticlw.com.br/editUserA</string>
+    <string name="url_search">http://farmaciaa.jelasticlw.com.br/searchMedxNom?</string>
 </resources>

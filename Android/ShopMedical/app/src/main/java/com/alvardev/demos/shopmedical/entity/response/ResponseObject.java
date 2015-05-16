@@ -10,7 +10,7 @@ public class ResponseObject implements Serializable {
 	private boolean success;
 	private Object object;
 	private String mensaje;
-    private List<DistritoEntity> listaD;
+    private List<DistritoEntity> lista;
 
     public ResponseObject() {
     }
@@ -39,12 +39,12 @@ public class ResponseObject implements Serializable {
         this.mensaje = mensaje;
     }
 
-    public List<DistritoEntity> getListaD() {
-        return listaD;
+    public List<DistritoEntity> getLista() {
+        return lista;
     }
 
-    public void setListaD(List<DistritoEntity> listaD) {
-        this.listaD = listaD;
+    public void setLista(List<DistritoEntity> lista) {
+        this.lista = lista;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ResponseObject implements Serializable {
                 "success=" + success +
                 ", object=" + object +
                 ", mensaje='" + mensaje + '\'' +
-                ", listaD=" + listaD +
+                ", listaD=" + lista +
                 '}';
     }
 }

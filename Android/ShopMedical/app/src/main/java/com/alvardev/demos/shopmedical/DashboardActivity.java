@@ -24,6 +24,7 @@ import com.alvardev.demos.shopmedical.entity.DireccionEntity;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
 import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
+import com.alvardev.demos.shopmedical.entity.response.ResponseSearch;
 import com.alvardev.demos.shopmedical.http.HttpCode;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
@@ -37,6 +38,7 @@ import com.alvardev.demos.shopmedical.view.fragment.SearchResultFragment;
 import com.alvardev.demos.shopmedical.view.fragment.SintomasFrecuentesFragment;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.PedidoInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.SearchInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
 import com.google.gson.Gson;
 
@@ -276,7 +278,11 @@ public class DashboardActivity extends BaseActionBarActivity
 
     }
 
-
+    @Override
+    public void searchMedicine(String text, String sucursal) {
+        connectGet(getString(R.string.url_search)+"codSucursal="+sucursal+
+                "&medicamento="+text, StaticData.SEARCH_RESULT);
+    }
 
 
     @Override
@@ -286,9 +292,10 @@ public class DashboardActivity extends BaseActionBarActivity
 
         switch (codigo) {
             case OK:
-                ResponseObject response = new Gson().fromJson(result,ResponseObject.class);
+
                 switch (accion){
                     case StaticData.ACTUALIZAR_INFORMACION:
+                        ResponseObject response = new Gson().fromJson(result,ResponseObject.class);
                         if(response.isSuccess()){
                             Toast.makeText(getApplicationContext(),
                                     "Sus datos se guardaron satisfactoriamente",
@@ -299,6 +306,13 @@ public class DashboardActivity extends BaseActionBarActivity
                             Toast.makeText(getApplicationContext(),
                                     response.getMensaje(),
                                     Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case StaticData.SEARCH_RESULT:
+                        ResponseSearch responseSearch = new Gson().fromJson(result, ResponseSearch.class);
+                        if(responseSearch.isSuccess()){
+                            SearchInterface mListener  =  (SearchInterface) searchResultFragment;
+                            mListener.getResultSearch(responseSearch.getLista());
                         }
                         break;
                 }

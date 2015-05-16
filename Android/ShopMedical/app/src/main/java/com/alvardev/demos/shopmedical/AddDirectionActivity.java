@@ -156,7 +156,7 @@ public class AddDirectionActivity extends BaseActionBarActivity
                 switch (accion){
                     case GET_DISTRITOS:
                         if(response.isSuccess()){
-                            listaD = response.getListaD();
+                            listaD = response.getLista();
                             setListDistritos(listaD);
                         }else{
                             Toast.makeText(getApplicationContext(), "Problemas al cargar distritos", Toast.LENGTH_SHORT).show();

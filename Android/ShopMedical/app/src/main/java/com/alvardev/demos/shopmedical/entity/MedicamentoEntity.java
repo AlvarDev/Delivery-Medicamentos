@@ -4,42 +4,38 @@ package com.alvardev.demos.shopmedical.entity;
 import java.io.Serializable;
 
 public class MedicamentoEntity implements Serializable{
-    private String nombre;
-    private String presentacion;
+
+    private String medicamentoxUnidad;
+    private String medicamentoxPresentacion;
     private double precio;
     private int cantidad;
     private boolean selected;
     private boolean restricted;
     private String superId;
 
+    private int codSucursal;
+    private int codMedicamento;
+    private int codCantxPresentacion;
+    private int codUnidad;
+    private String descripcionMedicamento;
+
     public MedicamentoEntity() {
     }
 
-    public MedicamentoEntity(String nombre, String presentacion, double precio,
-                             int cantidad, boolean selected, boolean restricted, String superId) {
-        this.nombre = nombre;
-        this.presentacion = presentacion;
-        this.precio = precio;
-        this.cantidad = cantidad;
-        this.selected = selected;
-        this.restricted = restricted;
-        this.superId = superId;
+    public String getMedicamentoxUnidad() {
+        return medicamentoxUnidad;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setMedicamentoxUnidad(String medicamentoxUnidad) {
+        this.medicamentoxUnidad = medicamentoxUnidad;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getMedicamentoxPresentacion() {
+        return medicamentoxPresentacion;
     }
 
-    public String getPresentacion() {
-        return presentacion;
-    }
-
-    public void setPresentacion(String presentacion) {
-        this.presentacion = presentacion;
+    public void setMedicamentoxPresentacion(String medicamentoxPresentacion) {
+        this.medicamentoxPresentacion = medicamentoxPresentacion;
     }
 
     public double getPrecio() {
@@ -82,16 +78,61 @@ public class MedicamentoEntity implements Serializable{
         this.superId = superId;
     }
 
+    public int getCodSucursal() {
+        return codSucursal;
+    }
+
+    public void setCodSucursal(int codSucursal) {
+        this.codSucursal = codSucursal;
+    }
+
+    public int getCodMedicamento() {
+        return codMedicamento;
+    }
+
+    public void setCodMedicamento(int codMedicamento) {
+        this.codMedicamento = codMedicamento;
+    }
+
+    public int getCodCantxPresentacion() {
+        return codCantxPresentacion;
+    }
+
+    public void setCodCantxPresentacion(int codCantxPresentacion) {
+        this.codCantxPresentacion = codCantxPresentacion;
+    }
+
+    public int getCodUnidad() {
+        return codUnidad;
+    }
+
+    public void setCodUnidad(int codUnidad) {
+        this.codUnidad = codUnidad;
+    }
+
+    public String getDescripcionMedicamento() {
+        return descripcionMedicamento;
+    }
+
+    public void setDescripcionMedicamento(String descripcionMedicamento) {
+        this.descripcionMedicamento = descripcionMedicamento;
+    }
+
     @Override
     public String toString() {
         return "MedicamentoEntity{" +
-                "nombre='" + nombre + '\'' +
-                ", presentacion='" + presentacion + '\'' +
+                "medicamentoxUnidad='" + medicamentoxUnidad + '\'' +
+                ", medicamentoxPresentacion='" + medicamentoxPresentacion + '\'' +
                 ", precio=" + precio +
                 ", cantidad=" + cantidad +
                 ", selected=" + selected +
                 ", restricted=" + restricted +
                 ", superId='" + superId + '\'' +
+                ", codSucursal=" + codSucursal +
+                ", codMedicamento=" + codMedicamento +
+                ", codCantxPresentacion=" + codCantxPresentacion +
+                ", codUnidad=" + codUnidad +
+                ", descripcionMedicamento='" + descripcionMedicamento + '\'' +
                 '}';
     }
 }

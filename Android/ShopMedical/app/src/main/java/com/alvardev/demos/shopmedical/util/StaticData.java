@@ -36,7 +36,7 @@ public class StaticData {
 
 
 
-    public static List<MedicamentoEntity> getMedicamentos(){
+    /*public static List<MedicamentoEntity> getMedicamentos(){
         List<MedicamentoEntity> medicamentos = new ArrayList<MedicamentoEntity>();
 
         medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false,"0001"));
@@ -50,7 +50,7 @@ public class StaticData {
         medicamentos.add(new MedicamentoEntity("Apronax 550mg", "tableta", 10.00, 0, false, false,"0009"));
 
         return medicamentos;
-    }
+    }*/
 
     public static List<OptionEntity> getOptionsList(){
         List<OptionEntity> options = new ArrayList<OptionEntity>();

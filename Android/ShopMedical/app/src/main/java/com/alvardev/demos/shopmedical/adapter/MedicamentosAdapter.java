@@ -59,7 +59,7 @@ public class MedicamentosAdapter extends BaseAdapter {
         MedicamentoEntity medicamento = (MedicamentoEntity) getItem(position);
 
 
-        holder.nombre.setText(medicamento.getNombre());
+        holder.nombre.setText(medicamento.getMedicamentoxUnidad());
 
         if(medicamento.isSelected()){
             holder.nombre.setTextColor(context.getResources().getColor(R.color.verde));
@@ -87,8 +87,8 @@ public class MedicamentosAdapter extends BaseAdapter {
 
 
         holder.cantidad.setText(""+medicamento.getCantidad());
-        holder.precio.setText(""+medicamento.getPrecio());
-        holder.presentacion.setText(medicamento.getPresentacion());
+        holder.precio.setText("S/. "+medicamento.getPrecio());
+        holder.presentacion.setText(medicamento.getMedicamentoxPresentacion()+"");
 
 
         return convertView;
