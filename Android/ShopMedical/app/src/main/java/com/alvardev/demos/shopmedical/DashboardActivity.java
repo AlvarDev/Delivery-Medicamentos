@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.adapter.OptionsDashboardAdapter;
+import com.alvardev.demos.shopmedical.entity.DireccionEntity;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
 import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
@@ -248,8 +249,12 @@ public class DashboardActivity extends BaseActionBarActivity
     }
 
     @Override
-    public void goToSearchResult() {
-        new ChangeFragmentsTask(null).execute(StaticData.SEARCH_RESULT);
+    public void goToSearchResult(DireccionEntity direccion) {
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("direccion",direccion);
+        getSupportActionBar().setTitle("Pedido para: "+direccion.getNombre());
+        new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
     }
 
 

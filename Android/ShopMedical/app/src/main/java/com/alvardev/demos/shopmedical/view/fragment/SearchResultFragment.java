@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.adapter.MedicamentosAdapter;
+import com.alvardev.demos.shopmedical.entity.DireccionEntity;
 import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
@@ -46,6 +47,8 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
     @InjectView(R.id.btnGenerico) Button btnGenerico;
     @InjectView(R.id.viewGenerico) View viewGenerico;
 
+    private DireccionEntity direction;
+
     public static SearchResultFragment newInstance(String param1, String param2) {
         SearchResultFragment fragment = new SearchResultFragment();
         Bundle args = new Bundle();
@@ -63,8 +66,10 @@ public class SearchResultFragment extends Fragment implements PedidoInterface{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //mParam1 = getArguments().getString(ARG_PARAM1);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
+            direction = (DireccionEntity) getArguments().getSerializable("direccion");
+            Log.i(TAG, "direction: "+direction.toString());
         }
     }
 

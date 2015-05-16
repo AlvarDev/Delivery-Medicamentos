@@ -99,7 +99,7 @@ public class BuscarMedicamentoFragment extends Fragment {
         }
     }
 
-    private void showDirecciones(List<DireccionEntity> direcciones){
+    private void showDirecciones(final List<DireccionEntity> direcciones){
         String[] directionName = new String[direcciones.size()];
 
         for(int i=0; i<direcciones.size();i++){
@@ -109,7 +109,8 @@ public class BuscarMedicamentoFragment extends Fragment {
         lviDirection.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Log.i(TAG,"pos: "+position);
+                Log.i(TAG, "pos: " + position);
+                mListener.goToSearchResult(direcciones.get(position));
             }
         });
     }

@@ -50,6 +50,7 @@ public class PedidoDialogFragment extends DialogFragment {
         np.setWrapSelectorWheel(false);
         np.setDisplayedValues(nums);
         np.setValue(0);
+        np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         np.setOnValueChangedListener(( new NumberPicker.
                 OnValueChangeListener() {
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {

@@ -59,9 +59,11 @@ public class MedicamentosAdapter extends BaseAdapter {
         holder.nombre.setText(medicamento.getNombre());
         if(medicamento.isSelected()){
             holder.nombre.setTextColor(context.getResources().getColor(R.color.verde));
+            holder.cantidad.setTextColor(context.getResources().getColor(R.color.verde));
             holder.carrito.setImageResource(R.drawable.added);
         }else{
             holder.nombre.setTextColor(context.getResources().getColor(R.color.txt_color));
+            holder.cantidad.setTextColor(context.getResources().getColor(R.color.txt_color));
             holder.carrito.setImageResource(R.drawable.add);
         }
 
