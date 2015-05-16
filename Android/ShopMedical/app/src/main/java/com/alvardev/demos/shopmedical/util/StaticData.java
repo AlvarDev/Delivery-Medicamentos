@@ -22,6 +22,8 @@ public class StaticData {
     public static final int ACTUALIZAR_INFORMACION = 6;
     public static final int CERRAR_SESION = 7;
 
+    public static final String NAME_PREFERENCE = "com.alvardev.demos.shopmedical.preferences";
+
 
 
     public static List<MedicamentoEntity> getMedicamentos(){

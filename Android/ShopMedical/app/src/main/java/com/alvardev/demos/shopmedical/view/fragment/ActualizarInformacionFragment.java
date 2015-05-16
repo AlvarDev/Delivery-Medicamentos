@@ -20,6 +20,7 @@ import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.http.HttpMethod;
 import com.alvardev.demos.shopmedical.http.RestJsonService;
+import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.google.gson.Gson;
 
@@ -32,7 +33,6 @@ public class ActualizarInformacionFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String NAME_PREFERENCE = "com.alvardev.demos.shopmedical.preferences";
     private static final String TAG = "UpdateFragment";
 
     private String mParam1;
@@ -170,8 +170,7 @@ public class ActualizarInformacionFragment extends Fragment {
     }
 
     public String getPreference(String llave) {
-
-        SharedPreferences preferencias = getActivity().getSharedPreferences(NAME_PREFERENCE, Activity.MODE_PRIVATE);
+        SharedPreferences preferencias = getActivity().getSharedPreferences(StaticData.NAME_PREFERENCE, Activity.MODE_PRIVATE);
         return preferencias.getString(llave, "");
     }
 

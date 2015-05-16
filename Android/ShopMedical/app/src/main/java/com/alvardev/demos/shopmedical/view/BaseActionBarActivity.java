@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.alvardev.demos.shopmedical.http.HttpMethod;
 import com.alvardev.demos.shopmedical.http.RestJsonService;
+import com.alvardev.demos.shopmedical.util.StaticData;
 
 import org.json.JSONObject;
 
@@ -17,7 +18,6 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
 
     private boolean doingRest;
     private ResultReceiver resultReceiver;
-    private static final String NAME_PREFERENCE = "com.alvardev.demos.shopmedical.preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,13 +108,13 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
 
     public String getPreference(String llave) {
 
-        SharedPreferences preferencias = this.getSharedPreferences(NAME_PREFERENCE, MODE_PRIVATE);
+        SharedPreferences preferencias = this.getSharedPreferences(StaticData.NAME_PREFERENCE, MODE_PRIVATE);
         return preferencias.getString(llave, "");
     }
 
     public void savePreference(String llave, String valor) {
 
-        SharedPreferences preferencias = this.getSharedPreferences(NAME_PREFERENCE, MODE_PRIVATE);
+        SharedPreferences preferencias = this.getSharedPreferences(StaticData.NAME_PREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString(llave, valor);
         editor.apply();

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="url_login">http://farmacia.jelasticlw.com.br/loginAndroid</string>
-    <string name="url_get_distritos">http://farmacia.jelasticlw.com.br/distrito</string>
-    <string name="url_get_dni">http://farmacia.jelasticlw.com.br/validaDNI?dni=</string>
-    <string name="url_post_register">http://farmacia.jelasticlw.com.br/regUserA</string>
-    <string name="url_update_user">http://farmacia.jelasticlw.com.br/editUserA</string>
+    <string name="url_login">http://farmaciaa.jelasticlw.com.br/loginAndroid</string>
+    <string name="url_get_distritos">http://farmaciaa.jelasticlw.com.br/distrito</string>
+    <string name="url_get_dni">http://farmaciaa.jelasticlw.com.br/validaDNI?dni=</string>
+    <string name="url_post_register">http://farmaciaa.jelasticlw.com.br/regUserA</string>
+    <string name="url_update_user">http://farmaciaa.jelasticlw.com.br/editUserA</string>
 </resources>

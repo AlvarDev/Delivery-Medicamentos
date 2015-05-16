@@ -1,10 +1,51 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.alvardev.demos.shopmedical.view.fragment.CarritoComprasFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="carrito compras" />
+    <TextView
+        android:id="@+id/eteCarritoVacio"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/s_carrito_vacio"
+        android:visibility="gone"/>
 
-</FrameLayout>
+    <ListView
+        android:id="@+id/lviItemsAdded"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:scrollbars="none"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@color/plomo"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/s_incluye_igv"
+            android:textColor="@color/rojo"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:gravity="end"/>
+
+
+
+    </LinearLayout>
+</LinearLayout>

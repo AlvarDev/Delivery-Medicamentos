@@ -14,6 +14,8 @@
     <string name="h_usuario">Usuario</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_activity_forget_password">Damm</string>
+    <string name="title_activity_add_direction">AddDirectionActivity</string>
 
     <string name="temp_user">sandysv</string>
     <string name="temp_pas">sistemas</string>
@@ -30,9 +32,11 @@
     <string name="s_nombre_razon_social">Nombre/Razón Social</string>
     <string name="s_direccion">*Dirección</string>
     <string name="s_distrito">*Distrito</string>
+    <string name="s_mapa">*Mapa</string>
     <string name="s_correo">*Correo</string>
     <string name="s_celular">*Teléfono Celular</string>
     <string name="btn_save">Guardar</string>
+    <string name="s_referencia">Referencia</string>
     <string-array name="distritos">
         <item>Seleccionar</item>
         <item>Breña</item>
@@ -66,12 +70,15 @@
     <!-- Buscar Medicamento -->
     <string name="s_mayor_presicion">Para una mejor precisión en nuestra busqueda por favor indiquenos hacia donde va el pedido</string>
     <string name="b_ubicacion_actual">Usar mi ubicación actual</string>
-
     <string name="action_search">¿Qué necesitas?</string>
     <string name="s_buscar">Buscar</string>
+    <string name="b_agregar_direccion">Agregar Dirección</string>
+    <string name="s_mis_direcciones">Mis Direcciones:</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_forget_password">ForgetPasswordActivity</string>
+    <!--Carrito de Compras-->
+    <string name="s_carrito_vacio">Carrito de Compras Vacío</string>
+    <string name="s_incluye_igv">*Montos incluyen IGV </string>
+
+
 
 </resources>

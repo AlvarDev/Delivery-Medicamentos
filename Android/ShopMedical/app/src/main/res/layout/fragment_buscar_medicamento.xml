@@ -1,24 +1,44 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp"
     tools:context="com.alvardev.demos.shopmedical.view.fragment.BuscarMedicamentoFragment">
 
 
     <TextView
+        android:id="@+id/tviHelp"
         style="@style/TextViewStyle"
         android:gravity="center"
         android:layout_marginBottom="16dp"
         android:text="@string/s_mayor_presicion"/>
 
+    <TextView
+        android:id="@+id/tvuTitleDir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_blue_dark"
+        android:text="@string/s_mis_direcciones"
+        android:padding="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_below="@+id/tviHelp"/>
+
+    <ListView
+        android:id="@+id/lviDirection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_below="@+id/tvuTitleDir"
+        android:layout_above="@+id/butAddDirection"/>
+
     <Button
-        android:id="@+id/butTemp"
+        android:id="@+id/butAddDirection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:background="@color/bg_boton"
-        android:text="@string/b_ubicacion_actual" />
+        android:layout_alignParentBottom="true"
+        android:text="@string/b_agregar_direccion" />
 
-</LinearLayout>
+</RelativeLayout>
