@@ -73,4 +73,12 @@
 
     </LinearLayout>
 
+    <include
+        android:id="@+id/rlayLoading"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        layout="@layout/layout_loading"
+        android:visibility="gone"
+        android:focusableInTouchMode="true"/>
+
 </RelativeLayout>

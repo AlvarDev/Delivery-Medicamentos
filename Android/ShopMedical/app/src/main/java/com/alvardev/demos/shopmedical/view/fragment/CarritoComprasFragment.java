@@ -142,9 +142,9 @@ public class CarritoComprasFragment extends Fragment {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 String efec = eteEfectivo.getText().toString();
-                if(!efec.isEmpty()){
+                if (!efec.isEmpty()) {
                     double efectivo = Double.parseDouble(efec);
-                    eteVuelto.setText(""+(efectivo-total));
+                    eteVuelto.setText("" + (efectivo - total));
                 }
 
                 return false;
@@ -168,6 +168,11 @@ public class CarritoComprasFragment extends Fragment {
 
         if(total == 0){
             Toast.makeText(getActivity(), "Ingrese medicamentos" , Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(total<25){
+            Toast.makeText(getActivity(), "Monto minimo de S/. 25.00" , Toast.LENGTH_LONG).show();
             return false;
         }
 

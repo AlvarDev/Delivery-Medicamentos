@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,9 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class DashboardActivity extends BaseActionBarActivity
         implements SesionDialogInterface, DashboardInterface, PedidoDialogFragment.PedidoDialogListener{
 
@@ -60,6 +64,8 @@ public class DashboardActivity extends BaseActionBarActivity
     private UserEntity user;
     private UserEntity userTemp;
     private String carString;
+
+    @InjectView(R.id.rlayLoading) View rlayLoading;
 
     private SearchResultFragment searchResultFragment = SearchResultFragment.newInstance(null,null);
     private BuscarMedicamentoFragment buscarMedicamentoFragment = BuscarMedicamentoFragment.newInstance(null,null);
@@ -75,6 +81,8 @@ public class DashboardActivity extends BaseActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         getSupportActionBar().setTitle("Buscar Medicamento");
+        ButterKnife.inject(this);
+
         String userString = getPreference("user");
         user = new Gson().fromJson(userString, UserEntity.class);
         carString = getPreference("car");
@@ -128,27 +136,37 @@ public class DashboardActivity extends BaseActionBarActivity
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            carString = getPreference("car");
-            if(position == StaticData.CERRAR_SESION){
-                Dialog dialogOk = new CustomDialog().cerrarSesionDialog(DashboardActivity.this);
-                dialogOk.show();
-            }else if(position == StaticData.BUSCAR_MEDICAMENTO && !carString.isEmpty()){
 
-                CarEntity car = new Gson().fromJson(carString, CarEntity.class);
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("car",car);
-                new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
-            }else if(position == StaticData.PEDIDOS_EN_PROCESO){
-                Bundle bundle = new Bundle();
-                bundle.putInt("typePedido", StaticData.PEDIDOS_EN_PROCESO);
-                new ChangeFragmentsTask(bundle).execute(StaticData.PEDIDOS_EN_PROCESO);
-            }else if(position == StaticData.HISTORIAL_DE_PEDIDO){
-                Bundle bundle = new Bundle();
-                bundle.putInt("typePedido", StaticData.HISTORIAL_DE_PEDIDO);
-                new ChangeFragmentsTask(bundle).execute(StaticData.HISTORIAL_DE_PEDIDO);
+            Log.i(TAG,"currentSelected: "+currentSelected);
+            Log.i(TAG,"pos: "+position);
+
+            if(currentSelected != position-1){
+                        carString = getPreference("car");
+                if (position == StaticData.CERRAR_SESION) {
+                    Dialog dialogOk = new CustomDialog().cerrarSesionDialog(DashboardActivity.this);
+                    dialogOk.show();
+                } else if (position == StaticData.BUSCAR_MEDICAMENTO && !carString.isEmpty()) {
+
+                    CarEntity car = new Gson().fromJson(carString, CarEntity.class);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("car", car);
+                    new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
+                } else if (position == StaticData.PEDIDOS_EN_PROCESO) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("typePedido", StaticData.PEDIDOS_EN_PROCESO);
+                    new ChangeFragmentsTask(bundle).execute(StaticData.PEDIDOS_EN_PROCESO);
+                } else if (position == StaticData.HISTORIAL_DE_PEDIDO) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("typePedido", StaticData.HISTORIAL_DE_PEDIDO);
+                    new ChangeFragmentsTask(bundle).execute(StaticData.HISTORIAL_DE_PEDIDO);
+                } else {
+                    new ChangeFragmentsTask(null).execute(position);
+                }
+
             }else{
-                new ChangeFragmentsTask(null).execute(position);
+                mDrawerLayout.closeDrawer(mDrawerList);
             }
         }
     }
@@ -272,6 +290,8 @@ public class DashboardActivity extends BaseActionBarActivity
                     new JSONObject(new Gson().toJson(userTemp)),
                     StaticData.ACTUALIZAR_INFORMACION);
 
+            rlayLoading.setVisibility(View.VISIBLE);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -282,6 +302,7 @@ public class DashboardActivity extends BaseActionBarActivity
     public void searchMedicine(String text, String sucursal) {
         connectGet(getString(R.string.url_search)+"codSucursal="+sucursal+
                 "&medicamento="+text, StaticData.SEARCH_RESULT);
+        rlayLoading.setVisibility(View.VISIBLE);
     }
 
 
@@ -289,6 +310,7 @@ public class DashboardActivity extends BaseActionBarActivity
     protected void onRESTResultado(int code, String result, int accion) {
 
         HttpCode codigo = HttpCode.forValue(code);
+        rlayLoading.setVisibility(View.GONE);
 
         switch (codigo) {
             case OK:
@@ -354,7 +376,9 @@ public class DashboardActivity extends BaseActionBarActivity
             case StaticData.BOLETA:
                 Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
                 savePreference("car", null);
-                new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
+                Bundle bundle = new Bundle();
+                bundle.putInt("typePedido", StaticData.PEDIDOS_EN_PROCESO);
+                new ChangeFragmentsTask(bundle).execute(StaticData.PEDIDOS_EN_PROCESO);
                 break;
             case StaticData.FACTURA:
                 Intent intent = new Intent(this, RUCActivity.class);
@@ -372,7 +396,9 @@ public class DashboardActivity extends BaseActionBarActivity
             Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
             savePreference("car", null);
             savePreference("doneRUC",null);
-            new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
+            Bundle bundle = new Bundle();
+            bundle.putInt("typePedido", StaticData.PEDIDOS_EN_PROCESO);
+            new ChangeFragmentsTask(bundle).execute(StaticData.PEDIDOS_EN_PROCESO);
         }
     }
 }

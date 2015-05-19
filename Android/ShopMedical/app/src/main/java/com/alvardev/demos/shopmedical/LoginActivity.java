@@ -30,6 +30,7 @@ public class LoginActivity extends BaseActionBarActivity {
     @InjectView(R.id.eteUser) EditText eteUser;
     @InjectView(R.id.etePassword) EditText etePassword;
     @InjectView(R.id.btnForgetPass) Button btnForgetPass;
+    @InjectView(R.id.rlayLoading) View rlayLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class LoginActivity extends BaseActionBarActivity {
 
                 try {
                     connectPost(getString(R.string.url_login), new JSONObject(new Gson().toJson(login)), 100);
+                    rlayLoading.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -107,6 +109,7 @@ public class LoginActivity extends BaseActionBarActivity {
     protected void onRESTResultado(int code, String result, int accion) {
 
         HttpCode codigo = HttpCode.forValue(code);
+        rlayLoading.setVisibility(View.GONE);
 
         switch (codigo) {
             case OK:
