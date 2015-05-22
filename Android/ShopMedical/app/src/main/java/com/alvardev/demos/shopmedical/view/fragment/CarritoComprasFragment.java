@@ -94,7 +94,7 @@ public class CarritoComprasFragment extends Fragment {
         tviTotal.setText("Precio Total S/.00.00");
         if(!carString.isEmpty()){
             final CarEntity car = new Gson().fromJson(carString, CarEntity.class);
-            final List<MedicamentoEntity> medicamentos = car.getMedicamentos();
+            final List<MedicamentoEntity> medicamentos = car.getDetalle();
 
             setTotal(medicamentos);
             adapter =  new MedicamentosAdapter(getActivity(), medicamentos, StaticData.CARRITO_DE_COMPRAS);
@@ -110,7 +110,7 @@ public class CarritoComprasFragment extends Fragment {
                             if(medicamentos.size()==0){
                                 savePreference("car", null);
                             }else{
-                                car.setMedicamentos(medicamentos);
+                                car.setDetalle(medicamentos);
                                 savePreference("car", new Gson().toJson(car));
                             }
                             adapter.notifyDataSetChanged();

@@ -29,7 +29,6 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
     private String mParam1;
     private String mParam2;
 
-    private int typePedido;
 
     @InjectView(R.id.lviPedidos) ListView lviPedidos;
 
@@ -50,9 +49,9 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
-            typePedido = getArguments().getInt("typePedido");
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -68,20 +67,6 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        //List<PedidoEntity> pedidos = new ArrayList<PedidoEntity>();
-        //switch (typePedido){
-        //    case StaticData.PEDIDOS_EN_PROCESO:
-                //pedidos = StaticData.getPedidosPendientes();
-        //        break;
-        //    case StaticData.HISTORIAL_DE_PEDIDO:
-                //pedidos = StaticData.getHistorialPedido();
-        //        break;
-        //}
-
-       // PedidosAdapter adapter = new PedidosAdapter(getActivity(), pedidos);
-       // lviPedidos.setAdapter(adapter);
-
     }
 
     @Override
@@ -93,13 +78,6 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
 
     @Override
     public void getPedidosHis(List<PedidoEntity> pedidos) {
-
-        if(pedidos==null){
-            Log.i(TAG,"it's null");
-        }else{
-            Log.i(TAG,"it's not null");
-        }
-
 
         PedidosAdapter adapter = new PedidosAdapter(getActivity(), pedidos, StaticData.HISTORIAL_DE_PEDIDO);
         lviPedidos.setAdapter(adapter);

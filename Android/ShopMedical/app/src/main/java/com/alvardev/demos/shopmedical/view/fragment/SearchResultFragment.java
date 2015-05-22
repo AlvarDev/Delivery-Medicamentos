@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,7 +102,7 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
     private void setResultList(List<MedicamentoEntity> medi){
         medicamentos = medi;
 
-        List<MedicamentoEntity> medicines = car.getMedicamentos();
+        List<MedicamentoEntity> medicines = car.getDetalle();
 
         for(MedicamentoEntity med : medicines){
             for(int i=0; i<medicamentos.size();i++){
@@ -153,6 +154,15 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
             }
         });
 
+        eteText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+
+                return false;
+            }
+        });
+
         iviBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,7 +207,7 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
         this.medicamentos.get(position).setSelected(cantidad != 0);
 
         String superId = this.medicamentos.get(position).getSuperId();
-        List<MedicamentoEntity> medicamentos = car.getMedicamentos();
+        List<MedicamentoEntity> medicamentos = car.getDetalle();
         boolean agregar = true;
 
         for(int i=0; i<medicamentos.size();i++){
@@ -219,7 +229,7 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
         if(medicamentos.size()==0){
             savePreference("car", null);
         }else {
-            car.setMedicamentos(medicamentos);
+            car.setDetalle(medicamentos);
             savePreference("car", new Gson().toJson(car));
         }
         Log.i(TAG,"car: "+car.toString());

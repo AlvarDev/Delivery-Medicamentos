@@ -6,35 +6,34 @@ import java.util.List;
 
 public class CarEntity implements Serializable{
 
-    private DireccionEntity direction;
-    private List<MedicamentoEntity> medicamentos;
+    private PedidoHeaderEntity pedido;
+    private List<MedicamentoEntity> detalle;
 
     public CarEntity() {
-        this.medicamentos = new ArrayList<MedicamentoEntity>();
+        this.detalle = new ArrayList<MedicamentoEntity>();
     }
 
-    public DireccionEntity getDirection() {
-        return direction;
+    public PedidoHeaderEntity getPedido() {
+        return pedido;
     }
 
-    public void setDirection(DireccionEntity direction) {
-        this.direction = direction;
+    public void setPedido(PedidoHeaderEntity pedido) {
+        this.pedido = pedido;
     }
 
-    public List<MedicamentoEntity> getMedicamentos() {
-        return medicamentos;
+    public List<MedicamentoEntity> getDetalle() {
+        return detalle;
     }
 
-    public void setMedicamentos(List<MedicamentoEntity> medicamentos) {
-        this.medicamentos = medicamentos;
+    public void setDetalle(List<MedicamentoEntity> detalle) {
+        this.detalle = detalle;
     }
-
 
     @Override
     public String toString() {
         return "CarEntity{" +
-                "direction=" + direction +
-                ", medicamentos=" + medicamentos +
+                "pedido=" + pedido +
+                ", detalle=" + detalle +
                 '}';
     }
 }

@@ -22,6 +22,7 @@ import com.alvardev.demos.shopmedical.adapter.OptionsDashboardAdapter;
 import com.alvardev.demos.shopmedical.entity.CarEntity;
 import com.alvardev.demos.shopmedical.entity.DireccionEntity;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
+import com.alvardev.demos.shopmedical.entity.PedidoHeaderEntity;
 import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
 import com.alvardev.demos.shopmedical.entity.response.ResponsePedido;
@@ -47,6 +48,8 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -120,8 +123,8 @@ public class DashboardActivity extends BaseActionBarActivity
         );
 
         if (savedInstanceState == null) {
-            currentSelected = StaticData.BUSCAR_MEDICAMENTO;
-            if(!carString.isEmpty()){
+            currentSelected = StaticData.SINTOMAS_FRECUENTES;
+            /*if(!carString.isEmpty()){
                 CarEntity car = new Gson().fromJson(carString, CarEntity.class);
 
                 Bundle bundle = new Bundle();
@@ -129,7 +132,8 @@ public class DashboardActivity extends BaseActionBarActivity
                 new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
             }else {
                 new ChangeFragmentsTask(null).execute(StaticData.BUSCAR_MEDICAMENTO);
-            }
+            }*/
+            new ChangeFragmentsTask(null).execute(StaticData.SINTOMAS_FRECUENTES);
         }
     }
 
@@ -158,6 +162,8 @@ public class DashboardActivity extends BaseActionBarActivity
                             CarEntity car = new Gson().fromJson(carString, CarEntity.class);
                             bundle.putSerializable("car", car);
                             new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
+                        }else{
+                            new ChangeFragmentsTask(null).execute(position);
                         }
                         break;
 
@@ -311,9 +317,19 @@ public class DashboardActivity extends BaseActionBarActivity
 
     @Override
     public void searchMedicine(String text, String sucursal) {
-        connectGet(getString(R.string.url_search)+"codSucursal="+sucursal+
-                "&medicamento="+text, StaticData.SEARCH_RESULT);
-        rlayLoading.setVisibility(View.VISIBLE);
+        try {
+            String query = URLEncoder.encode(text, "utf-8");
+            connectGet(getString(R.string.url_search)+"codSucursal="+sucursal+
+                    "&medicamento="+query, StaticData.SEARCH_RESULT);
+            rlayLoading.setVisibility(View.VISIBLE);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),
+                    "Problemas al realizar la búsqueda",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     @Override
@@ -401,7 +417,19 @@ public class DashboardActivity extends BaseActionBarActivity
     @Override
     public void goToSearchResult(DireccionEntity direccion) {
         CarEntity car = new CarEntity();
-        car.setDirection(direccion);
+        PedidoHeaderEntity header = new PedidoHeaderEntity();
+
+        header.setCodEstadoPedido(2);
+        header.setCodPedido("");
+        header.setCodPersona(user.getCodPersona());
+        header.setCodUsuario(user.getCodUsuario());
+        header.setFechaPedido("");
+        header.setHoraPedido("");
+        header.setMontoTotal(0);
+        header.setMontoCancelar(0);
+        header.setTipoComprobante("");
+        header.setRuc("");
+        car.setPedido(header);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("car",car);

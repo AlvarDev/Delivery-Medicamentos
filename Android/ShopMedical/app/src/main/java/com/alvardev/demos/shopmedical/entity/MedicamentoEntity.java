@@ -13,6 +13,7 @@ public class MedicamentoEntity implements Serializable{
     private boolean restricted;
     private String superId;
 
+    private String codPedido;
     private int codSucursal;
     private int codMedicamento;
     private int codCantxPresentacion;
@@ -20,6 +21,14 @@ public class MedicamentoEntity implements Serializable{
     private String descripcionMedicamento;
 
     public MedicamentoEntity() {
+    }
+
+    public String getCodPedido() {
+        return codPedido;
+    }
+
+    public void setCodPedido(String codPedido) {
+        this.codPedido = codPedido;
     }
 
     public String getMedicamentoxUnidad() {
@@ -128,6 +137,7 @@ public class MedicamentoEntity implements Serializable{
                 ", selected=" + selected +
                 ", restricted=" + restricted +
                 ", superId='" + superId + '\'' +
+                ", codPedido='" + codPedido + '\'' +
                 ", codSucursal=" + codSucursal +
                 ", codMedicamento=" + codMedicamento +
                 ", codCantxPresentacion=" + codCantxPresentacion +
