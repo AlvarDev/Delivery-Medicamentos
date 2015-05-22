@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +24,7 @@ import com.alvardev.demos.shopmedical.entity.DireccionEntity;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
 import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
+import com.alvardev.demos.shopmedical.entity.response.ResponsePedido;
 import com.alvardev.demos.shopmedical.entity.response.ResponseSearch;
 import com.alvardev.demos.shopmedical.http.HttpCode;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
@@ -39,6 +39,7 @@ import com.alvardev.demos.shopmedical.view.fragment.SearchResultFragment;
 import com.alvardev.demos.shopmedical.view.fragment.SintomasFrecuentesFragment;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.PedidoInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.PedidosInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SearchInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
 import com.google.gson.Gson;
@@ -142,28 +143,41 @@ public class DashboardActivity extends BaseActionBarActivity
             Log.i(TAG,"pos: "+position);
 
             if(currentSelected != position-1){
-                        carString = getPreference("car");
-                if (position == StaticData.CERRAR_SESION) {
-                    Dialog dialogOk = new CustomDialog().cerrarSesionDialog(DashboardActivity.this);
-                    dialogOk.show();
-                } else if (position == StaticData.BUSCAR_MEDICAMENTO && !carString.isEmpty()) {
 
-                    CarEntity car = new Gson().fromJson(carString, CarEntity.class);
+                carString = getPreference("car");
+                Bundle bundle = new Bundle();
 
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("car", car);
-                    new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
-                } else if (position == StaticData.PEDIDOS_EN_PROCESO) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("typePedido", StaticData.PEDIDOS_EN_PROCESO);
-                    new ChangeFragmentsTask(bundle).execute(StaticData.PEDIDOS_EN_PROCESO);
-                } else if (position == StaticData.HISTORIAL_DE_PEDIDO) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("typePedido", StaticData.HISTORIAL_DE_PEDIDO);
-                    new ChangeFragmentsTask(bundle).execute(StaticData.HISTORIAL_DE_PEDIDO);
-                } else {
-                    new ChangeFragmentsTask(null).execute(position);
+                switch (position){
+                    case StaticData.CERRAR_SESION:
+                        Dialog dialogOk = new CustomDialog().cerrarSesionDialog(DashboardActivity.this);
+                        dialogOk.show();
+                        break;
+
+                    case StaticData.BUSCAR_MEDICAMENTO:
+                        if(!carString.isEmpty()){
+                            CarEntity car = new Gson().fromJson(carString, CarEntity.class);
+                            bundle.putSerializable("car", car);
+                            new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
+                        }
+                        break;
+
+                    case StaticData.PEDIDOS_EN_PROCESO:
+                        rlayLoading.setVisibility(View.VISIBLE);
+                        connectGet(getString(R.string.url_get_pedidos_proceso) + "9", StaticData.PEDIDOS_EN_PROCESO);
+                        new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
+                        break;
+
+                    case StaticData.HISTORIAL_DE_PEDIDO:
+                        rlayLoading.setVisibility(View.VISIBLE);
+                        connectGet(getString(R.string.url_get_pedido_historial)+"9",StaticData.HISTORIAL_DE_PEDIDO);
+                        new ChangeFragmentsTask(null).execute(StaticData.HISTORIAL_DE_PEDIDO);
+                        break;
+
+                    default:
+                        new ChangeFragmentsTask(null).execute(position);
+                        break;
                 }
+
 
             }else{
                 mDrawerLayout.closeDrawer(mDrawerList);
@@ -182,7 +196,6 @@ public class DashboardActivity extends BaseActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         return mDrawerToggle.onOptionsItemSelected(item);
     }
-
 
     private class ChangeFragmentsTask extends AsyncTask<Integer, Integer, Boolean> {
         private Bundle bundle;
@@ -234,13 +247,13 @@ public class DashboardActivity extends BaseActionBarActivity
                 break;
         }
     }
+
     private void changeFragment(Bundle args, Fragment fragment) {
         if (args != null) fragment.setArguments(args);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
 
     }
-
 
     private void closeDrawer(int position){
         position = position > 0 ? position-1:0;
@@ -277,8 +290,6 @@ public class DashboardActivity extends BaseActionBarActivity
 
     }
 
-
-
     @Override
     public void updateInformation(UserEntity user){
 
@@ -304,7 +315,6 @@ public class DashboardActivity extends BaseActionBarActivity
                 "&medicamento="+text, StaticData.SEARCH_RESULT);
         rlayLoading.setVisibility(View.VISIBLE);
     }
-
 
     @Override
     protected void onRESTResultado(int code, String result, int accion) {
@@ -333,9 +343,42 @@ public class DashboardActivity extends BaseActionBarActivity
                     case StaticData.SEARCH_RESULT:
                         ResponseSearch responseSearch = new Gson().fromJson(result, ResponseSearch.class);
                         if(responseSearch.isSuccess()){
-                            SearchInterface mListener  =  (SearchInterface) searchResultFragment;
+                            SearchInterface mListener  = searchResultFragment;
                             mListener.getResultSearch(responseSearch.getLista());
+                        }else{
+                            Toast.makeText(getApplicationContext(),
+                                    responseSearch.getMensaje(),
+                                    Toast.LENGTH_SHORT).show();
                         }
+                        break;
+                    case StaticData.PEDIDOS_EN_PROCESO:
+
+                        ResponsePedido responsePedidoPro = new Gson().fromJson(result, ResponsePedido.class);
+                        if(responsePedidoPro.isSuccess()){
+                            PedidosInterface mListener  = pedidosProcesoFragment;
+                            mListener.getPedidosPro(responsePedidoPro.getLista());
+                        }else{
+                            Toast.makeText(getApplicationContext(),
+                                    responsePedidoPro.getMensaje(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        break;
+
+                    case StaticData.HISTORIAL_DE_PEDIDO:
+
+                        //Log.i(TAG,"[H]Result: "+result);
+
+                        ResponsePedido responsePedidoHis = new Gson().fromJson(result, ResponsePedido.class);
+                        if(responsePedidoHis.isSuccess()){
+                            PedidosInterface mListener  = historialPedidosFragment;
+                            mListener.getPedidosHis(responsePedidoHis.getLista());
+                        }else{
+                            Toast.makeText(getApplicationContext(),
+                                    responsePedidoHis.getMensaje(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
                         break;
                 }
                 break;
@@ -354,7 +397,6 @@ public class DashboardActivity extends BaseActionBarActivity
         }
 
     }
-
 
     @Override
     public void goToSearchResult(DireccionEntity direccion) {

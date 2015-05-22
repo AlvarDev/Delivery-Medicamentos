@@ -20,10 +20,12 @@ public class PedidosAdapter extends BaseAdapter {
 
     private Context context;
     private List<PedidoEntity> pedidos;
+    private int tipoPedido;
 
-    public PedidosAdapter(Context context, List<PedidoEntity> pedidos) {
+    public PedidosAdapter(Context context, List<PedidoEntity> pedidos, int tipoPedido) {
         this.context = context;
         this.pedidos = pedidos;
+        this.tipoPedido = tipoPedido;
     }
 
     /*private view holder class*/
@@ -55,24 +57,24 @@ public class PedidosAdapter extends BaseAdapter {
         PedidoEntity pedido = (PedidoEntity) getItem(position);
 
 
-        holder.nro.setText("Nro Pedido "+pedido.getNro());
-        holder.fecha.setText(pedido.getFecha());
+        holder.nro.setText("Nro Pedido "+pedido.getCodPedido());
+        holder.fecha.setText(pedido.getFechaPedido()+" "+pedido.getHoraPedido());
 
 
-        switch (pedido.getTipoPedido()){
+        switch (tipoPedido){
             case StaticData.PEDIDOS_EN_PROCESO:
                 holder.imagePedido.setImageResource(R.drawable.cancel);
-                holder.tipoDoc.setText("Comprobante de Pago: " + pedido.getTipoDoc());
+                holder.tipoDoc.setText("Comprobante de Pago: " + pedido.getTipoComprobante());
                 holder.tipoDoc.setTextColor(context.getResources().getColor(R.color.amarillo));
                 break;
             case StaticData.HISTORIAL_DE_PEDIDO:
                 holder.imagePedido.setImageResource(R.drawable.next);
 
-                if(pedido.getEstado() == StaticData.RECIBIDO){
-                    holder.tipoDoc.setText("Estado: Recibido");
+                if(pedido.getCodEstadoPedido() == StaticData.TERMINADO){
+                    holder.tipoDoc.setText("Estado: "+pedido.getDescripcion());
                     holder.tipoDoc.setTextColor(context.getResources().getColor(R.color.amarillo));
                 }else{
-                    holder.tipoDoc.setText("Estado: Cancelado");
+                    holder.tipoDoc.setText("Estado: "+pedido.getDescripcion());
                     holder.tipoDoc.setTextColor(context.getResources().getColor(R.color.rojo));
                 }
                 break;

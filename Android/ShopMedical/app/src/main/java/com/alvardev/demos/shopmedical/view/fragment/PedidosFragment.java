@@ -2,6 +2,7 @@ package com.alvardev.demos.shopmedical.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.adapter.PedidosAdapter;
 import com.alvardev.demos.shopmedical.entity.PedidoEntity;
 import com.alvardev.demos.shopmedical.util.StaticData;
+import com.alvardev.demos.shopmedical.view.interfaces.PedidosInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +20,11 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class PedidosFragment extends Fragment {
+public class PedidosFragment extends Fragment implements PedidosInterface{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "PedidosFragment";
 
     private String mParam1;
     private String mParam2;
@@ -66,18 +69,40 @@ public class PedidosFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        List<PedidoEntity> pedidos = new ArrayList<PedidoEntity>();
-        switch (typePedido){
-            case StaticData.PEDIDOS_EN_PROCESO:
-                pedidos = StaticData.getPedidosPendientes();
-                break;
-            case StaticData.HISTORIAL_DE_PEDIDO:
-                pedidos = StaticData.getHistorialPedido();
-                break;
-        }
+        //List<PedidoEntity> pedidos = new ArrayList<PedidoEntity>();
+        //switch (typePedido){
+        //    case StaticData.PEDIDOS_EN_PROCESO:
+                //pedidos = StaticData.getPedidosPendientes();
+        //        break;
+        //    case StaticData.HISTORIAL_DE_PEDIDO:
+                //pedidos = StaticData.getHistorialPedido();
+        //        break;
+        //}
 
-        PedidosAdapter adapter = new PedidosAdapter(getActivity(), pedidos);
-        lviPedidos.setAdapter(adapter);
+       // PedidosAdapter adapter = new PedidosAdapter(getActivity(), pedidos);
+       // lviPedidos.setAdapter(adapter);
 
     }
+
+    @Override
+    public void getPedidosPro(List<PedidoEntity> pedidos) {
+
+         PedidosAdapter adapter = new PedidosAdapter(getActivity(), pedidos, StaticData.PEDIDOS_EN_PROCESO);
+         lviPedidos.setAdapter(adapter);
+    }
+
+    @Override
+    public void getPedidosHis(List<PedidoEntity> pedidos) {
+
+        if(pedidos==null){
+            Log.i(TAG,"it's null");
+        }else{
+            Log.i(TAG,"it's not null");
+        }
+
+
+        PedidosAdapter adapter = new PedidosAdapter(getActivity(), pedidos, StaticData.HISTORIAL_DE_PEDIDO);
+        lviPedidos.setAdapter(adapter);
+    }
+
 }

@@ -91,7 +91,6 @@
     <orderEntry type="library" exported="" name="play-services-6.5.87" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-20.0.0" level="project" />
-    <orderEntry type="library" exported="" name="volley" level="project" />
     <orderEntry type="library" exported="" name="butterknife-6.1.0" level="project" />
   </component>
 </module>

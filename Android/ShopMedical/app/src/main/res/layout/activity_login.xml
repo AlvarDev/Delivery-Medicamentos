@@ -12,7 +12,12 @@
         android:src="@drawable/fondo04"
         android:contentDescription="@string/app_name"/>
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_current_version"
+        android:padding="8dp"
+        android:textColor="@color/bg_blue_dark"/>
 
     <LinearLayout
         android:layout_width="match_parent"

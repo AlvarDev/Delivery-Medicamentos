@@ -87,6 +87,7 @@
     <string name="title_activity_ruc">RUCActivity</string>
     <string name="s_comprobante_factura">Comprobante de Pago Factura</string>
     <string name="s_ingrese_ruc">*Ingrese su RUC por favor</string>
+    <string name="s_current_version">V. 0.7</string>
 
 
 

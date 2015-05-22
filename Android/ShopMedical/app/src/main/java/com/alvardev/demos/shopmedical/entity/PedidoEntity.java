@@ -5,71 +5,123 @@ import java.io.Serializable;
 
 public class PedidoEntity implements Serializable{
 
-    private String nro;
-    private String fecha;
-    private String tipoDoc;
-    private int tipoPedido;
-    private int estado;
+    private int codPersona;
+    private int codUsuario;
+    private String codPedido;
+    private String fechaPedido;
+    private String horaPedido;
+    private double montoTotal;
+    private double montoCancelar;
+    private String tipoComprobante;
+    private String ruc;
+    private int codEstadoPedido;
+    private String descripcion;
 
     public PedidoEntity() {
     }
 
-    public PedidoEntity(String nro, String fecha, String tipoDoc, int tipoPedido, int estado) {
-        this.nro = nro;
-        this.fecha = fecha;
-        this.tipoDoc = tipoDoc;
-        this.tipoPedido = tipoPedido;
-        this.estado = estado;
+    public int getCodPersona() {
+        return codPersona;
     }
 
-    public String getNro() {
-        return nro;
+    public void setCodPersona(int codPersona) {
+        this.codPersona = codPersona;
     }
 
-    public void setNro(String nro) {
-        this.nro = nro;
+    public int getCodUsuario() {
+        return codUsuario;
     }
 
-    public String getFecha() {
-        return fecha;
+    public void setCodUsuario(int codUsuario) {
+        this.codUsuario = codUsuario;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public String getCodPedido() {
+        return codPedido;
     }
 
-    public String getTipoDoc() {
-        return tipoDoc;
+    public void setCodPedido(String codPedido) {
+        this.codPedido = codPedido;
     }
 
-    public void setTipoDoc(String tipoDoc) {
-        this.tipoDoc = tipoDoc;
+    public String getFechaPedido() {
+        return fechaPedido;
     }
 
-    public int getTipoPedido() {
-        return tipoPedido;
+    public void setFechaPedido(String fechaPedido) {
+        this.fechaPedido = fechaPedido;
     }
 
-    public void setTipoPedido(int tipoPedido) {
-        this.tipoPedido = tipoPedido;
+    public String getHoraPedido() {
+        return horaPedido;
     }
 
-    public int getEstado() {
-        return estado;
+    public void setHoraPedido(String horaPedido) {
+        this.horaPedido = horaPedido;
     }
 
-    public void setEstado(int estado) {
-        this.estado = estado;
+    public double getMontoTotal() {
+        return montoTotal;
+    }
+
+    public void setMontoTotal(double montoTotal) {
+        this.montoTotal = montoTotal;
+    }
+
+    public double getMontoCancelar() {
+        return montoCancelar;
+    }
+
+    public void setMontoCancelar(double montoCancelar) {
+        this.montoCancelar = montoCancelar;
+    }
+
+    public String getTipoComprobante() {
+        return tipoComprobante;
+    }
+
+    public void setTipoComprobante(String tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
+    }
+
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
+
+    public int getCodEstadoPedido() {
+        return codEstadoPedido;
+    }
+
+    public void setCodEstadoPedido(int codEstadoPedido) {
+        this.codEstadoPedido = codEstadoPedido;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override
     public String toString() {
         return "PedidoEntity{" +
-                "nro='" + nro + '\'' +
-                ", fecha='" + fecha + '\'' +
-                ", tipoDoc='" + tipoDoc + '\'' +
-                ", tipoPedido=" + tipoPedido +
-                ", estado=" + estado +
+                "codPersona=" + codPersona +
+                ", codUsuario=" + codUsuario +
+                ", codPedido='" + codPedido + '\'' +
+                ", fechaPedido='" + fechaPedido + '\'' +
+                ", horaPedido='" + horaPedido + '\'' +
+                ", montoTotal=" + montoTotal +
+                ", montoCancelar=" + montoCancelar +
+                ", tipoComprobante='" + tipoComprobante + '\'' +
+                ", ruc='" + ruc + '\'' +
+                ", codEstadoPedido=" + codEstadoPedido +
+                ", descripcion='" + descripcion + '\'' +
                 '}';
     }
 }
