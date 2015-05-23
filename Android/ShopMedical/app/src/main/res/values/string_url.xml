@@ -8,4 +8,5 @@
     <string name="url_search">http://farmaciaa.jelasticlw.com.br/searchMedxNom?</string>
     <string name="url_get_pedidos_proceso">http://farmaciaa.jelasticlw.com.br/buscarPedEnProdA?codUsuario=</string>
     <string name="url_get_pedido_historial">http://farmaciaa.jelasticlw.com.br/historialPedA?codUsuario=</string>
+    <string name="url_register_pedido">​http://farmaciaa.jelasticlw.com.br/carrito</string>
 </resources>

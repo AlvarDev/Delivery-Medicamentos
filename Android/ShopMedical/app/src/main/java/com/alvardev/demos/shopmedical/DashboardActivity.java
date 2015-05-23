@@ -20,7 +20,10 @@ import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.adapter.OptionsDashboardAdapter;
 import com.alvardev.demos.shopmedical.entity.CarEntity;
+import com.alvardev.demos.shopmedical.entity.CarSendEntity;
 import com.alvardev.demos.shopmedical.entity.DireccionEntity;
+import com.alvardev.demos.shopmedical.entity.ItemPedidoEntity;
+import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
 import com.alvardev.demos.shopmedical.entity.PedidoHeaderEntity;
 import com.alvardev.demos.shopmedical.entity.UserEntity;
@@ -169,13 +172,13 @@ public class DashboardActivity extends BaseActionBarActivity
 
                     case StaticData.PEDIDOS_EN_PROCESO:
                         rlayLoading.setVisibility(View.VISIBLE);
-                        connectGet(getString(R.string.url_get_pedidos_proceso) + "9", StaticData.PEDIDOS_EN_PROCESO);
+                        connectGet(getString(R.string.url_get_pedidos_proceso) +""+user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
                         new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
                         break;
 
                     case StaticData.HISTORIAL_DE_PEDIDO:
                         rlayLoading.setVisibility(View.VISIBLE);
-                        connectGet(getString(R.string.url_get_pedido_historial)+"9",StaticData.HISTORIAL_DE_PEDIDO);
+                        connectGet(getString(R.string.url_get_pedido_historial)+""+user.getCodPersona(),StaticData.HISTORIAL_DE_PEDIDO);
                         new ChangeFragmentsTask(null).execute(StaticData.HISTORIAL_DE_PEDIDO);
                         break;
 
@@ -396,6 +399,23 @@ public class DashboardActivity extends BaseActionBarActivity
                         }
 
                         break;
+
+                    case StaticData.CARRITO_DE_COMPRAS:
+                        ResponseObject responseCar = new Gson().fromJson(result,ResponseObject.class);
+                        if(responseCar.isSuccess()){
+                            Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
+                            savePreference("car", null);
+                            rlayLoading.setVisibility(View.VISIBLE);
+                            connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
+                            new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
+                        }else{
+                            Toast.makeText(getApplicationContext(),
+                                    responseCar.getMensaje(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+
+                        break;
                 }
                 break;
             case BAD_REQUEST:
@@ -439,19 +459,60 @@ public class DashboardActivity extends BaseActionBarActivity
     }
 
     @Override
-    public void goToPedidoProceso(int tipoDoc, String nro) {
+    public void goToPedidoProceso(int tipoDoc, double total, double cancelar) {
         //TODO Crear all to send
+
+        //Log.i(TAG,"tipoDoc: "+tipoDoc);
 
         switch (tipoDoc){
             case StaticData.BOLETA:
-                Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
-                savePreference("car", null);
-                Bundle bundle = new Bundle();
-                bundle.putInt("typePedido", StaticData.PEDIDOS_EN_PROCESO);
-                new ChangeFragmentsTask(bundle).execute(StaticData.PEDIDOS_EN_PROCESO);
+
+                String carString =  getPreference("car");
+                if(!carString.isEmpty()){
+                    CarEntity car = new Gson().fromJson(carString, CarEntity.class);
+                    car.getPedido().setCodPedido("16040061");
+                    car.getPedido().setTipoComprobante("Boleta");
+                    car.getPedido().setFechaPedido("2015-05-22");
+                    car.getPedido().setHoraPedido("11:20:00");
+                    car.getPedido().setMontoTotal(total);
+                    car.getPedido().setMontoCancelar(cancelar);
+                    car.getPedido().setRuc("000000000");
+
+                    CarSendEntity send = new CarSendEntity();
+                    send.setPedido(car.getPedido());
+
+                    for(MedicamentoEntity med : car.getDetalle()){
+
+
+                        ItemPedidoEntity item = new ItemPedidoEntity();
+                        item.setCodPedido("16040061");
+                        item.setCodSucursal(med.getCodSucursal());
+                        item.setCodMedicamento(med.getCodMedicamento());
+                        item.setCodCantidadxPresentacion(med.getCodCantxPresentacion());
+                        item.setCodUnidad(med.getCodUnidad());
+                        item.setCantidad(med.getCantidad());
+                        item.setPrecioTotal(med.getPrecio()*med.getCantidad());
+
+                        send.getDetalle().add(item);
+                    }
+
+                    try {
+                          connectPost("http://farmaciaa.jelasticlw.com.br/carrito",
+                                  new JSONObject(new Gson().toJson(send)),
+                                  StaticData.CARRITO_DE_COMPRAS);
+
+                        //Log.i(TAG,"Sent pedido: "+new JSONObject(new Gson().toJson(send)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
                 break;
             case StaticData.FACTURA:
                 Intent intent = new Intent(this, RUCActivity.class);
+                intent.putExtra("total",total);
+                intent.putExtra("cancelar",cancelar);
                 startActivity(intent);
                 break;
         }
@@ -465,10 +526,10 @@ public class DashboardActivity extends BaseActionBarActivity
         if(!doneRUC.isEmpty()){
             Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
             savePreference("car", null);
-            savePreference("doneRUC",null);
-            Bundle bundle = new Bundle();
-            bundle.putInt("typePedido", StaticData.PEDIDOS_EN_PROCESO);
-            new ChangeFragmentsTask(bundle).execute(StaticData.PEDIDOS_EN_PROCESO);
+            savePreference("doneRUC", null);
+            rlayLoading.setVisibility(View.VISIBLE);
+            connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
+            new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
         }
     }
 }

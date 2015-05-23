@@ -1,12 +1,26 @@
 package com.alvardev.demos.shopmedical;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alvardev.demos.shopmedical.entity.CarEntity;
+import com.alvardev.demos.shopmedical.entity.CarSendEntity;
+import com.alvardev.demos.shopmedical.entity.ItemPedidoEntity;
+import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
+import com.alvardev.demos.shopmedical.entity.UserEntity;
+import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
+import com.alvardev.demos.shopmedical.http.HttpCode;
+import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -14,8 +28,10 @@ import butterknife.InjectView;
 
 public class RUCActivity extends BaseActionBarActivity{
 
+    private static final String TAG = "RUCActivity";
     @InjectView(R.id.eteRUC) EditText eteRUC;
     @InjectView(R.id.btnGetRUC) Button btnGetRUC;
+    @InjectView(R.id.rlayLoading) View rlayLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +39,59 @@ public class RUCActivity extends BaseActionBarActivity{
         setContentView(R.layout.activity_ruc);
         ButterKnife.inject(this);
 
+        final double total = getIntent().getDoubleExtra("total",0);
+        final double cancelar = getIntent().getDoubleExtra("cancelar",0);
+
+
+
         btnGetRUC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String ruc = eteRUC.getText().toString();
                 if(validateRUC(ruc)){
-                    savePreference("doneRUC", "done");
-                    finish();
+
+                    String carString =  getPreference("car");
+                    if(!carString.isEmpty()){
+                        CarEntity car = new Gson().fromJson(carString, CarEntity.class);
+                        car.getPedido().setCodPedido("16040064");
+                        car.getPedido().setTipoComprobante("Factura");
+                        car.getPedido().setFechaPedido("2015-05-22");
+                        car.getPedido().setHoraPedido("11:20:00");
+                        car.getPedido().setMontoTotal(total);
+                        car.getPedido().setMontoCancelar(cancelar);
+                        car.getPedido().setRuc(ruc);
+
+                        CarSendEntity send = new CarSendEntity();
+                        send.setPedido(car.getPedido());
+
+                        for(MedicamentoEntity med : car.getDetalle()){
+
+
+                            ItemPedidoEntity item = new ItemPedidoEntity();
+                            item.setCodPedido("16040064");
+                            item.setCodSucursal(med.getCodSucursal());
+                            item.setCodMedicamento(med.getCodMedicamento());
+                            item.setCodCantidadxPresentacion(med.getCodCantxPresentacion());
+                            item.setCodUnidad(med.getCodUnidad());
+                            item.setCantidad(med.getCantidad());
+                            item.setPrecioTotal(med.getPrecio()*med.getCantidad());
+
+                            send.getDetalle().add(item);
+                        }
+
+                        try {
+                            connectPost("http://farmaciaa.jelasticlw.com.br/carrito",
+                                    new JSONObject(new Gson().toJson(send)),
+                                    StaticData.CARRITO_DE_COMPRAS);
+
+                            //Log.i(TAG,"Sent pedido: "+new JSONObject(new Gson().toJson(send)));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+
                 }
             }
         });
@@ -50,7 +112,40 @@ public class RUCActivity extends BaseActionBarActivity{
 
     @Override
     protected void onRESTResultado(int code, String result, int accion) {
+        HttpCode codigo = HttpCode.forValue(code);
+        rlayLoading.setVisibility(View.GONE);
 
+        switch (codigo) {
+            case OK:
+                try {
+                    ResponseObject response = new Gson().fromJson(result,ResponseObject.class);
+
+                    if(response.isSuccess()){
+                        savePreference("doneRUC", "done");
+                        finish();
+                    }else{
+                        Toast.makeText(getApplicationContext(),
+                                response.getMensaje(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    Log.e(TAG, e.getMessage());
+                }
+                break;
+            case BAD_REQUEST:
+                generalError("BAD REQUEST");
+                break;
+            case ERROR:
+                generalError("ERROR");
+                break;
+            case TIMEOUT:
+                generalError("TIME OUT");
+                break;
+            default:
+                generalError("DEFAULT");
+                break;
+        }
     }
 
 

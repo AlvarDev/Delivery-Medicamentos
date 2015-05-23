@@ -7,5 +7,5 @@ public interface DashboardInterface {
     void updateInformation(UserEntity user);
     void searchMedicine(String text, String sucursal);
     void goToSearchResult(DireccionEntity direccion);
-    void goToPedidoProceso(int tipoDoc, String nro);
+    void goToPedidoProceso(int tipoDoc, double total, double pagar);
 }

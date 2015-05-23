@@ -11,11 +11,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.adapter.MedicamentosAdapter;
@@ -154,10 +156,13 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
             }
         });
 
-        eteText.setOnKeyListener(new View.OnKeyListener() {
+        eteText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // do your stuff here
+                    mListener.searchMedicine(eteText.getText().toString(),"1");
+                }
 
                 return false;
             }

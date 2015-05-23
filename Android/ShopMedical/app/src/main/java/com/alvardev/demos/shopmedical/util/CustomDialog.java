@@ -100,7 +100,7 @@ public class CustomDialog {
         return dialog;
     }
 
-    public Dialog selectDocumentDialog(final Context context){
+    public Dialog selectDocumentDialog(final Context context, final double total, final double cancelar){
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -113,7 +113,7 @@ public class CustomDialog {
             @Override
             public void onClick(View view) {
                 DashboardInterface mListener = (DashboardInterface) context;
-                mListener.goToPedidoProceso(StaticData.BOLETA, "");
+                mListener.goToPedidoProceso(StaticData.BOLETA, total, cancelar);
                 dialog.dismiss();
             }
         });
@@ -122,7 +122,7 @@ public class CustomDialog {
             @Override
             public void onClick(View view) {
                 DashboardInterface mListener = (DashboardInterface) context;
-                mListener.goToPedidoProceso(StaticData.FACTURA, "");
+                mListener.goToPedidoProceso(StaticData.FACTURA, total, cancelar);
                 dialog.dismiss();
             }
         });

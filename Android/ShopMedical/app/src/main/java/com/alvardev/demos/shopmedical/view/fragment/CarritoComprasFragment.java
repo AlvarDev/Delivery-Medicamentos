@@ -155,7 +155,9 @@ public class CarritoComprasFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (validatePedido(eteEfectivo.getText().toString())) {
-                    Dialog dialogOk = new CustomDialog().selectDocumentDialog(getActivity());
+                    String efec = eteEfectivo.getText().toString();
+                    double efectivo = Double.parseDouble(efec);
+                    Dialog dialogOk = new CustomDialog().selectDocumentDialog(getActivity(), total, efectivo);
                     dialogOk.show();
                 }
             }
