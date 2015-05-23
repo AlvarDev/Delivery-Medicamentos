@@ -57,7 +57,7 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <!--ForgetPasswordActivity-->
-    <string name="s_forget_indication">Introduzca el nombre de usuario y le enviaremos una nueva contraseña</string>
+    <string name="s_forget_indication">Introduzca su correo electrónico y le enviaremos su usuario y una nueva contraseña</string>
     <string name="b_enviar">Enviar</string>
 
     <!-- SearchFragment-->

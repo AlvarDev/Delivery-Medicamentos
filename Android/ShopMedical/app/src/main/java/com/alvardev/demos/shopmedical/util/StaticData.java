@@ -31,6 +31,9 @@ public class StaticData {
     public static final int TERMINADO = 4;
     public static final int CANCELADO = 3;
 
+    public static final int VALIDAR_RUC = 12;
+    public static final int RECOVERY_PASSWORD = 13;
+
 
     public static final String NAME_PREFERENCE = "com.alvardev.demos.shopmedical.preferences";
 

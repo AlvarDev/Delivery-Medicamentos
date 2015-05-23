@@ -439,7 +439,7 @@ public class DashboardActivity extends BaseActionBarActivity
         CarEntity car = new CarEntity();
         PedidoHeaderEntity header = new PedidoHeaderEntity();
 
-        header.setCodEstadoPedido(2);
+        header.setCodEstadoPedido(1);
         header.setCodPedido("");
         header.setCodPersona(user.getCodPersona());
         header.setCodUsuario(user.getCodUsuario());
