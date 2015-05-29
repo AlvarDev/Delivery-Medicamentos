@@ -1,0 +1,137 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.alvardev.demos.shopmedical.DetallePedidoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tviNroPedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="@color/txt_color"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:background="@color/bg_dark"/>
+        <TextView
+            android:id="@+id/tviTipoComp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:background="@color/bg_celeste"/>
+        <TextView
+            android:id="@+id/eteCarritoVacio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/s_carrito_vacio"
+            android:visibility="gone"/>
+
+        <ListView
+            android:id="@+id/lviItemsAdded"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:scrollbars="none"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tviTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:background="@color/bg_celeste"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/s_incluye_igv"
+                android:textColor="@color/rojo"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:gravity="end"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/s_efectivo_soles"/>
+
+                <TextView
+                    android:id="@+id/eteEfectivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="100dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/s_vuelto"/>
+
+                <TextView
+                    android:id="@+id/eteVuelto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="100dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/rlayLoading"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        layout="@layout/layout_loading"
+        android:visibility="gone"
+        android:focusableInTouchMode="true"/>
+
+</RelativeLayout>
+

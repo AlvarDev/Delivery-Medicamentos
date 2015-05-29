@@ -7,25 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alvardev.demos.shopmedical.R;
+import com.alvardev.demos.shopmedical.entity.DetallePedidoEntity;
 import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
 import com.alvardev.demos.shopmedical.util.StaticData;
 
 import java.util.List;
 
-public class MedicamentosAdapter extends BaseAdapter {
+public class DetallePedidoAdapter extends BaseAdapter {
 
     private Context context;
-    private List<MedicamentoEntity> medicamentos;
-    private int state;
+    private List<DetallePedidoEntity> detalles;
 
-    public MedicamentosAdapter(Context context, List<MedicamentoEntity> medicamentos, int state) {
+    public DetallePedidoAdapter(Context context, List<DetallePedidoEntity> detalles) {
         this.context = context;
-        this.medicamentos = medicamentos;
-        this.state = state;
+        this.detalles = detalles;
     }
 
     /*private view holder class*/
@@ -56,39 +54,17 @@ public class MedicamentosAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        MedicamentoEntity medicamento = (MedicamentoEntity) getItem(position);
+        DetallePedidoEntity detalle = (DetallePedidoEntity) getItem(position);
 
+        holder.nombre.setTextColor(context.getResources().getColor(R.color.txt_color));
+        holder.cantidad.setTextColor(context.getResources().getColor(R.color.txt_color));
+        holder.presentacion.setTextColor(context.getResources().getColor(R.color.txt_color));
 
-        holder.nombre.setText(medicamento.getMedicamentoxUnidad());
-
-        if(medicamento.isSelected()){
-            holder.nombre.setTextColor(context.getResources().getColor(R.color.verde));
-            holder.cantidad.setTextColor(context.getResources().getColor(R.color.verde));
-            if(state == StaticData.CARRITO_DE_COMPRAS) {
-                holder.carrito.setImageResource(R.drawable.cancel);
-            }else{
-                holder.carrito.setImageResource(R.drawable.added);
-            }
-
-        }else{
-            holder.nombre.setTextColor(context.getResources().getColor(R.color.txt_color));
-            holder.cantidad.setTextColor(context.getResources().getColor(R.color.txt_color));
-            holder.carrito.setImageResource(R.drawable.add);
-        }
-
-        /*switch (state){
-            case StaticData.SEARCH_RESULT:
-
-                break;
-            case StaticData.CARRITO_DE_COMPRAS:
-
-                break;
-        }*/
-
-
-        holder.cantidad.setText(""+medicamento.getCantidad());
-        holder.precio.setText("S/. "+medicamento.getPrecio());
-        holder.presentacion.setText(medicamento.getMedicamentoxPresentacion()+"");
+        holder.nombre.setText(detalle.getMedicamentoxUnidad());
+        holder.cantidad.setText(""+detalle.getCantidad());
+        holder.precio.setText("S/. "+detalle.getPrecioUnitario());
+        holder.presentacion.setText(detalle.getMedicamentoxPresentacion()+"");
+        holder.carrito.setVisibility(View.GONE);
 
 
         return convertView;
@@ -99,17 +75,17 @@ public class MedicamentosAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return medicamentos.size();
+        return detalles.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return medicamentos.get(position);
+        return detalles.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return medicamentos.indexOf(getItem(position));
+        return detalles.indexOf(getItem(position));
     }
 
 

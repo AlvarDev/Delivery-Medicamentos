@@ -133,6 +133,8 @@ public class CarritoComprasFragment extends Fragment {
         for(MedicamentoEntity med :  medicamentos){
             total+=med.getPrecio()*med.getCantidad();
         }
+
+        total = Math.round(total*100)/100;
         tviTotal.setText("Precio Total S/." + total);
     }
 

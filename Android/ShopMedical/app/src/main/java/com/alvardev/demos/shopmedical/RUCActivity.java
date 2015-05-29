@@ -37,6 +37,7 @@ public class RUCActivity extends BaseActionBarActivity{
     private double total;
     private double cancelar;
     private String ruc;
+    //private String lastnumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class RUCActivity extends BaseActionBarActivity{
 
         total = getIntent().getDoubleExtra("total",0);
         cancelar = getIntent().getDoubleExtra("cancelar",0);
-
+        //lastnumber = "";
 
 
         btnGetRUC.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +68,21 @@ public class RUCActivity extends BaseActionBarActivity{
         String carString =  getPreference("car");
         if(!carString.isEmpty()){
             CarEntity car = new Gson().fromJson(carString, CarEntity.class);
-            car.getPedido().setCodPedido("16040064");
+
+            String userString = getPreference("user");
+            UserEntity user = new Gson().fromJson(userString, UserEntity.class);
+
+
+            /*String codPedido = user.getCodPersona() <10 ? "0"+user.getCodPersona(): ""+user.getCodPersona();
+            int lastNumberTemp =  getPreference("lastNumber").isEmpty() ? 1 : Integer.parseInt(getPreference("lastNumber"))+1;
+            lastnumber  = lastNumberTemp+"";
+
+            while (lastnumber.length()<6){
+                lastnumber = "0"+lastnumber;
+            }*/
+
+
+            car.getPedido().setCodPedido("00000000");
             car.getPedido().setTipoComprobante("Factura");
             car.getPedido().setFechaPedido("2015-05-22");
             car.getPedido().setHoraPedido("11:20:00");
@@ -82,7 +97,7 @@ public class RUCActivity extends BaseActionBarActivity{
 
 
                 ItemPedidoEntity item = new ItemPedidoEntity();
-                item.setCodPedido("16040064");
+                item.setCodPedido("00000000");
                 item.setCodSucursal(med.getCodSucursal());
                 item.setCodMedicamento(med.getCodMedicamento());
                 item.setCodCantidadxPresentacion(med.getCodCantxPresentacion());
@@ -99,7 +114,7 @@ public class RUCActivity extends BaseActionBarActivity{
                         new JSONObject(new Gson().toJson(send)),
                         StaticData.CARRITO_DE_COMPRAS);
 
-                //Log.i(TAG,"Sent pedido: "+new JSONObject(new Gson().toJson(send)));
+                Log.i(TAG,"Sent pedido: "+new JSONObject(new Gson().toJson(send)));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -134,6 +149,7 @@ public class RUCActivity extends BaseActionBarActivity{
 
                             if(response.isSuccess()){
                                 savePreference("doneRUC", "done");
+                                //savePreference("lastNumber",lastnumber);
                                 finish();
                             }else{
                                 Toast.makeText(getApplicationContext(),

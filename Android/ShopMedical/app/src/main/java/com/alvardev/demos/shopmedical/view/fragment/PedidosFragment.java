@@ -1,13 +1,16 @@
 package com.alvardev.demos.shopmedical.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.alvardev.demos.shopmedical.DetallePedidoActivity;
 import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.adapter.PedidosAdapter;
 import com.alvardev.demos.shopmedical.entity.PedidoEntity;
@@ -31,6 +34,7 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
 
 
     @InjectView(R.id.lviPedidos) ListView lviPedidos;
+
 
     public static PedidosFragment newInstance(String param1, String param2) {
         PedidosFragment fragment = new PedidosFragment();
@@ -70,17 +74,33 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
     }
 
     @Override
-    public void getPedidosPro(List<PedidoEntity> pedidos) {
+    public void getPedidosPro(final List<PedidoEntity> pedidos) {
 
-         PedidosAdapter adapter = new PedidosAdapter(getActivity(), pedidos, StaticData.PEDIDOS_EN_PROCESO);
-         lviPedidos.setAdapter(adapter);
+        PedidosAdapter adapter = new PedidosAdapter(getActivity(), pedidos, StaticData.PEDIDOS_EN_PROCESO);
+        lviPedidos.setAdapter(adapter);
+        lviPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), DetallePedidoActivity.class);
+                intent.putExtra("pedido", pedidos.get(i));
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
-    public void getPedidosHis(List<PedidoEntity> pedidos) {
-
+    public void getPedidosHis(final List<PedidoEntity> pedidos) {
         PedidosAdapter adapter = new PedidosAdapter(getActivity(), pedidos, StaticData.HISTORIAL_DE_PEDIDO);
         lviPedidos.setAdapter(adapter);
+        lviPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), DetallePedidoActivity.class);
+                intent.putExtra("pedido", pedidos.get(i));
+                startActivity(intent);
+            }
+        });
     }
 
 }

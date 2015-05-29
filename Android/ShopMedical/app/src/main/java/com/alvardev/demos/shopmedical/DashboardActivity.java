@@ -2,6 +2,7 @@ package com.alvardev.demos.shopmedical;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -71,6 +72,7 @@ public class DashboardActivity extends BaseActionBarActivity
     private UserEntity user;
     private UserEntity userTemp;
     private String carString;
+    //private String lastnumber;
 
     @InjectView(R.id.rlayLoading) View rlayLoading;
 
@@ -90,6 +92,7 @@ public class DashboardActivity extends BaseActionBarActivity
         getSupportActionBar().setTitle("Buscar Medicamento");
         ButterKnife.inject(this);
 
+        //lastnumber = "";
         String userString = getPreference("user");
         user = new Gson().fromJson(userString, UserEntity.class);
         carString = getPreference("car");
@@ -149,7 +152,7 @@ public class DashboardActivity extends BaseActionBarActivity
             Log.i(TAG,"currentSelected: "+currentSelected);
             Log.i(TAG,"pos: "+position);
 
-            if(currentSelected != position-1){
+            if(currentSelected != position-1 && position!=0){
 
                 carString = getPreference("car");
                 Bundle bundle = new Bundle();
@@ -164,6 +167,11 @@ public class DashboardActivity extends BaseActionBarActivity
                         if(!carString.isEmpty()){
                             CarEntity car = new Gson().fromJson(carString, CarEntity.class);
                             bundle.putSerializable("car", car);
+                            String query = getPreference("lastSearch");
+                            connectGet(getString(R.string.url_search)+"codSucursal=1"+
+                                    "&medicamento="+query, StaticData.SEARCH_RESULT);
+                            rlayLoading.setVisibility(View.VISIBLE);
+
                             new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
                         }else{
                             new ChangeFragmentsTask(null).execute(position);
@@ -225,8 +233,46 @@ public class DashboardActivity extends BaseActionBarActivity
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
             closeDrawer(position);
+            setTitle(position);
         }
 
+    }
+
+    public void setTitle(int position){
+        switch (position){
+            case StaticData.BUSCAR_MEDICAMENTO:
+                getSupportActionBar().setTitle("Buscar Medicamentos");
+                //getSupportActionBar().setIcon(R.drawable.buscar_medicamento);
+                break;
+            case StaticData.CARRITO_DE_COMPRAS:
+                getSupportActionBar().setTitle("Carrito de Compras");
+                //getSupportActionBar().setIcon(R.drawable.neutral);
+                break;
+            case StaticData.SINTOMAS_FRECUENTES:
+                getSupportActionBar().setTitle("Sintomas Frecuentes");
+                //getSupportActionBar().setIcon(R.drawable.sintomas);
+                break;
+            case StaticData.PEDIDOS_EN_PROCESO:
+                getSupportActionBar().setTitle("Pedidos en Proceso");
+                //getSupportActionBar().setIcon(R.drawable.pending);
+                break;
+            case StaticData.HISTORIAL_DE_PEDIDO:
+                getSupportActionBar().setTitle("Historial de Pedidos");
+                //getSupportActionBar().setIcon(R.drawable.historial);
+                break;
+            case StaticData.ACTUALIZAR_INFORMACION:
+                getSupportActionBar().setTitle("Actualizar Información Personal");
+                //getSupportActionBar().setIcon(R.drawable.actualizar);
+                break;
+            case  StaticData.SEARCH_RESULT:
+                getSupportActionBar().setTitle("Buscar Medicamentos");
+                //getSupportActionBar().setIcon(R.drawable.buscar_medicamento);
+
+            default:
+                getSupportActionBar().setTitle(getString(R.string.app_name));
+                //getSupportActionBar().setIcon(R.drawable.logo);
+                break;
+        }
     }
 
     private void changeScreen(Bundle bundle, int option) {
@@ -325,6 +371,7 @@ public class DashboardActivity extends BaseActionBarActivity
             connectGet(getString(R.string.url_search)+"codSucursal="+sucursal+
                     "&medicamento="+query, StaticData.SEARCH_RESULT);
             rlayLoading.setVisibility(View.VISIBLE);
+            savePreference("lastSearch", query);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(),
@@ -405,6 +452,7 @@ public class DashboardActivity extends BaseActionBarActivity
                         if(responseCar.isSuccess()){
                             Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
                             savePreference("car", null);
+                            //savePreference("lastNumber",lastnumber);
                             rlayLoading.setVisibility(View.VISIBLE);
                             connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
                             new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
@@ -454,6 +502,8 @@ public class DashboardActivity extends BaseActionBarActivity
         Bundle bundle = new Bundle();
         bundle.putSerializable("car",car);
 
+
+
         getSupportActionBar().setTitle("Pedido para: "+direccion.getNombre());
         new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
     }
@@ -469,8 +519,18 @@ public class DashboardActivity extends BaseActionBarActivity
 
                 String carString =  getPreference("car");
                 if(!carString.isEmpty()){
+
+
+                    /*String codPedido = user.getCodPersona() <10 ? "0"+user.getCodPersona(): ""+user.getCodPersona();
+                    int lastNumberTemp =  getPreference("lastNumber").isEmpty() ? 1 : Integer.parseInt(getPreference("lastNumber"))+1;
+                    lastnumber  = lastNumberTemp+"";
+
+                    while (lastnumber.length()<6){
+                        lastnumber = "0"+lastnumber;
+                    }*/
+
                     CarEntity car = new Gson().fromJson(carString, CarEntity.class);
-                    car.getPedido().setCodPedido("16040061");
+                    car.getPedido().setCodPedido("00000000");
                     car.getPedido().setTipoComprobante("Boleta");
                     car.getPedido().setFechaPedido("2015-05-22");
                     car.getPedido().setHoraPedido("11:20:00");
@@ -485,7 +545,7 @@ public class DashboardActivity extends BaseActionBarActivity
 
 
                         ItemPedidoEntity item = new ItemPedidoEntity();
-                        item.setCodPedido("16040061");
+                        item.setCodPedido("00000000");
                         item.setCodSucursal(med.getCodSucursal());
                         item.setCodMedicamento(med.getCodMedicamento());
                         item.setCodCantidadxPresentacion(med.getCodCantxPresentacion());
@@ -497,7 +557,7 @@ public class DashboardActivity extends BaseActionBarActivity
                     }
 
                     try {
-                          connectPost("http://farmaciaa.jelasticlw.com.br/carrito",
+                          connectPost("http://farmaciaaa.jelasticlw.com.br/carrito",
                                   new JSONObject(new Gson().toJson(send)),
                                   StaticData.CARRITO_DE_COMPRAS);
 

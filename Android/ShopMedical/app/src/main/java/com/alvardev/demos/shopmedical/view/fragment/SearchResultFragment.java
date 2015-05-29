@@ -162,6 +162,7 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     // do your stuff here
                     mListener.searchMedicine(eteText.getText().toString(),"1");
+
                 }
 
                 return false;
@@ -172,6 +173,7 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
             @Override
             public void onClick(View view) {
                 mListener.searchMedicine(eteText.getText().toString(),"1");
+
             }
         });
     }

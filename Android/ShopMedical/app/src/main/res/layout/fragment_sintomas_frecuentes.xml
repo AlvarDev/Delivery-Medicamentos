@@ -1,10 +1,152 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:animateLayoutChanges="true"
     tools:context="com.alvardev.demos.shopmedical.view.fragment.SintomasFrecuentesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="sintomas frecuentes" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <Button
+                android:id="@+id/tempAgotamiento"
+                android:text="@string/t_agotamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_boton"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:id="@+id/vieAgotamiento"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/amarillo"/>
+
+            <Button
+                android:id="@+id/tempCabeza"
+                android:text="@string/t_cabeza"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_boton"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:id="@+id/vieCabeza"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/amarillo"/>
+
+            <Button
+                android:id="@+id/tempEstomago"
+                android:text="@string/t_estomago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_boton"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:id="@+id/vieEstomago"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/amarillo"/>
+
+            <Button
+                android:id="@+id/tempMuscular"
+                android:text="@string/t_muscular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_boton"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:id="@+id/vieMuscular"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/amarillo"/>
+
+            <Button
+                android:id="@+id/tempResfriado"
+                android:text="@string/t_resfriado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_boton"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:id="@+id/vieResfriado"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/amarillo"/>
+
+            <Button
+                android:id="@+id/tempEstrenhimiento"
+                android:text="@string/t_estre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_boton"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:id="@+id/vieEstrenhimiento"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/amarillo"/>
+
+            <Button
+                android:id="@+id/tempTos"
+                android:text="@string/t_tos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_boton"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:id="@+id/vieTos"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/amarillo"/>
+
+            <Button
+                android:id="@+id/tempMigranha"
+                android:text="@string/t_migranha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_boton"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:id="@+id/vieMigranha"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/amarillo"/>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/rlayLoading"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/layout_loading"
+            android:visibility="gone"
+            android:focusableInTouchMode="true"/>
+
+
+    </RelativeLayout>
+</ScrollView>

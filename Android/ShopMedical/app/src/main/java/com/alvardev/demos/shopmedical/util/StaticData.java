@@ -33,6 +33,7 @@ public class StaticData {
 
     public static final int VALIDAR_RUC = 12;
     public static final int RECOVERY_PASSWORD = 13;
+    public static final int DETALLE_PEDIDO = 14;
 
 
     public static final String NAME_PREFERENCE = "com.alvardev.demos.shopmedical.preferences";
@@ -40,13 +41,13 @@ public class StaticData {
     public static List<OptionEntity> getOptionsList(){
         List<OptionEntity> options = new ArrayList<OptionEntity>();
 
-        options.add(new OptionEntity(BUSCAR_MEDICAMENTO, R.drawable.buscar,"Buscar Medicamentos"));
-        options.add(new OptionEntity(CARRITO_DE_COMPRAS, R.drawable.logo,"Carrito de Compras"));
-        options.add(new OptionEntity(SINTOMAS_FRECUENTES, R.drawable.logo,"Sintomas Frecuentes"));
-        options.add(new OptionEntity(PEDIDOS_EN_PROCESO, R.drawable.logo,"Pedidos en Proceso"));
-        options.add(new OptionEntity(HISTORIAL_DE_PEDIDO, R.drawable.logo,"Historial de Pedidos"));
-        options.add(new OptionEntity(ACTUALIZAR_INFORMACION, R.drawable.logo,"Actualizar Información Personal"));
-        options.add(new OptionEntity(CERRAR_SESION, R.drawable.logo,"Cerrar Sesión"));
+        options.add(new OptionEntity(BUSCAR_MEDICAMENTO, R.drawable.buscar_medicamento,"Buscar Medicamentos"));
+        options.add(new OptionEntity(CARRITO_DE_COMPRAS, R.drawable.neutral,"Carrito de Compras"));
+        options.add(new OptionEntity(SINTOMAS_FRECUENTES, R.drawable.sintomas,"Sintomas Frecuentes"));
+        options.add(new OptionEntity(PEDIDOS_EN_PROCESO, R.drawable.pending,"Pedidos en Proceso"));
+        options.add(new OptionEntity(HISTORIAL_DE_PEDIDO, R.drawable.historial,"Historial de Pedidos"));
+        options.add(new OptionEntity(ACTUALIZAR_INFORMACION, R.drawable.actualizar,"Actualizar Información Personal"));
+        options.add(new OptionEntity(CERRAR_SESION, R.drawable.cerrar_sesion,"Cerrar Sesión"));
 
         return options;
     }

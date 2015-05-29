@@ -59,6 +59,10 @@
             android:name=".RUCActivity"
             android:label="@string/title_activity_ruc" >
         </activity>
+        <activity
+            android:name=".DetallePedidoActivity"
+            android:label="@string/title_activity_detalle_pedido" >
+        </activity>
     </application>
 
 </manifest>

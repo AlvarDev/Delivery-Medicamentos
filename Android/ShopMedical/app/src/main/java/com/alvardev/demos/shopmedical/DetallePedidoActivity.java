@@ -1,0 +1,115 @@
+package com.alvardev.demos.shopmedical;
+
+import android.app.Dialog;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.alvardev.demos.shopmedical.adapter.DetallePedidoAdapter;
+import com.alvardev.demos.shopmedical.entity.DetallePedidoEntity;
+import com.alvardev.demos.shopmedical.entity.PedidoEntity;
+import com.alvardev.demos.shopmedical.entity.response.ResponseDetallePedido;
+import com.alvardev.demos.shopmedical.http.HttpCode;
+import com.alvardev.demos.shopmedical.util.CustomDialog;
+import com.alvardev.demos.shopmedical.util.StaticData;
+import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
+import com.google.gson.Gson;
+
+import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+
+public class DetallePedidoActivity extends BaseActionBarActivity {
+
+    private static final String TAG = "DetallePedido";
+
+    @InjectView(R.id.lviItemsAdded) ListView lviItemsAdded;
+    @InjectView(R.id.tviNroPedido) TextView tviNroPedido;
+    @InjectView(R.id.tviTipoComp) TextView tviTipoComp;
+    @InjectView(R.id.tviTotal) TextView tviTotal;
+    @InjectView(R.id.eteEfectivo) TextView eteEfectivo;
+    @InjectView(R.id.eteVuelto) TextView eteVuelto;
+    @InjectView(R.id.rlayLoading) View rlayLoading;
+
+    private PedidoEntity pedido;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detalle_pedido);
+        ButterKnife.inject(this);
+
+        pedido = (PedidoEntity) getIntent().getSerializableExtra("pedido");
+        rlayLoading.setVisibility(View.VISIBLE);
+        connectGet(getString(R.string.url_detalle_pedido) + pedido.getCodPedido(), StaticData.DETALLE_PEDIDO);
+
+    }
+
+
+    private void setData(final List<DetallePedidoEntity> lista){
+
+        tviNroPedido.setText("N° Pedido" + pedido.getCodPedido());
+        tviTipoComp.setText("Comprobante de pago: " + pedido.getTipoComprobante());
+
+        DetallePedidoAdapter adapter = new DetallePedidoAdapter(getApplicationContext(), lista);
+        lviItemsAdded.setAdapter(adapter);
+        lviItemsAdded.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Dialog dialogOk = new CustomDialog().descriptionDialog(getApplicationContext(),
+                        lista.get(i).getDescripcionMedicamento());
+                dialogOk.show();
+            }
+        });
+
+        tviTotal.setText("Precio Total S/." + pedido.getMontoTotal());
+        eteEfectivo.setText(""+pedido.getMontoCancelar());
+        eteVuelto.setText(""+(pedido.getMontoCancelar()-pedido.getMontoTotal()));
+
+    }
+
+    @Override
+    protected void onRESTResultado(int code, String result, int accion) {
+        HttpCode codigo = HttpCode.forValue(code);
+        rlayLoading.setVisibility(View.GONE);
+
+        switch (codigo) {
+            case OK:
+                try {
+                    final ResponseDetallePedido response = new Gson().fromJson(result, ResponseDetallePedido.class);
+
+                    if(response.isSuccess()){
+                        setData(response.getLista());
+                    }else{
+                        Toast.makeText(getApplicationContext(), response.getMensaje(), Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
+                }catch (Exception e){
+                    Log.e(TAG, e.getMessage());
+                }
+                break;
+            case BAD_REQUEST:
+                generalError("BAD REQUEST");
+                break;
+            case ERROR:
+                generalError("ERROR");
+                break;
+            case TIMEOUT:
+                generalError("TIME OUT");
+                break;
+            default:
+                generalError("DEFAULT");
+                break;
+        }
+    }
+
+
+}

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.http.HttpMethod;
 import com.alvardev.demos.shopmedical.http.RestJsonService;
@@ -104,6 +105,7 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
 
     public void generalError(String msn){
         Log.e("HttpClient",msn);
+        Toast.makeText(getApplicationContext(), "Fuera de Servicio" , Toast.LENGTH_SHORT).show();
     }
 
     public String getPreference(String llave) {

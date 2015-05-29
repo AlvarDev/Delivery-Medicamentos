@@ -19,7 +19,10 @@
 
     <string name="temp_user">sandysv</string>
     <string name="temp_pas">sistemas</string>
-    
+
+
+
+
     <!--Register-->
     <string name="s_register">Registrar Cliente</string>
     <string name="s_dni">*DNI</string>
@@ -87,8 +90,21 @@
     <string name="title_activity_ruc">RUCActivity</string>
     <string name="s_comprobante_factura">Comprobante de Pago Factura</string>
     <string name="s_ingrese_ruc">*Ingrese su RUC por favor</string>
-    <string name="s_current_version">V. 0.7</string>
+    <string name="s_current_version">V. 0.8</string>
 
+
+    <!-- Sintomas Frecuentes-->
+    <string name="t_agotamiento">Agotamiento</string>
+    <string name="t_cabeza">Dolor de Cabeza</string>
+    <string name="t_estomago">Dolor Estomacal</string>
+    <string name="t_muscular">Dolor Muscular</string>
+    <string name="t_resfriado">Resfriado</string>
+    <string name="t_estre">Estreñimiento</string>
+    <string name="t_tos">Tos</string>
+    <string name="t_migranha">Migraña</string>
+
+    <!-- Detalle Pedido-->
+    <string name="title_activity_detalle_pedido">Detalle de Pedido</string>
 
 
 </resources>

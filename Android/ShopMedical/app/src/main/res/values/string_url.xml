@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="url_login">http://farmaciaa.jelasticlw.com.br/loginAndroid</string>
-    <string name="url_get_distritos">http://farmaciaa.jelasticlw.com.br/distrito</string>
-    <string name="url_get_dni">http://farmaciaa.jelasticlw.com.br/validaDNI?dni=</string>
-    <string name="url_post_register">http://farmaciaa.jelasticlw.com.br/regUserA</string>
-    <string name="url_update_user">http://farmaciaa.jelasticlw.com.br/editUserA</string>
-    <string name="url_search">http://farmaciaa.jelasticlw.com.br/searchMedxNom?</string>
-    <string name="url_get_pedidos_proceso">http://farmaciaa.jelasticlw.com.br/buscarPedEnProdA?codUsuario=</string>
-    <string name="url_get_pedido_historial">http://farmaciaa.jelasticlw.com.br/historialPedA?codUsuario=</string>
-    <string name="url_register_pedido">​http://farmaciaa.jelasticlw.com.br/carrito</string>
-    <string name="url_recovery_password">http://farmaciaa.jelasticlw.com.br/recuperaClave?correo=</string>
-    <string name="url_get_ruc">http://farmaciaa.jelasticlw.com.br/validaRUC?ruc=</string>
+    <string name="url_login">http://farmaciaaa.jelasticlw.com.br/loginAndroid</string>
+    <string name="url_get_distritos">http://farmaciaaa.jelasticlw.com.br/distrito</string>
+    <string name="url_get_dni">http://farmaciaaa.jelasticlw.com.br/validaDNI?dni=</string>
+    <string name="url_post_register">http://farmaciaaa.jelasticlw.com.br/regUserA</string>
+    <string name="url_update_user">http://farmaciaaa.jelasticlw.com.br/editUserA</string>
+    <string name="url_search">http://farmaciaaa.jelasticlw.com.br/searchMedxNom?</string>
+    <string name="url_get_pedidos_proceso">http://farmaciaaa.jelasticlw.com.br/buscarPedEnProdA?codUsuario=</string>
+    <string name="url_get_pedido_historial">http://farmaciaaa.jelasticlw.com.br/historialPedA?codUsuario=</string>
+    <string name="url_register_pedido">​http://farmaciaaa.jelasticlw.com.br/carrito</string>
+    <string name="url_recovery_password">http://farmaciaaa.jelasticlw.com.br/recuperaClave?correo=</string>
+    <string name="url_get_ruc">http://farmaciaaa.jelasticlw.com.br/validaRUC?ruc=</string>
+    <string name="url_detalle_pedido">http://farmaciaaa.jelasticlw.com.br/buscarDetPedA?codPedido=</string>
 </resources>
