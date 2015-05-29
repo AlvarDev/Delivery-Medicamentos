@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,14 @@ public class RUCActivity extends BaseActionBarActivity{
 
     private static final String TAG = "RUCActivity";
     @InjectView(R.id.eteRUC) EditText eteRUC;
-    @InjectView(R.id.btnGetRUC) Button btnGetRUC;
+    @InjectView(R.id.btnValidateRUC) Button btnValidateRUC;
+    @InjectView(R.id.llaValidate) LinearLayout llaValidate;
+    @InjectView(R.id.tviRazonSocial) TextView tviRazonSocial;
+    @InjectView(R.id.tviNombreComercial) TextView tviNombreComercial;
+    @InjectView(R.id.tviDireccion) TextView tviDireccion;
+    @InjectView(R.id.btnBackRUC) Button btnBackRUC;
+
+    @InjectView(R.id.btnSendPedidoRUC) Button btnSendPedidoRUC;
     @InjectView(R.id.rlayLoading) View rlayLoading;
 
     private double total;
@@ -49,16 +57,32 @@ public class RUCActivity extends BaseActionBarActivity{
         cancelar = getIntent().getDoubleExtra("cancelar",0);
         //lastnumber = "";
 
-
-        btnGetRUC.setOnClickListener(new View.OnClickListener() {
+        btnValidateRUC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String rucTemp = eteRUC.getText().toString();
                 if(validateRUC(rucTemp)){
                     ruc = rucTemp;
                     rlayLoading.setVisibility(View.VISIBLE);
-                    connectGet(getString(R.string.url_get_ruc)+ruc, StaticData.VALIDAR_RUC);
+                    connectGet(getString(R.string.url_get_ruc) + ruc, StaticData.VALIDAR_RUC);
                 }
+            }
+        });
+
+        btnBackRUC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eteRUC.setText("");
+                eteRUC.setEnabled(true);
+                llaValidate.setVisibility(View.GONE);
+                btnValidateRUC.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnSendPedidoRUC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                enviarPedido();
             }
         });
 
@@ -110,7 +134,7 @@ public class RUCActivity extends BaseActionBarActivity{
 
             try {
                 rlayLoading.setVisibility(View.VISIBLE);
-                connectPost("http://farmaciaa.jelasticlw.com.br/carrito",
+                connectPost("http://farmaciaaa.jelasticlw.com.br/carrito",
                         new JSONObject(new Gson().toJson(send)),
                         StaticData.CARRITO_DE_COMPRAS);
 
@@ -169,10 +193,19 @@ public class RUCActivity extends BaseActionBarActivity{
 
                             if(rucResp.isSuccess()){
 
-                                Toast.makeText(getApplicationContext(),
+                                btnValidateRUC.setVisibility(View.GONE);
+                                llaValidate.setVisibility(View.VISIBLE);
+                                eteRUC.setEnabled(false);
+
+                                tviRazonSocial.setText(rucResp.getObject().getRazonSocial());
+                                tviNombreComercial.setText(rucResp.getObject().getNombreComercial());
+                                tviDireccion.setText(rucResp.getObject().getDireccion());
+
+
+                                /*Toast.makeText(getApplicationContext(),
                                         rucResp.getObject().getRazonSocial()+"",
                                         Toast.LENGTH_SHORT).show();
-                                enviarPedido();
+                                enviarPedido();*/
                             }else{
                                 Toast.makeText(getApplicationContext(),
                                         rucResp.getMensaje(),

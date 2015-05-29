@@ -1,46 +1,98 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context="com.alvardev.demos.shopmedical.RUCActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/s_register"
-            android:textSize="21sp"
-            android:padding="16dp"
-            android:textColor="@color/bg_boton"
-            android:gravity="center"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            style="@style/TextViewStyle"
-            android:textColor="@color/txt_color"
-            android:text="@string/s_ingrese_ruc"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/b_validar_ruc"
+                android:textSize="21sp"
+                android:padding="16dp"
+                android:textColor="@color/bg_boton"
+                android:gravity="center"/>
 
-        <EditText
-            android:id="@+id/eteRUC"
-            style="@style/EditTextStyle"
-            android:inputType="number"
-            android:maxLength="11"/>
+            <TextView
+                style="@style/TextViewStyle"
+                android:textColor="@color/txt_color"
+                android:text="@string/s_ingrese_ruc"/>
 
-        <Button
-            android:id="@+id/btnGetRUC"
-            android:text="@string/btn_aceptar"
-            style="@style/ButtonStyle"/>
+            <EditText
+                android:id="@+id/eteRUC"
+                style="@style/EditTextStyle"
+                android:inputType="number"
+                android:maxLength="11"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnValidateRUC"
+                android:text="@string/b_validar_ruc"
+                style="@style/ButtonStyle"/>
 
-    <include
-        android:id="@+id/rlayLoading"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        layout="@layout/layout_loading"
-        android:visibility="gone"
-        android:focusableInTouchMode="true"/>
-</RelativeLayout>
+            <LinearLayout
+                android:id="@+id/llaValidate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btnBackRUC"
+                    android:text="@string/b_validar_ruc_back"
+                    style="@style/ButtonStyle"/>
+
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:text="@string/s_razon_social"/>
+
+                <TextView
+                    android:id="@+id/tviRazonSocial"
+                    style="@style/TextViewStyle"
+                    android:textColor="@color/txt_color"/>
+
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:text="@string/s_nombre_comercial"/>
+
+                <TextView
+                    android:id="@+id/tviNombreComercial"
+                    style="@style/TextViewStyle"
+                    android:textColor="@color/txt_color"/>
+
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:text="@string/s_direccion_ruc"/>
+
+                <TextView
+                    android:id="@+id/tviDireccion"
+                    style="@style/TextViewStyle"
+                    android:textColor="@color/txt_color"/>
+
+                <Button
+                    android:id="@+id/btnSendPedidoRUC"
+                    android:text="@string/b_enviar_pedido"
+                    style="@style/ButtonStyle"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/rlayLoading"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/layout_loading"
+            android:visibility="gone"
+            android:focusableInTouchMode="true"/>
+    </RelativeLayout>
+</ScrollView>
