@@ -32,6 +32,8 @@ public class RegisterActivity extends BaseActionBarActivity {
     @InjectView(R.id.btnSaveRegister) Button btnSaveRegister;
     @InjectView(R.id.llaData) LinearLayout llaData;
     @InjectView(R.id.etedni) EditText etedni;
+    @InjectView(R.id.btnValidateDNI) Button btnValidateDNI;
+
     @InjectView(R.id.tviName) TextView tviName;
     @InjectView(R.id.tviLastName) TextView tviLastName;
 
@@ -40,6 +42,8 @@ public class RegisterActivity extends BaseActionBarActivity {
     //@InjectView(R.id.eteDireccion) EditText eteDireccion;
     @InjectView(R.id.eteCorreo) EditText eteCorreo;
     @InjectView(R.id.eteTelefono) EditText eteTelefono;
+
+    @InjectView(R.id.rlayLoading) View rlayLoading;
 
 
     //private final int GET_DISTRITOS = 100;
@@ -67,7 +71,8 @@ public class RegisterActivity extends BaseActionBarActivity {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
                     String dni = etedni.getText().toString();
                     if(dni.length()==8) {
-                        connectGet(getString(R.string.url_get_dni)+dni, GET_DNI);
+                        rlayLoading.setVisibility(View.VISIBLE);
+                        connectGet(getString(R.string.url_get_dni) + dni, GET_DNI);
                     }else{
                         Log.i(TAG,"Ingresa 8 digitos");
                         Toast.makeText(getApplicationContext(), "Ingresa 8 digitos", Toast.LENGTH_SHORT).show();
@@ -75,6 +80,20 @@ public class RegisterActivity extends BaseActionBarActivity {
                 }
 
                 return false;
+            }
+        });
+
+        btnValidateDNI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String dni = etedni.getText().toString();
+                if(dni.length()==8) {
+                    rlayLoading.setVisibility(View.VISIBLE);
+                    connectGet(getString(R.string.url_get_dni)+dni, GET_DNI);
+                }else{
+                    Log.i(TAG,"Ingresa 8 digitos");
+                    Toast.makeText(getApplicationContext(), "Ingresa 8 digitos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -189,6 +208,7 @@ public class RegisterActivity extends BaseActionBarActivity {
     @Override
     protected void onRESTResultado(int code, String result, int accion) {
         HttpCode codigo = HttpCode.forValue(code);
+        rlayLoading.setVisibility(View.GONE);
 
         switch (codigo) {
             case OK:
@@ -210,6 +230,7 @@ public class RegisterActivity extends BaseActionBarActivity {
                             String tmp = new Gson().toJson(response.getObject());
                             user = new Gson().fromJson(tmp, UserEntity.class);
                             setName(user);
+                            btnValidateDNI.setVisibility(View.GONE);
                             llaData.setVisibility(View.VISIBLE);
                             Toast.makeText(getApplicationContext(), "Datos encontrados", Toast.LENGTH_SHORT).show();
                         }else{

@@ -167,11 +167,6 @@ public class DashboardActivity extends BaseActionBarActivity
                         if(!carString.isEmpty()){
                             CarEntity car = new Gson().fromJson(carString, CarEntity.class);
                             bundle.putSerializable("car", car);
-                            String query = getPreference("lastSearch");
-                            connectGet(getString(R.string.url_search)+"codSucursal=1"+
-                                    "&medicamento="+query, StaticData.SEARCH_RESULT);
-                            rlayLoading.setVisibility(View.VISIBLE);
-
                             new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
                         }else{
                             new ChangeFragmentsTask(null).execute(position);
@@ -234,6 +229,7 @@ public class DashboardActivity extends BaseActionBarActivity
             super.onPostExecute(result);
             closeDrawer(position);
             setTitle(position);
+
         }
 
     }
@@ -266,6 +262,7 @@ public class DashboardActivity extends BaseActionBarActivity
                 break;
             case  StaticData.SEARCH_RESULT:
                 getSupportActionBar().setTitle("Buscar Medicamentos");
+
                 //getSupportActionBar().setIcon(R.drawable.buscar_medicamento);
 
             default:

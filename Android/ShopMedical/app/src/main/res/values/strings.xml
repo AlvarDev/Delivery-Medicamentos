@@ -26,6 +26,7 @@
     <!--Register-->
     <string name="s_register">Registrar Cliente</string>
     <string name="s_dni">*DNI</string>
+    <string name="b_validate_dni">Validar DNI</string>
     <string name="s_name">*Nombre</string>
     <string name="s_latname">*Apellidos</string>
     <string name="s_user">*Usuario</string>

@@ -261,6 +261,18 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //Log.i(TAG,"Enter Here");
+        String lastSearch = getPreference("lastSearch");
+        if(!lastSearch.isEmpty()){
+            mListener.searchMedicine(lastSearch,"1");
+        }
+
+
+    }
+
+    @Override
     public void getResultSearch(List<MedicamentoEntity> medi) {
         setResultList(medi);
     }
