@@ -3,6 +3,7 @@ package com.alvardev.demos.shopmedical;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -46,6 +47,9 @@ public class DetallePedidoActivity extends BaseActionBarActivity {
         setContentView(R.layout.activity_detalle_pedido);
         ButterKnife.inject(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         pedido = (PedidoEntity) getIntent().getSerializableExtra("pedido");
         rlayLoading.setVisibility(View.VISIBLE);
         connectGet(getString(R.string.url_detalle_pedido) + pedido.getCodPedido(), StaticData.DETALLE_PEDIDO);
@@ -70,8 +74,8 @@ public class DetallePedidoActivity extends BaseActionBarActivity {
         });*/
 
         tviTotal.setText("Precio Total S/." + pedido.getMontoTotal());
-        eteEfectivo.setText(""+pedido.getMontoCancelar());
-        eteVuelto.setText(""+(pedido.getMontoCancelar()-pedido.getMontoTotal()));
+        eteEfectivo.setText("" + pedido.getMontoCancelar());
+        eteVuelto.setText("" + (pedido.getMontoCancelar() - pedido.getMontoTotal()));
 
     }
 
@@ -109,6 +113,19 @@ public class DetallePedidoActivity extends BaseActionBarActivity {
                 generalError("DEFAULT");
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
