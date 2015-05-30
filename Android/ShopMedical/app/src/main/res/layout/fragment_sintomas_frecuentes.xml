@@ -1,32 +1,24 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:animateLayoutChanges="true"
+    android:layout_height="wrap_content"
     tools:context="com.alvardev.demos.shopmedical.view.fragment.SintomasFrecuentesFragment">
 
-    <RelativeLayout
+
+    <ExpandableListView
+        android:id="@+id/lvExpSintomas"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:padding="16dp"
+        android:scrollbars="none"/>
 
+    <include
+        android:id="@+id/rlayLoading"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        layout="@layout/layout_loading"
+        android:visibility="gone"
+        android:focusableInTouchMode="true"/>
 
-        <LinearLayout
-            android:id="@+id/llaSintomas"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"/>
-
-
-        <include
-            android:id="@+id/rlayLoading"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            layout="@layout/layout_loading"
-            android:visibility="gone"
-            android:focusableInTouchMode="true"/>
-
-
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.R;
+import com.alvardev.demos.shopmedical.adapter.SintomasAdapter;
 import com.alvardev.demos.shopmedical.entity.MedEntity;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SintomasInterface;
@@ -38,7 +40,7 @@ public class SintomasFrecuentesFragment extends Fragment implements SintomasInte
     private DashboardInterface mListener;
     private View view;
 
-    @InjectView(R.id.llaSintomas) LinearLayout llaSintomas;
+    @InjectView(R.id.lvExpSintomas) ExpandableListView lvExpSintomas;
 
     private View currentView;
 
@@ -74,11 +76,21 @@ public class SintomasFrecuentesFragment extends Fragment implements SintomasInte
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mListener.getSintomas();
+    }
+
+    @Override
     public void setSintomas(List<MedEntity> list) {
-        //Log.i(TAG,"cant: "+list.size());
+
+        Toast.makeText(getActivity(),
+                "setting sintomas",
+                Toast.LENGTH_SHORT).show();
+
         List<String> sintomas = new ArrayList<String>();
 
-        Map<String, List<MedEntity> > map = new HashMap<String, List<MedEntity>>();
+        HashMap<String, List<MedEntity>> map = new HashMap<String, List<MedEntity>>();
 
         for(MedEntity med : list){
             String temp = med.getSintoma().trim();
@@ -93,42 +105,12 @@ public class SintomasFrecuentesFragment extends Fragment implements SintomasInte
 
         }
 
-
-
-        for(String key : sintomas){
-            Log.i(TAG, "[" + key + "]");
-            LayoutInflater mInflater = (LayoutInflater)
-                    getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            TextView lay = (TextView) mInflater.inflate(R.layout.row_direction, null);
-            lay.setText(key);
-
-            llaSintomas.addView(lay);
-
-        }
-
-
-
-
-        /*for(String key : map.keySet()){
-
-            Log.i(TAG,"["+key+"]");
-
-            LinearLayout layout = (LinearLayout) getLayoutInflater(null).inflate(R.layout.layout_sintoma, null);
-            Button btnSintoma = (Button) layout.findViewById(R.id.btnSintoma);
-            btnSintoma.setText(key);
-            llaSintomas.addView(layout);
-
-        }*/
+        SintomasAdapter listAdapter = new SintomasAdapter(getActivity(), sintomas, map);
+        lvExpSintomas.setAdapter(listAdapter);
 
     }
 
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mListener.getSintomas();
-    }
 
     @Override
     public void onAttach(Activity activity) {
