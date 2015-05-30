@@ -31,6 +31,7 @@ import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
 import com.alvardev.demos.shopmedical.entity.response.ResponsePedido;
 import com.alvardev.demos.shopmedical.entity.response.ResponseSearch;
+import com.alvardev.demos.shopmedical.entity.response.ResponseSintomas;
 import com.alvardev.demos.shopmedical.http.HttpCode;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
@@ -47,6 +48,7 @@ import com.alvardev.demos.shopmedical.view.interfaces.PedidoInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.PedidosInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SearchInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.SintomasInterface;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -130,15 +132,6 @@ public class DashboardActivity extends BaseActionBarActivity
 
         if (savedInstanceState == null) {
             currentSelected = StaticData.SINTOMAS_FRECUENTES;
-            /*if(!carString.isEmpty()){
-                CarEntity car = new Gson().fromJson(carString, CarEntity.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("car",car);
-                new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
-            }else {
-                new ChangeFragmentsTask(null).execute(StaticData.BUSCAR_MEDICAMENTO);
-            }*/
             new ChangeFragmentsTask(null).execute(StaticData.SINTOMAS_FRECUENTES);
         }
     }
@@ -414,6 +407,17 @@ public class DashboardActivity extends BaseActionBarActivity
                                     Toast.LENGTH_SHORT).show();
                         }
                         break;
+                    case StaticData.SINTOMAS_FRECUENTES:
+                        ResponseSintomas responseSintomas = new Gson().fromJson(result, ResponseSintomas.class);
+                        if(responseSintomas.isSuccess()){
+                            SintomasInterface mListenerSintoma  = sintomasFrecuentesFragment;
+                            mListenerSintoma.setSintomas(responseSintomas.getLista());
+                        }else{
+                            Toast.makeText(getApplicationContext(),
+                                    responseSintomas.getMensaje(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        break;
                     case StaticData.PEDIDOS_EN_PROCESO:
 
                         ResponsePedido responsePedidoPro = new Gson().fromJson(result, ResponsePedido.class);
@@ -480,7 +484,7 @@ public class DashboardActivity extends BaseActionBarActivity
     }
 
     @Override
-    public void goToSearchResult(DireccionEntity direccion) {
+    public void goToSearchResultNew(DireccionEntity direccion) {
         CarEntity car = new CarEntity();
         PedidoHeaderEntity header = new PedidoHeaderEntity();
 
@@ -503,6 +507,25 @@ public class DashboardActivity extends BaseActionBarActivity
 
         getSupportActionBar().setTitle("Pedido para: "+direccion.getNombre());
         new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
+    }
+
+    @Override
+    public void goToSearchResultFromSintomas() {
+        carString = getPreference("car");
+        Bundle bundle = new Bundle();
+        if(!carString.isEmpty()){
+            CarEntity car = new Gson().fromJson(carString, CarEntity.class);
+            bundle.putSerializable("car", car);
+            new ChangeFragmentsTask(bundle).execute(StaticData.SEARCH_RESULT);
+        }else{
+            new ChangeFragmentsTask(null).execute(StaticData.BUSCAR_MEDICAMENTO);
+        }
+    }
+
+    @Override
+    public void getSintomas() {
+        rlayLoading.setVisibility(View.VISIBLE);
+        connectGet(getString(R.string.url_sintomas),StaticData.SINTOMAS_FRECUENTES);
     }
 
     @Override

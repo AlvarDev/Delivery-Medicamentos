@@ -107,7 +107,7 @@ public class BuscarMedicamentoFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Log.i(TAG, "pos: " + position);
-                mListener.goToSearchResult(direcciones.get(position));
+                mListener.goToSearchResultNew(direcciones.get(position));
             }
         });
     }
