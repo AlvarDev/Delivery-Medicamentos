@@ -60,14 +60,14 @@ public class DetallePedidoActivity extends BaseActionBarActivity {
 
         DetallePedidoAdapter adapter = new DetallePedidoAdapter(getApplicationContext(), lista);
         lviItemsAdded.setAdapter(adapter);
-        lviItemsAdded.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*lviItemsAdded.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Dialog dialogOk = new CustomDialog().descriptionDialog(getApplicationContext(),
                         lista.get(i).getDescripcionMedicamento());
                 dialogOk.show();
             }
-        });
+        });*/
 
         tviTotal.setText("Precio Total S/." + pedido.getMontoTotal());
         eteEfectivo.setText(""+pedido.getMontoCancelar());
