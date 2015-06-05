@@ -2,14 +2,20 @@ package com.alvardev.demos.shopmedical;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.entity.DireccionEntity;
@@ -30,6 +36,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,17 +50,19 @@ public class AddDirectionActivity extends BaseActionBarActivity
     private static final String TAG = "AddDirectionActivity";
     private final int GET_DISTRITOS = 100;
 
-    @InjectView(R.id.spiDistritos) Spinner spiDistritos;
+    //@InjectView(R.id.spiDistritos) Spinner spiDistritos;
     @InjectView(R.id.eteNameDirection) EditText eteNameDirection;
     @InjectView(R.id.eteDirection) EditText eteDirection;
     @InjectView(R.id.eteReferencia) EditText eteReferencia;
     @InjectView(R.id.btnSaveDirection) Button btnSaveDirection;
+    @InjectView(R.id.searchMap) ImageButton searchMap;
 
     private List<DistritoEntity> listaD;
     private GoogleMap mMap;
     protected GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
     private boolean ready;
+    private boolean directionSet;
 
 
 
@@ -62,8 +71,9 @@ public class AddDirectionActivity extends BaseActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_direction);
         ButterKnife.inject(this);
+        directionSet = false;
         mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map_root)).getMap();
-        connectGet(getString(R.string.url_get_distritos),GET_DISTRITOS);
+        //connectGet(getString(R.string.url_get_distritos),GET_DISTRITOS);
         buildGoogleApiClient();
         setComponents();
 
@@ -82,20 +92,20 @@ public class AddDirectionActivity extends BaseActionBarActivity
         btnSaveDirection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ready){
+                if (ready) {
                     DireccionEntity direction = new DireccionEntity();
                     direction.setNombre(eteNameDirection.getText().toString());
                     direction.setDireccion(eteDirection.getText().toString());
-                    direction.setDistrito(listaD.get(spiDistritos.getSelectedItemPosition()).getCodDistrito());
-                    direction.setLatlong(mLastLocation.getLatitude()+","+mLastLocation.getLongitude());
-                    direction.setReferencia(eteReferencia.getText().toString()+"");
+                    //direction.setDistrito(listaD.get(spiDistritos.getSelectedItemPosition()).getCodDistrito());
+                    direction.setLatlong(mLastLocation.getLatitude() + "," + mLastLocation.getLongitude());
+                    direction.setReferencia(eteReferencia.getText().toString() + "");
 
-                    if(isDirectionOk(direction)){
+                    if (isDirectionOk(direction)) {
                         String direccionesString = getPreference("direcciones");
                         ListDirecciones direcciones = new ListDirecciones();
-                        if(!direccionesString.isEmpty()){
+                        if (!direccionesString.isEmpty()) {
                             direcciones = new Gson().fromJson(direccionesString, ListDirecciones.class);
-                        }else{
+                        } else {
                             Log.i(TAG, "no directions");
                         }
 
@@ -108,10 +118,42 @@ public class AddDirectionActivity extends BaseActionBarActivity
                     }
 
                 }
-
-
             }
         });
+
+
+        searchMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String direction = eteDirection.getText().toString();
+                    Geocoder geocoder = new Geocoder(getBaseContext());
+
+                    List<Address>gotAddresses = geocoder.getFromLocationName(direction + " lima peru", 1);
+
+                    if(gotAddresses.size()>0) {
+                        Address address = gotAddresses.get(0);
+
+                        Location locDir = new Location(mLastLocation);
+                        locDir.setLatitude(address.getLatitude());
+                        locDir.setLongitude(address.getLongitude());
+                        setCurrentLocation(locDir);
+
+                        directionSet = true;
+                    }else{
+                        Toast.makeText(getApplicationContext(),
+                                "No se encontro direccón ",
+                                Toast.LENGTH_SHORT).show();
+                        directionSet = false;
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }
 
 
@@ -120,12 +162,17 @@ public class AddDirectionActivity extends BaseActionBarActivity
         eteNameDirection.setError(null);
         eteDirection.setError(null);
 
+        if(direction.getDireccion().isEmpty()){
+            eteDirection.setError(getString(R.string.error_field));
+            return false;
+        }
+
         if(direction.getNombre().isEmpty()){
             eteNameDirection.setError(getString(R.string.error_field));
             return false;
         }
 
-        if(direction.getDireccion().isEmpty()){
+        if(directionSet){
             eteDirection.setError(getString(R.string.error_field));
             return false;
         }
@@ -141,7 +188,7 @@ public class AddDirectionActivity extends BaseActionBarActivity
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,distritos);
-        spiDistritos.setAdapter(adapter);
+        //spiDistritos.setAdapter(adapter);
     }
 
 
@@ -224,13 +271,16 @@ public class AddDirectionActivity extends BaseActionBarActivity
         try{
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(),location.getLongitude()))      // Sets the center of the map to Mountain View
-                    .zoom(17)                   // Sets the zoom
+                    .zoom(13)                   // Sets the zoom
                     .tilt(30)                   // Sets the tilt of the camera to 30 degrees
                     .build();                   // Creates a CameraPosition from the builder
             if(mMap!=null){
+                mMap.clear();
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))
-                        .title("Tu ubicación"));
+                if(ready){
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))
+                            .title("Tu ubicación"));
+                }
                 ready = true;
             }
         }catch (Exception e){

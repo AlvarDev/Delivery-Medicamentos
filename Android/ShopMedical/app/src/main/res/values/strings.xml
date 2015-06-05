@@ -28,6 +28,7 @@
     <string name="s_dni">*DNI</string>
     <string name="b_validate_dni">Validar DNI</string>
     <string name="s_name">*Nombre</string>
+    <string name="s_name_r">*Alias</string>
     <string name="s_latname">*Apellidos</string>
     <string name="s_user">*Usuario</string>
     <string name="s_password">*Contraseña</string>

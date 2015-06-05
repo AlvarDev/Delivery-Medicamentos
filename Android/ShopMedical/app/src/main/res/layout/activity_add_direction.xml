@@ -1,9 +1,54 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.alvardev.demos.shopmedical.AddDirectionActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/s_direccion"/>
+
+            <EditText
+                android:id="@+id/eteDirection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/txt_color"
+                android:inputType="textPostalAddress"/>
+
+        </LinearLayout>
+
+
+        <ImageButton
+            android:id="@+id/searchMap"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/mapicon"
+            android:background="@color/white"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
+            android:contentDescription="@string/app_name"/>
+
+    </LinearLayout>
 
     <fragment
         android:id="@+id/map_root"
@@ -42,7 +87,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <!--<TextView
                 style="@style/TextViewStyle"
                 android:text="@string/s_distrito"/>
 
@@ -52,23 +97,17 @@
                 android:layout_height="50dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"/>
+                -->
+
             <TextView
                 style="@style/TextViewStyle"
-                android:text="@string/s_name"/>
+                android:text="@string/s_name_r"/>
 
             <EditText
                 android:id="@+id/eteNameDirection"
                 style="@style/EditTextStyle"
                 android:inputType="textPostalAddress"/>
 
-            <TextView
-                style="@style/TextViewStyle"
-                android:text="@string/s_direccion"/>
-
-            <EditText
-                android:id="@+id/eteDirection"
-                style="@style/EditTextStyle"
-                android:inputType="textPostalAddress"/>
             <TextView
                 style="@style/TextViewStyle"
                 android:text="@string/s_referencia"/>
@@ -89,3 +128,10 @@
 
 
 </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+</RelativeLayout>
