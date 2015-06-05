@@ -502,6 +502,7 @@ public class DashboardActivity extends BaseActionBarActivity
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("car",car);
+        bundle.putString("sucursal", direccion.getSucursal());
 
 
 
