@@ -24,9 +24,11 @@ import com.alvardev.demos.shopmedical.entity.ListDirecciones;
 import com.alvardev.demos.shopmedical.entity.SucursalEntity;
 import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
 import com.alvardev.demos.shopmedical.http.HttpCode;
+import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
 import com.alvardev.demos.shopmedical.view.fragment.BuscarMedicamentoFragment;
+import com.alvardev.demos.shopmedical.view.interfaces.SucursalInterface;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -50,7 +52,9 @@ import butterknife.InjectView;
 
 
 public class AddDirectionActivity extends BaseActionBarActivity
-        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+        implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        SucursalInterface{
 
     private static final String TAG = "AddDirectionActivity";
     private final int GET_DISTRITOS = 100;
@@ -320,11 +324,15 @@ public class AddDirectionActivity extends BaseActionBarActivity
                                 if(tempTime<=DURATION_LIMIT){
                                     SucursalEntity finalSucursal = StaticData.getSucursalById(indicator);
                                     direction.setSucursal(finalSucursal.getCodSucursale());
-                                    Toast.makeText(getApplicationContext(),
-                                            "Sucursal Encontrada "+ finalSucursal.getDirection(),
-                                            Toast.LENGTH_SHORT).show();
-                                    Log.i(TAG,"sucursal: "+finalSucursal.getDirection());
-                                    Log.i(TAG,"time: "+(tempTime/60));
+
+                                    String msn = "Sucursal encontrada: "+finalSucursal.getDirection()+
+                                            " - "+finalSucursal.getDistrito();
+
+                                    Dialog dialogOk = new CustomDialog().showFinalSucursal(AddDirectionActivity.this,msn);
+                                    dialogOk.show();
+
+                                    //Log.i(TAG,"sucursal: "+finalSucursal.getDirection());
+                                    //Log.i(TAG,"time: "+(tempTime/60));
                                 }else{
                                     rlayLoading.setVisibility(View.GONE);
                                     Toast.makeText(getApplicationContext(),
@@ -421,5 +429,9 @@ public class AddDirectionActivity extends BaseActionBarActivity
         }
     }
 
+    @Override
+    public void closeAddDirection() {
+        saveDirection();
+    }
 }
 

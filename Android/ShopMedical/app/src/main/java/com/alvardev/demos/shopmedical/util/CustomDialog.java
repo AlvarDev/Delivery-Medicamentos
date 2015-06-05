@@ -16,8 +16,10 @@ import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.LoginActivity;
 import com.alvardev.demos.shopmedical.R;
+import com.alvardev.demos.shopmedical.entity.SucursalEntity;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.SucursalInterface;
 
 public class CustomDialog {
 
@@ -138,6 +140,33 @@ public class CustomDialog {
     }
 
 
+
+    public Dialog showFinalSucursal(final Context context, String msn){
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(msn)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SucursalInterface mListener = (SucursalInterface) context;
+                        mListener.closeAddDirection();
+                    }
+                });
+
+
+        dialog = builder.create();
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                SucursalInterface mListener = (SucursalInterface) context;
+                mListener.closeAddDirection();
+            }
+        });
+
+        return dialog;
+    }
 
 
 
