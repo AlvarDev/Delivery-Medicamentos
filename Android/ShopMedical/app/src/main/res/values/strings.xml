@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Shop Medical</string>
     <string name="s_cero">0</string>
+    <string name="s_buscar_sucursal">Buscando una sucursal cerca a tu ubicación</string>
+    <string name="s_sucursal_not_found">Lo sentimos, no tenemos sucursales cerca a tu ubicación</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -15,7 +17,7 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="title_activity_forget_password">Damm</string>
-    <string name="title_activity_add_direction">AddDirectionActivity</string>
+    <string name="title_activity_add_direction">Agregar Dirección</string>
 
     <string name="temp_user">sandysv</string>
     <string name="temp_pas">sistemas</string>

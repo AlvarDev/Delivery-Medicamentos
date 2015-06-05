@@ -11,4 +11,5 @@
     <color name="verde">#ff009c3a</color>
     <color name="plomo">#ddd</color>
     <color name="rojo">#ffc2070c</color>
+    <color name="bg_black_loading">#d5eaeaea</color>
 </resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_black_loading">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_above="@+id/nameTemp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/app_name"/>
+
+    <TextView
+        android:id="@+id/nameTemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="21sp"
+        android:layout_above="@+id/pgb_cargando"
+        android:textColor="@color/bg_boton"
+        android:gravity="center"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pgb_cargando"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:gravity="center"
+        android:text="@string/s_buscar_sucursal"
+        android:layout_below="@+id/pgb_cargando"
+        android:layout_marginTop="10dp" />
+
+
+</RelativeLayout>

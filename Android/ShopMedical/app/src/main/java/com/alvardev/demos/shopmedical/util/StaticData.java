@@ -5,6 +5,7 @@ import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
 import com.alvardev.demos.shopmedical.entity.PedidoEntity;
+import com.alvardev.demos.shopmedical.entity.SucursalEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,5 +52,19 @@ public class StaticData {
 
         return options;
     }
+
+    public static SucursalEntity getSucursalById(int codSucursak){
+        switch (codSucursak){
+            case 0: return new SucursalEntity("1","Av Aguarico 879","Breña","-12.056789,-77.051527");
+            case 1: return new SucursalEntity("2","Avenida Felipe Salaverry 1049","Jesús María","-12.076267,-77.041948");
+            case 2: return new SucursalEntity("3","Avenida.Bolivar 860","Pueblo Libre","-12.071298,-77.060872");
+            case 3: return new SucursalEntity("4","Avenida Arequipa 2665","San Isidro 15046","-12.091686,-77.033239");
+            case 4: return new SucursalEntity("5","PRONABEC, Arequipa 1935","Lince 15046","-12.083889,-77.034259");
+            case 5: return new SucursalEntity("6","Av República de Panamá 6239","Lima","-12.126689,-77.017820");
+            case 6: return new SucursalEntity("7","Av Los Frutales 1111","Lima","-12.075332,-76.964027");
+            default: return new SucursalEntity("7","Av Los Frutales 1111","Lima","-12.075332,-76.964027");
+        }
+    }
+
 
 }

@@ -48,7 +48,8 @@
         <activity
             android:name=".AddDirectionActivity"
             android:label="@string/title_activity_add_direction"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
         </activity>
 
         <meta-data

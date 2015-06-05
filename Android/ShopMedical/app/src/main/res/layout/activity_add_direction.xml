@@ -1,11 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/white"
     tools:context="com.alvardev.demos.shopmedical.AddDirectionActivity">
@@ -77,61 +82,43 @@
 
 -->
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/s_name_r"/>
 
-            <!--<TextView
-                style="@style/TextViewStyle"
-                android:text="@string/s_distrito"/>
+    <EditText
+        android:id="@+id/eteNameDirection"
+        style="@style/EditTextStyle"
+        android:inputType="textPostalAddress"/>
 
-            <Spinner
-                android:id="@+id/spiDistritos"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"/>
-                -->
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/s_referencia"/>
 
-            <TextView
-                style="@style/TextViewStyle"
-                android:text="@string/s_name_r"/>
+    <EditText
+        android:id="@+id/eteReferencia"
+        style="@style/EditTextStyle"
+        android:inputType="textPostalAddress"/>
 
-            <EditText
-                android:id="@+id/eteNameDirection"
-                style="@style/EditTextStyle"
-                android:inputType="textPostalAddress"/>
+    <Button
+        android:id="@+id/btnSaveDirection"
+        android:text="@string/btn_save"
+        style="@style/ButtonStyle"/>
 
-            <TextView
-                style="@style/TextViewStyle"
-                android:text="@string/s_referencia"/>
-
-            <EditText
-                android:id="@+id/eteReferencia"
-                style="@style/EditTextStyle"
-                android:inputType="textPostalAddress"/>
-
-            <Button
-                android:id="@+id/btnSaveDirection"
-                android:text="@string/btn_save"
-                style="@style/ButtonStyle"/>
-
-
-        </LinearLayout>
-    </ScrollView>
 
 
 </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
+    <include
+        android:id="@+id/rlayLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_buscando_sucursales"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusableInTouchMode="true"/>
 
 </RelativeLayout>
+
+</ScrollView>

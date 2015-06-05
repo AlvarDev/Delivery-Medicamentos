@@ -9,6 +9,7 @@ public class DireccionEntity implements Serializable{
     private int distrito;
     private String latlong;
     private String referencia;
+    private String sucursal;
 
 
     public DireccionEntity() {
@@ -55,6 +56,14 @@ public class DireccionEntity implements Serializable{
         this.referencia = referencia;
     }
 
+    public String getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(String sucursal) {
+        this.sucursal = sucursal;
+    }
+
     @Override
     public String toString() {
         return "DireccionEntity{" +
@@ -63,6 +72,7 @@ public class DireccionEntity implements Serializable{
                 ", distrito=" + distrito +
                 ", latlong='" + latlong + '\'' +
                 ", referencia='" + referencia + '\'' +
+                ", sucursal='" + sucursal + '\'' +
                 '}';
     }
 }
