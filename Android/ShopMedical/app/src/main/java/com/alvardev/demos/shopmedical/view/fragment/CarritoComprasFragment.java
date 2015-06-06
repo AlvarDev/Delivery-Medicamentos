@@ -23,6 +23,9 @@ import com.alvardev.demos.shopmedical.entity.CarEntity;
 import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.StaticData;
+import com.alvardev.demos.shopmedical.view.interfaces.CarritoAnswerInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.CarritoInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -30,7 +33,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class CarritoComprasFragment extends Fragment {
+public class CarritoComprasFragment extends Fragment implements CarritoAnswerInterface{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -40,6 +43,9 @@ public class CarritoComprasFragment extends Fragment {
 
     private MedicamentosAdapter adapter;
     private double total;
+    private double efectivo;
+
+    private CarritoInterface mListener;
 
     @InjectView(R.id.lviItemsAdded) ListView lviItemsAdded;
     @InjectView(R.id.tviTotal) TextView tviTotal;
@@ -158,9 +164,11 @@ public class CarritoComprasFragment extends Fragment {
             public void onClick(View view) {
                 if (validatePedido(eteEfectivo.getText().toString())) {
                     String efec = eteEfectivo.getText().toString();
-                    double efectivo = Double.parseDouble(efec);
-                    Dialog dialogOk = new CustomDialog().selectDocumentDialog(getActivity(), total, efectivo);
-                    dialogOk.show();
+                    efectivo = Double.parseDouble(efec);
+
+                    mListener.validarPedidosPendientes();
+                    //Dialog dialogOk = new CustomDialog().selectDocumentDialog(getActivity(), total, efectivo);
+                    //dialogOk.show();
                 }
             }
         });
@@ -210,5 +218,35 @@ public class CarritoComprasFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void validateEnvio(boolean answer) {
+        if(answer){
+            Toast.makeText(getActivity(),
+                    "Tiene un pedido en proceso",
+                    Toast.LENGTH_SHORT).show();
+        }else{
+            Dialog dialogOk = new CustomDialog().selectDocumentDialog(getActivity(), total, efectivo);
+            dialogOk.show();
+        }
+    }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (CarritoInterface) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement DashboardInterface");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
 }

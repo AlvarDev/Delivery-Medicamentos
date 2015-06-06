@@ -13,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.adapter.DetallePedidoAdapter;
+import com.alvardev.demos.shopmedical.entity.CarSendEntity;
 import com.alvardev.demos.shopmedical.entity.DetallePedidoEntity;
+import com.alvardev.demos.shopmedical.entity.ItemPedidoEntity;
 import com.alvardev.demos.shopmedical.entity.PedidoEntity;
 import com.alvardev.demos.shopmedical.entity.response.ResponseDetallePedido;
 import com.alvardev.demos.shopmedical.http.HttpCode;
@@ -23,6 +25,7 @@ import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
 import com.alvardev.demos.shopmedical.view.interfaces.CancelarPedidoInterface;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -54,9 +57,13 @@ public class DetallePedidoActivity extends BaseActionBarActivity implements Canc
         getSupportActionBar().setHomeButtonEnabled(true);
 
         pedido = (PedidoEntity) getIntent().getSerializableExtra("pedido");
-        rlayLoading.setVisibility(View.VISIBLE);
-        connectGet(getString(R.string.url_detalle_pedido) + pedido.getCodPedido(), StaticData.DETALLE_PEDIDO);
 
+        if(pedido.getCodPedido().equals("En proceso...")){
+            setDataTemp();
+        }else {
+            rlayLoading.setVisibility(View.VISIBLE);
+            connectGet(getString(R.string.url_detalle_pedido) + pedido.getCodPedido(), StaticData.DETALLE_PEDIDO);
+        }
     }
 
 
@@ -81,6 +88,32 @@ public class DetallePedidoActivity extends BaseActionBarActivity implements Canc
         eteVuelto.setText("" + (pedido.getMontoCancelar() - pedido.getMontoTotal()));
 
     }
+
+    private void setDataTemp(){
+        tviNroPedido.setText("N° Pedido" + pedido.getCodPedido());
+        tviTipoComp.setText("Comprobante de pago: " + pedido.getTipoComprobante());
+
+        CarSendEntity tempCar = new Gson().fromJson(getPreference("send"),CarSendEntity.class);
+
+        List<DetallePedidoEntity> lista = new ArrayList<DetallePedidoEntity>();
+
+        for(ItemPedidoEntity item : tempCar.getDetalle()){
+            DetallePedidoEntity detalle = new DetallePedidoEntity();
+            detalle.setCantidad(item.getCantidad());
+            detalle.setPrecioTotal(item.getPrecioTotal());
+            detalle.setMedicamentoxUnidad(item.getNombreMedicamento());
+            detalle.setMedicamentoxPresentacion(item.getPresentacion());
+        }
+
+        DetallePedidoAdapter adapter = new DetallePedidoAdapter(getApplicationContext(), lista);
+        lviItemsAdded.setAdapter(adapter);
+
+
+        tviTotal.setText("Precio Total S/." + pedido.getMontoTotal());
+        eteEfectivo.setText("" + pedido.getMontoCancelar());
+        eteVuelto.setText("" + (pedido.getMontoCancelar() - pedido.getMontoTotal()));
+    }
+
 
     @Override
     protected void onRESTResultado(int code, String result, int accion) {

@@ -48,6 +48,8 @@ import com.alvardev.demos.shopmedical.view.fragment.CarritoComprasFragment;
 import com.alvardev.demos.shopmedical.view.fragment.PedidosFragment;
 import com.alvardev.demos.shopmedical.view.fragment.SearchResultFragment;
 import com.alvardev.demos.shopmedical.view.fragment.SintomasFrecuentesFragment;
+import com.alvardev.demos.shopmedical.view.interfaces.CarritoAnswerInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.CarritoInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.PedidoInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.PedidosInterface;
@@ -70,7 +72,7 @@ import butterknife.InjectView;
 
 public class DashboardActivity extends BaseActionBarActivity
         implements SesionDialogInterface, DashboardInterface,
-        PedidoDialogFragment.PedidoDialogListener, RUCInterface{
+        PedidoDialogFragment.PedidoDialogListener, RUCInterface, CarritoInterface{
 
     private static final String TAG = "DashboardActivity";
     private DrawerLayout mDrawerLayout;
@@ -146,6 +148,17 @@ public class DashboardActivity extends BaseActionBarActivity
         }
     }
 
+    @Override
+    public void validarPedidosPendientes() {
+
+        if(getPreference("send").isEmpty()) {
+            rlayLoading.setVisibility(View.VISIBLE);
+            connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO_VALIDAR);
+        }else{
+            CarritoAnswerInterface mListenerCar  = carritoComprasFragment;
+            mListenerCar.validateEnvio(true);
+        }
+    }
 
 
     /* The click listner for ListView in the navigation drawer */
@@ -438,11 +451,18 @@ public class DashboardActivity extends BaseActionBarActivity
                             mListener.getPedidosPro(responsePedidoPro.getLista());
                         }else{
                             if(!getPreference("send").isEmpty()){
+
                                 CarSendEntity tempCar = new Gson().fromJson(getPreference("send"),CarSendEntity.class);
                                 List<PedidoEntity> pedidos = new ArrayList<PedidoEntity>();
+
                                 PedidoEntity pedido = new PedidoEntity();
                                 pedido.setCodPedido("En proceso...");
                                 pedido.setMontoTotal(tempCar.getPedido().getMontoTotal());
+                                pedido.setTipoComprobante(tempCar.getPedido().getTipoComprobante());
+                                pedido.setFechaPedido("--");
+                                pedido.setHoraPedido("--");
+                                pedido.setMontoCancelar(tempCar.getPedido().getMontoCancelar());
+
                                 pedidos.add(pedido);
 
                                 PedidosInterface mListener  = pedidosProcesoFragment;
@@ -455,6 +475,14 @@ public class DashboardActivity extends BaseActionBarActivity
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
+
+                        break;
+                    case StaticData.PEDIDOS_EN_PROCESO_VALIDAR:
+
+                        ResponsePedido responsePedidoProValidar = new Gson().fromJson(result, ResponsePedido.class);
+                            CarritoAnswerInterface mListenerCar  = carritoComprasFragment;
+                            mListenerCar.validateEnvio(responsePedidoProValidar.isSuccess());
+
 
                         break;
 
@@ -593,7 +621,9 @@ public class DashboardActivity extends BaseActionBarActivity
                         item.setCodCantidadxPresentacion(med.getCodCantxPresentacion());
                         item.setCodUnidad(med.getCodUnidad());
                         item.setCantidad(med.getCantidad());
-                        item.setPrecioTotal(med.getPrecio()*med.getCantidad());
+                        item.setPrecioTotal(med.getPrecio() * med.getCantidad());
+                        item.setNombreMedicamento(med.getMedicamentoxUnidad());
+                        item.setPresentacion(med.getMedicamentoxPresentacion());
 
                         send.getDetalle().add(item);
                     }

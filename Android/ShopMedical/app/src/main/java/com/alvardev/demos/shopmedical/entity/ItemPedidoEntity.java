@@ -11,8 +11,26 @@ public class ItemPedidoEntity implements Serializable{
     private int codUnidad;
     private int cantidad;
     private double precioTotal;
+    private String nombreMedicamento;
+    private String presentacion;
 
     public ItemPedidoEntity() {
+    }
+
+    public String getPresentacion() {
+        return presentacion;
+    }
+
+    public void setPresentacion(String presentacion) {
+        this.presentacion = presentacion;
+    }
+
+    public String getNombreMedicamento() {
+        return nombreMedicamento;
+    }
+
+    public void setNombreMedicamento(String nombreMedicamento) {
+        this.nombreMedicamento = nombreMedicamento;
     }
 
     public String getCodPedido() {

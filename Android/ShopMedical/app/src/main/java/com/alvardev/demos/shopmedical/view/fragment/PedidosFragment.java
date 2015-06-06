@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.DetallePedidoActivity;
 import com.alvardev.demos.shopmedical.R;
@@ -83,12 +84,16 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
         lviPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (!pedidos.get(i).getCodPedido().equals("En proceso...")) {
+
+                if (pedidos.get(i).getCodPedido().equals("En proceso...") && getPreference("send").isEmpty()) {
+                    Log.i(TAG, "El pedido fue cancelado");
+                    Toast.makeText(getActivity(),
+                            "El pedido fue cancelado",
+                            Toast.LENGTH_SHORT).show();
+                } else {
                     Intent intent = new Intent(getActivity(), DetallePedidoActivity.class);
                     intent.putExtra("pedido", pedidos.get(i));
                     startActivity(intent);
-                } else if(pedidos.get(i).getCodPedido().equals("En proceso...") && getPreference("send").isEmpty()) {
-                    Log.i(TAG,"El pedido fue cancelado");
                 }
             }
         });

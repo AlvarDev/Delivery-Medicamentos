@@ -20,6 +20,7 @@ public class StaticData {
     public static final int CARRITO_DE_COMPRAS = 2;
     public static final int SINTOMAS_FRECUENTES = 3;
     public static final int PEDIDOS_EN_PROCESO = 4;
+    public static final int PEDIDOS_EN_PROCESO_VALIDAR = 40;
     public static final int HISTORIAL_DE_PEDIDO = 5;
     public static final int ACTUALIZAR_INFORMACION = 6;
     public static final int CERRAR_SESION = 7;
