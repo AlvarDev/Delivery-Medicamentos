@@ -451,7 +451,11 @@ public class DashboardActivity extends BaseActionBarActivity
                     case StaticData.CARRITO_DE_COMPRAS:
                         ResponseObject responseCar = new Gson().fromJson(result,ResponseObject.class);
                         if(responseCar.isSuccess()){
-                            Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
+
+                            //Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
+                            Dialog dialogOk = new CustomDialog().showMessage(DashboardActivity.this,
+                                    "Pedido enviado, tiene 5 minutos para cancelar su pedido");
+                            dialogOk.show();
                             savePreference("car", null);
                             //savePreference("lastNumber",lastnumber);
                             rlayLoading.setVisibility(View.VISIBLE);
@@ -605,7 +609,10 @@ public class DashboardActivity extends BaseActionBarActivity
         super.onResume();
         String doneRUC = getPreference("doneRUC");
         if(!doneRUC.isEmpty()){
-            Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
+            Dialog dialogOk = new CustomDialog().showMessage(DashboardActivity.this,
+                    "Pedido enviado, tiene 5 minutos para cancelar su pedido");
+            dialogOk.show();
+            //Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
             savePreference("car", null);
             savePreference("doneRUC", null);
             rlayLoading.setVisibility(View.VISIBLE);

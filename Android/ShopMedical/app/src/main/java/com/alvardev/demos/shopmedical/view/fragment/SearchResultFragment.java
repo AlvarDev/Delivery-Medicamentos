@@ -269,6 +269,7 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
         //Log.i(TAG,"Enter Here");
         String lastSearch = getPreference("lastSearch");
         if(!lastSearch.isEmpty()){
+            sucursal = sucursal == null ? "1":sucursal;
             mListener.searchMedicine(lastSearch,sucursal);
         }
 

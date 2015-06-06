@@ -43,7 +43,8 @@
         </activity>
         <activity
             android:name=".ForgetPasswordActivity"
-            android:label="@string/title_activity_forget_password" >
+            android:label="@string/title_activity_forget_password"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AddDirectionActivity"
@@ -58,11 +59,13 @@
 
         <activity
             android:name=".RUCActivity"
-            android:label="@string/title_activity_ruc" >
+            android:label="@string/title_activity_ruc"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".DetallePedidoActivity"
-            android:label="@string/title_activity_detalle_pedido" >
+            android:label="@string/title_activity_detalle_pedido"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

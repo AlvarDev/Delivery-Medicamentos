@@ -30,7 +30,7 @@
     <string name="s_dni">*DNI</string>
     <string name="b_validate_dni">Validar DNI</string>
     <string name="s_name">*Nombre</string>
-    <string name="s_name_r">*Alias</string>
+    <string name="s_name_r">*Nombre de ubicación</string>
     <string name="s_latname">*Apellidos</string>
     <string name="s_user">*Usuario</string>
     <string name="s_password">*Contraseña</string>
@@ -113,6 +113,7 @@
 
     <!-- Detalle Pedido-->
     <string name="title_activity_detalle_pedido">Detalle de Pedido</string>
+    <string name="s_cancelar_pedido">Cancelar Pedido</string>
 
 
     <string name="s_current_version">V. 0.9</string>

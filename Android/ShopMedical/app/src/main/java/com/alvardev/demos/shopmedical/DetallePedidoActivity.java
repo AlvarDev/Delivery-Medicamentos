@@ -3,6 +3,8 @@ package com.alvardev.demos.shopmedical;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import com.alvardev.demos.shopmedical.http.HttpCode;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
+import com.alvardev.demos.shopmedical.view.interfaces.CancelarPedidoInterface;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -26,7 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class DetallePedidoActivity extends BaseActionBarActivity {
+public class DetallePedidoActivity extends BaseActionBarActivity implements CancelarPedidoInterface{
 
     private static final String TAG = "DetallePedido";
 
@@ -116,17 +119,37 @@ public class DetallePedidoActivity extends BaseActionBarActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_detalle_pedido, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.cancel_pedido:
+                Dialog cancelarPedidoDialog = new CustomDialog().cancelarPedidoDialog(DetallePedidoActivity.this);
+                cancelarPedidoDialog.show();
+                return true;
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    public void cancelarPedidoPositive() {
+        finish();
+    }
+
+    @Override
+    public void cancelatPedidoNegative() {
+
+    }
 }

@@ -27,6 +27,7 @@
             android:textSize="18sp"
             android:gravity="center"
             android:background="@color/bg_celeste"/>
+
         <TextView
             android:id="@+id/eteCarritoVacio"
             android:layout_width="match_parent"
@@ -120,7 +121,6 @@
                     android:layout_marginStart="16dp"/>
 
             </LinearLayout>
-
 
         </LinearLayout>
     </LinearLayout>

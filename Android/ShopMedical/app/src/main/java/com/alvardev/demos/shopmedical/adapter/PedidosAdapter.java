@@ -63,7 +63,7 @@ public class PedidosAdapter extends BaseAdapter {
 
         switch (tipoPedido){
             case StaticData.PEDIDOS_EN_PROCESO:
-                holder.imagePedido.setImageResource(R.drawable.cancel);
+                holder.imagePedido.setImageResource(R.drawable.next);
                 holder.tipoDoc.setText("Comprobante de Pago: " + pedido.getTipoComprobante());
                 holder.tipoDoc.setTextColor(context.getResources().getColor(R.color.amarillo));
                 break;

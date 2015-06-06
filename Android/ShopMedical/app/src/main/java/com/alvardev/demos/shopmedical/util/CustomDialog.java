@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.alvardev.demos.shopmedical.LoginActivity;
 import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.entity.SucursalEntity;
+import com.alvardev.demos.shopmedical.view.interfaces.CancelarPedidoInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SucursalInterface;
@@ -149,8 +150,9 @@ public class CustomDialog {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SucursalInterface mListener = (SucursalInterface) context;
-                        mListener.closeAddDirection();
+                        //SucursalInterface mListener = (SucursalInterface) context;
+                        //mListener.closeAddDirection();
+                        dialog.dismiss();
                     }
                 });
 
@@ -167,6 +169,54 @@ public class CustomDialog {
 
         return dialog;
     }
+
+    public Dialog showMessage(final Context context, String msn){
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(msn)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //SucursalInterface mListener = (SucursalInterface) context;
+                        //mListener.closeAddDirection();
+                        dialog.dismiss();
+                    }
+                });
+
+
+        dialog = builder.create();
+
+        return dialog;
+    }
+
+
+    public Dialog cancelarPedidoDialog(final Context context){
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage("¿Seguro que desea cancelar su pedido?")
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        CancelarPedidoInterface mListener = (CancelarPedidoInterface) context;
+                        mListener.cancelarPedidoPositive();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //SesionDialogInterface mListener = (SesionDialogInterface) context;
+                        //mListener.cerrarSesionNegative();
+                    }
+                });
+
+
+        dialog = builder.create();
+
+        return dialog;
+    }
+
 
 
 
