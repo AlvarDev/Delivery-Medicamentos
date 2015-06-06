@@ -145,7 +145,19 @@ public class DetallePedidoActivity extends BaseActionBarActivity implements Canc
 
     @Override
     public void cancelarPedidoPositive() {
-        finish();
+        if(!getPreference("send").isEmpty()){
+            savePreference("send",null);
+            finish();
+            Toast.makeText(getApplicationContext(),
+                    "Pedido Cancelado",
+                    Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(),
+                    "Ya han pasado los dos minutos",
+                    Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 
     @Override

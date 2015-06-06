@@ -172,7 +172,7 @@ public class CustomDialog {
         return dialog;
     }
 
-    public Dialog showMessage(final Context context, String msn, final CarSendEntity send){
+    public Dialog showMessage(final Context context, String msn){
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -192,7 +192,7 @@ public class CustomDialog {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 RUCInterface mListener = (RUCInterface) context;
-                mListener.pedidoEnviado(send);
+                mListener.pedidoEnviado();
             }
         });
 

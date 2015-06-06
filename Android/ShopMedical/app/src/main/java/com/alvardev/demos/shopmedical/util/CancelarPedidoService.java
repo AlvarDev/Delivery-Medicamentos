@@ -21,7 +21,6 @@ public class CancelarPedidoService extends IntentService {
             Thread.sleep(120 * 1000);
             Intent bcIntent = new Intent();
             bcIntent.setAction(ACTION_FIN);
-            bcIntent.putExtra("send", intent.getSerializableExtra("send"));
             sendBroadcast(bcIntent);
         } catch(InterruptedException e) {
             Log.i(TAG, "error: " + e.getMessage());

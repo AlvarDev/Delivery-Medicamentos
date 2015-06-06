@@ -6,7 +6,7 @@
     <item android:id="@+id/cancel_pedido"
         android:icon="@drawable/cancel"
         android:title="@string/s_cancelar_pedido"
-        app:showAsAction="never"  />
+        app:showAsAction="always"  />
 
 
 </menu>

@@ -29,6 +29,7 @@ import com.alvardev.demos.shopmedical.entity.DireccionEntity;
 import com.alvardev.demos.shopmedical.entity.ItemPedidoEntity;
 import com.alvardev.demos.shopmedical.entity.MedicamentoEntity;
 import com.alvardev.demos.shopmedical.entity.OptionEntity;
+import com.alvardev.demos.shopmedical.entity.PedidoEntity;
 import com.alvardev.demos.shopmedical.entity.PedidoHeaderEntity;
 import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
@@ -61,6 +62,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -435,9 +437,23 @@ public class DashboardActivity extends BaseActionBarActivity
                             PedidosInterface mListener  = pedidosProcesoFragment;
                             mListener.getPedidosPro(responsePedidoPro.getLista());
                         }else{
-                            Toast.makeText(getApplicationContext(),
-                                    responsePedidoPro.getMensaje(),
-                                    Toast.LENGTH_SHORT).show();
+                            if(!getPreference("send").isEmpty()){
+                                CarSendEntity tempCar = new Gson().fromJson(getPreference("send"),CarSendEntity.class);
+                                List<PedidoEntity> pedidos = new ArrayList<PedidoEntity>();
+                                PedidoEntity pedido = new PedidoEntity();
+                                pedido.setCodPedido("En proceso...");
+                                pedido.setMontoTotal(tempCar.getPedido().getMontoTotal());
+                                pedidos.add(pedido);
+
+                                PedidosInterface mListener  = pedidosProcesoFragment;
+                                mListener.getPedidosPro(pedidos);
+
+                            }else{
+
+                                Toast.makeText(getApplicationContext(),
+                                        responsePedidoPro.getMensaje(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         break;
@@ -462,6 +478,7 @@ public class DashboardActivity extends BaseActionBarActivity
                         ResponseObject responseCar = new Gson().fromJson(result,ResponseObject.class);
                         if(responseCar.isSuccess()){
 
+                            savePreference("send",null);
                             //Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
                             //Dialog dialogOk = new CustomDialog().showMessage(DashboardActivity.this,
                             //        "Pedido enviado, tiene 5 minutos para cancelar su pedido");
@@ -581,9 +598,9 @@ public class DashboardActivity extends BaseActionBarActivity
                         send.getDetalle().add(item);
                     }
 
-
+                    savePreference("send",new Gson().toJson(send));
                     Dialog dialogOk = new CustomDialog().showMessage(DashboardActivity.this,
-                            "Pedido enviado, tiene 5 minutos para cancelar su pedido", send);
+                            "Pedido enviado, tiene 2 minutos para cancelar su pedido");
                     dialogOk.show();
                     savePreference("car", null);
                     savePreference("sucursal", null);
@@ -621,25 +638,24 @@ public class DashboardActivity extends BaseActionBarActivity
             savePreference("car", null);
             savePreference("doneRUC", null);
             savePreference("sucursal", null);
-            CarSendEntity send = new Gson().fromJson(getPreference("send"),CarSendEntity.class);
-            savePreference("send",null);
-            enviarPedidoAll(send);
+            //CarSendEntity send = new Gson().fromJson(getPreference("send"),CarSendEntity.class);
+            //savePreference("send",null);
+            enviarPedidoAll();
         }
     }
 
 
     @Override
-    public void pedidoEnviado(CarSendEntity send) {
+    public void pedidoEnviado() {
 
-        enviarPedidoAll(send);
+        enviarPedidoAll();
 
     }
 
 
-    public void enviarPedidoAll(CarSendEntity send){
+    public void enviarPedidoAll(){
 
         Intent msgIntent = new Intent(DashboardActivity.this, CancelarPedidoService.class);
-        msgIntent.putExtra("send", send);
         startService(msgIntent);
         enviando = false;
 
@@ -663,10 +679,15 @@ public class DashboardActivity extends BaseActionBarActivity
                 Log.i("[Done]","make it enviado");
                 try {
                       if(!enviando){
-                          connectPost("http://farmaciaaa.jelasticlw.com.br/carrito",
-                                  new JSONObject(new Gson().toJson(intent.getSerializableExtra("send"))),
-                                  StaticData.CARRITO_DE_COMPRAS);
-                          enviando=true;
+                          if(!getPreference("send").isEmpty()){
+                              CarSendEntity send = new Gson().fromJson(getPreference("send"),CarSendEntity.class);
+                              connectPost("http://farmaciaaa.jelasticlw.com.br/carrito",
+                                      new JSONObject(new Gson().toJson(send)),
+                                      StaticData.CARRITO_DE_COMPRAS);
+                              enviando=true;
+                          }else{
+                              Log.i(TAG,"El pedido fue cancelado");
+                          }
                       }
 
                         //Log.i(TAG,"Sent pedido: "+new JSONObject(new Gson().toJson(send)));

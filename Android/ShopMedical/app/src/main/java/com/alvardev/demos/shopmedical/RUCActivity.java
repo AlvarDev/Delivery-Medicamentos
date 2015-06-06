@@ -125,8 +125,9 @@ public class RUCActivity extends BaseActionBarActivity implements RUCInterface{
                 send.getDetalle().add(item);
             }
             savePreference("doneRUC", "done");
+            savePreference("send",new Gson().toJson(send));
             Dialog dialogOk = new CustomDialog().showMessage(RUCActivity.this,
-                    "Pedido enviado, tiene 5 minutos para cancelar su pedido",send);
+                    "Pedido enviado, tiene 2 minutos para cancelar su pedido");
             dialogOk.show();
 
             /*try {
@@ -174,7 +175,7 @@ public class RUCActivity extends BaseActionBarActivity implements RUCInterface{
                                 /*Dialog dialogOk = new CustomDialog().showMessage(RUCActivity.this,
                                         "Pedido enviado, tiene 5 minutos para cancelar su pedido");
                                 dialogOk.show();
-*/
+                            */
                             }else{
                                 Toast.makeText(getApplicationContext(),
                                         response.getMensaje(),
@@ -237,9 +238,7 @@ public class RUCActivity extends BaseActionBarActivity implements RUCInterface{
 
 
     @Override
-    public void pedidoEnviado(CarSendEntity send) {
-
-        savePreference("send", new Gson().toJson(send));
+    public void pedidoEnviado() {
         finish();
     }
 }

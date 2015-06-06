@@ -1,6 +1,8 @@
 package com.alvardev.demos.shopmedical.view.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -81,9 +83,13 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
         lviPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), DetallePedidoActivity.class);
-                intent.putExtra("pedido", pedidos.get(i));
-                startActivity(intent);
+                if (!pedidos.get(i).getCodPedido().equals("En proceso...")) {
+                    Intent intent = new Intent(getActivity(), DetallePedidoActivity.class);
+                    intent.putExtra("pedido", pedidos.get(i));
+                    startActivity(intent);
+                } else if(pedidos.get(i).getCodPedido().equals("En proceso...") && getPreference("send").isEmpty()) {
+                    Log.i(TAG,"El pedido fue cancelado");
+                }
             }
         });
 
@@ -102,5 +108,20 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
             }
         });
     }
+
+    public String getPreference(String llave) {
+        SharedPreferences preferencias = getActivity().getSharedPreferences(StaticData.NAME_PREFERENCE, Activity.MODE_PRIVATE);
+        return preferencias.getString(llave, "");
+    }
+
+    public void savePreference(String llave, String valor) {
+
+        SharedPreferences preferencias = getActivity().getSharedPreferences(StaticData.NAME_PREFERENCE, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString(llave, valor);
+        editor.apply();
+
+    }
+
 
 }
