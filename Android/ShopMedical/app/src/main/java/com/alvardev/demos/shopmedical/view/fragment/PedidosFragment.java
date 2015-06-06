@@ -93,6 +93,7 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
                 } else {
                     Intent intent = new Intent(getActivity(), DetallePedidoActivity.class);
                     intent.putExtra("pedido", pedidos.get(i));
+                    intent.putExtra("tipo",StaticData.PEDIDOS_EN_PROCESO);
                     startActivity(intent);
                 }
             }
@@ -109,6 +110,7 @@ public class PedidosFragment extends Fragment implements PedidosInterface{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), DetallePedidoActivity.class);
                 intent.putExtra("pedido", pedidos.get(i));
+                intent.putExtra("tipo",StaticData.HISTORIAL_DE_PEDIDO);
                 startActivity(intent);
             }
         });

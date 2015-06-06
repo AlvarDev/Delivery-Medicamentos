@@ -45,6 +45,7 @@ public class DetallePedidoActivity extends BaseActionBarActivity implements Canc
     @InjectView(R.id.rlayLoading) View rlayLoading;
 
     private PedidoEntity pedido;
+    private int tipo;
 
 
     @Override
@@ -57,6 +58,7 @@ public class DetallePedidoActivity extends BaseActionBarActivity implements Canc
         getSupportActionBar().setHomeButtonEnabled(true);
 
         pedido = (PedidoEntity) getIntent().getSerializableExtra("pedido");
+        tipo = getIntent().getIntExtra("tipo",StaticData.PEDIDOS_EN_PROCESO);
 
         if(pedido.getCodPedido().equals("En proceso...")){
             setDataTemp();
@@ -90,7 +92,7 @@ public class DetallePedidoActivity extends BaseActionBarActivity implements Canc
     }
 
     private void setDataTemp(){
-        tviNroPedido.setText("N° Pedido" + pedido.getCodPedido());
+        tviNroPedido.setText("N° Pedido " + pedido.getCodPedido());
         tviTipoComp.setText("Comprobante de pago: " + pedido.getTipoComprobante());
 
         CarSendEntity tempCar = new Gson().fromJson(getPreference("send"),CarSendEntity.class);
@@ -101,8 +103,10 @@ public class DetallePedidoActivity extends BaseActionBarActivity implements Canc
             DetallePedidoEntity detalle = new DetallePedidoEntity();
             detalle.setCantidad(item.getCantidad());
             detalle.setPrecioTotal(item.getPrecioTotal());
+            detalle.setPrecioUnitario(item.getPrecioUnitario());
             detalle.setMedicamentoxUnidad(item.getNombreMedicamento());
             detalle.setMedicamentoxPresentacion(item.getPresentacion());
+            lista.add(detalle);
         }
 
         DetallePedidoAdapter adapter = new DetallePedidoAdapter(getApplicationContext(), lista);
@@ -165,8 +169,14 @@ public class DetallePedidoActivity extends BaseActionBarActivity implements Canc
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.cancel_pedido:
-                Dialog cancelarPedidoDialog = new CustomDialog().cancelarPedidoDialog(DetallePedidoActivity.this);
-                cancelarPedidoDialog.show();
+                if(tipo == StaticData.PEDIDOS_EN_PROCESO){
+                    Dialog cancelarPedidoDialog = new CustomDialog().cancelarPedidoDialog(DetallePedidoActivity.this);
+                    cancelarPedidoDialog.show();
+                }else{
+                    Toast.makeText(getApplicationContext(),
+                            "No puede cancelar pedidos del historial",
+                            Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case android.R.id.home:
                 finish();

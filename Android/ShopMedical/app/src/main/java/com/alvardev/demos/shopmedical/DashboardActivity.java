@@ -624,6 +624,7 @@ public class DashboardActivity extends BaseActionBarActivity
                         item.setPrecioTotal(med.getPrecio() * med.getCantidad());
                         item.setNombreMedicamento(med.getMedicamentoxUnidad());
                         item.setPresentacion(med.getMedicamentoxPresentacion());
+                        item.setPrecioUnitario(med.getPrecio());
 
                         send.getDetalle().add(item);
                     }

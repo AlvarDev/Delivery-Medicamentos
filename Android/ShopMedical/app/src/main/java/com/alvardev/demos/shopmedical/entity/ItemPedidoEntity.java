@@ -13,6 +13,7 @@ public class ItemPedidoEntity implements Serializable{
     private double precioTotal;
     private String nombreMedicamento;
     private String presentacion;
+    private double precioUnitario;
 
     public ItemPedidoEntity() {
     }
@@ -89,6 +90,14 @@ public class ItemPedidoEntity implements Serializable{
         this.precioTotal = precioTotal;
     }
 
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
     @Override
     public String toString() {
         return "ItemPedidoEntity{" +
@@ -99,6 +108,8 @@ public class ItemPedidoEntity implements Serializable{
                 ", codUnidad=" + codUnidad +
                 ", cantidad=" + cantidad +
                 ", precioTotal=" + precioTotal +
+                ", nombreMedicamento='" + nombreMedicamento + '\'' +
+                ", presentacion='" + presentacion + '\'' +
                 '}';
     }
 }

@@ -120,9 +120,10 @@ public class RUCActivity extends BaseActionBarActivity implements RUCInterface{
                 item.setCodCantidadxPresentacion(med.getCodCantxPresentacion());
                 item.setCodUnidad(med.getCodUnidad());
                 item.setCantidad(med.getCantidad());
-                item.setPrecioTotal(med.getPrecio()*med.getCantidad());
+                item.setPrecioTotal(med.getPrecio() * med.getCantidad());
                 item.setNombreMedicamento(med.getMedicamentoxUnidad());
                 item.setPresentacion(med.getMedicamentoxPresentacion());
+                item.setPrecioUnitario(med.getPrecio());
 
                 send.getDetalle().add(item);
             }

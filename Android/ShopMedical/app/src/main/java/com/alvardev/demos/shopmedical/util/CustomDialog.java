@@ -176,7 +176,8 @@ public class CustomDialog {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        builder.setMessage(msn)
+        builder.setTitle("¡Alerta!")
+                .setMessage(msn)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
