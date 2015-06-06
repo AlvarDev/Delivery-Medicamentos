@@ -51,7 +51,6 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
     private List<MedicamentoEntity> medicamentosGenerico;
     private MedicamentosAdapter adapter;
     private CarEntity car;
-    private String sucursal;
     private DashboardInterface mListener;
 
     @InjectView(R.id.lviResult) ListView lviResult;
@@ -82,9 +81,8 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
             //mParam1 = getArguments().getString(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
             car = (CarEntity) getArguments().getSerializable("car");
-            sucursal = getArguments().getString("sucursal");
             Log.i(TAG, "car: "+car.toString());
-            Log.i(TAG, "sucursal: "+sucursal);
+
         }
     }
 
@@ -164,7 +162,8 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     // do your stuff here
-                    mListener.searchMedicine(eteText.getText().toString(),sucursal);
+                    mListener.searchMedicine(eteText.getText().toString(),
+                            getPreference("sucursal"));
 
                 }
 
@@ -175,7 +174,8 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
         iviBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.searchMedicine(eteText.getText().toString(),sucursal);
+                mListener.searchMedicine(eteText.getText().toString(),
+                        getPreference("sucursal"));
 
             }
         });
@@ -269,8 +269,8 @@ public class SearchResultFragment extends Fragment implements PedidoInterface, S
         //Log.i(TAG,"Enter Here");
         String lastSearch = getPreference("lastSearch");
         if(!lastSearch.isEmpty()){
-            sucursal = sucursal == null ? "1":sucursal;
-            mListener.searchMedicine(lastSearch,sucursal);
+            mListener.searchMedicine(lastSearch,
+                    getPreference("sucursal"));
         }
 
 

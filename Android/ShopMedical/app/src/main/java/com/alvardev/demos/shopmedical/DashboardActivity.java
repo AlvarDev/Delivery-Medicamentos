@@ -457,6 +457,7 @@ public class DashboardActivity extends BaseActionBarActivity
                                     "Pedido enviado, tiene 5 minutos para cancelar su pedido");
                             dialogOk.show();
                             savePreference("car", null);
+                            savePreference("sucursal", null);
                             //savePreference("lastNumber",lastnumber);
                             rlayLoading.setVisibility(View.VISIBLE);
                             connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
@@ -506,7 +507,7 @@ public class DashboardActivity extends BaseActionBarActivity
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("car",car);
-        bundle.putString("sucursal", direccion.getSucursal());
+        savePreference("sucursal", direccion.getSucursal());
 
 
 
@@ -615,6 +616,7 @@ public class DashboardActivity extends BaseActionBarActivity
             //Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
             savePreference("car", null);
             savePreference("doneRUC", null);
+            savePreference("sucursal",null);
             rlayLoading.setVisibility(View.VISIBLE);
             connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
             new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
