@@ -99,16 +99,6 @@ public class RUCActivity extends BaseActionBarActivity implements RUCInterface{
             String userString = getPreference("user");
             UserEntity user = new Gson().fromJson(userString, UserEntity.class);
 
-
-            /*String codPedido = user.getCodPersona() <10 ? "0"+user.getCodPersona(): ""+user.getCodPersona();
-            int lastNumberTemp =  getPreference("lastNumber").isEmpty() ? 1 : Integer.parseInt(getPreference("lastNumber"))+1;
-            lastnumber  = lastNumberTemp+"";
-
-            while (lastnumber.length()<6){
-                lastnumber = "0"+lastnumber;
-            }*/
-
-
             car.getPedido().setCodPedido("00000000");
             car.getPedido().setTipoComprobante("Factura");
             car.getPedido().setFechaPedido("2015-05-22");
@@ -134,8 +124,12 @@ public class RUCActivity extends BaseActionBarActivity implements RUCInterface{
 
                 send.getDetalle().add(item);
             }
+            savePreference("doneRUC", "done");
+            Dialog dialogOk = new CustomDialog().showMessage(RUCActivity.this,
+                    "Pedido enviado, tiene 5 minutos para cancelar su pedido",send);
+            dialogOk.show();
 
-            try {
+            /*try {
                 rlayLoading.setVisibility(View.VISIBLE);
                 connectPost("http://farmaciaaa.jelasticlw.com.br/carrito",
                         new JSONObject(new Gson().toJson(send)),
@@ -144,7 +138,7 @@ public class RUCActivity extends BaseActionBarActivity implements RUCInterface{
                 Log.i(TAG,"Sent pedido: "+new JSONObject(new Gson().toJson(send)));
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }*/
 
         }
     }
@@ -175,12 +169,12 @@ public class RUCActivity extends BaseActionBarActivity implements RUCInterface{
                             ResponseObject response = new Gson().fromJson(result,ResponseObject.class);
 
                             if(response.isSuccess()){
-                                savePreference("doneRUC", "done");
+                                //savePreference("doneRUC", "done");
                                 //savePreference("lastNumber",lastnumber);
-                                Dialog dialogOk = new CustomDialog().showMessage(RUCActivity.this,
+                                /*Dialog dialogOk = new CustomDialog().showMessage(RUCActivity.this,
                                         "Pedido enviado, tiene 5 minutos para cancelar su pedido");
                                 dialogOk.show();
-
+*/
                             }else{
                                 Toast.makeText(getApplicationContext(),
                                         response.getMensaje(),
@@ -243,7 +237,9 @@ public class RUCActivity extends BaseActionBarActivity implements RUCInterface{
 
 
     @Override
-    public void pedidoEnviado() {
+    public void pedidoEnviado(CarSendEntity send) {
+
+        savePreference("send", new Gson().toJson(send));
         finish();
     }
 }

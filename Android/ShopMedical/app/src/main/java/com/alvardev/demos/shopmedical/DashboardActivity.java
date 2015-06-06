@@ -1,7 +1,10 @@
 package com.alvardev.demos.shopmedical;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +36,7 @@ import com.alvardev.demos.shopmedical.entity.response.ResponsePedido;
 import com.alvardev.demos.shopmedical.entity.response.ResponseSearch;
 import com.alvardev.demos.shopmedical.entity.response.ResponseSintomas;
 import com.alvardev.demos.shopmedical.http.HttpCode;
+import com.alvardev.demos.shopmedical.util.CancelarPedidoService;
 import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.PedidoDialogFragment;
 import com.alvardev.demos.shopmedical.util.StaticData;
@@ -76,6 +80,7 @@ public class DashboardActivity extends BaseActionBarActivity
     private UserEntity user;
     private UserEntity userTemp;
     private String carString;
+    private boolean enviando;
     //private String lastnumber;
 
     @InjectView(R.id.rlayLoading) View rlayLoading;
@@ -100,6 +105,7 @@ public class DashboardActivity extends BaseActionBarActivity
         String userString = getPreference("user");
         user = new Gson().fromJson(userString, UserEntity.class);
         carString = getPreference("car");
+        enviando = false;
         setDrawer(savedInstanceState);
     }
 
@@ -138,12 +144,7 @@ public class DashboardActivity extends BaseActionBarActivity
         }
     }
 
-    @Override
-    public void pedidoEnviado() {
-        rlayLoading.setVisibility(View.VISIBLE);
-        connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
-        new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
-    }
+
 
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -278,25 +279,25 @@ public class DashboardActivity extends BaseActionBarActivity
 
         switch (option){
             case StaticData.BUSCAR_MEDICAMENTO:
-                changeFragment(bundle,buscarMedicamentoFragment);
+                changeFragment(bundle, buscarMedicamentoFragment);
                 break;
             case StaticData.CARRITO_DE_COMPRAS:
-                changeFragment(bundle,carritoComprasFragment);
+                changeFragment(bundle, carritoComprasFragment);
                 break;
             case StaticData.SINTOMAS_FRECUENTES:
-                changeFragment(bundle,sintomasFrecuentesFragment);
+                changeFragment(bundle, sintomasFrecuentesFragment);
                 break;
             case StaticData.PEDIDOS_EN_PROCESO:
-                changeFragment(bundle,pedidosProcesoFragment);
+                changeFragment(bundle, pedidosProcesoFragment);
                 break;
             case StaticData.HISTORIAL_DE_PEDIDO:
-                changeFragment(bundle,historialPedidosFragment);
+                changeFragment(bundle, historialPedidosFragment);
                 break;
             case StaticData.ACTUALIZAR_INFORMACION:
                 changeFragment(bundle, actualizarInformacionFragment);
                 break;
             case  StaticData.SEARCH_RESULT:
-                changeFragment(bundle,searchResultFragment);
+                changeFragment(bundle, searchResultFragment);
             default:
                 break;
         }
@@ -462,11 +463,11 @@ public class DashboardActivity extends BaseActionBarActivity
                         if(responseCar.isSuccess()){
 
                             //Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
-                            Dialog dialogOk = new CustomDialog().showMessage(DashboardActivity.this,
-                                    "Pedido enviado, tiene 5 minutos para cancelar su pedido");
-                            dialogOk.show();
-                            savePreference("car", null);
-                            savePreference("sucursal", null);
+                            //Dialog dialogOk = new CustomDialog().showMessage(DashboardActivity.this,
+                            //        "Pedido enviado, tiene 5 minutos para cancelar su pedido");
+                            //dialogOk.show();
+                            //savePreference("car", null);
+                            //savePreference("sucursal", null);
                             //savePreference("lastNumber",lastnumber);
 
                         }else{
@@ -580,7 +581,15 @@ public class DashboardActivity extends BaseActionBarActivity
                         send.getDetalle().add(item);
                     }
 
-                    try {
+
+                    Dialog dialogOk = new CustomDialog().showMessage(DashboardActivity.this,
+                            "Pedido enviado, tiene 5 minutos para cancelar su pedido", send);
+                    dialogOk.show();
+                    savePreference("car", null);
+                    savePreference("sucursal", null);
+
+
+                    /*try {
                           connectPost("http://farmaciaaa.jelasticlw.com.br/carrito",
                                   new JSONObject(new Gson().toJson(send)),
                                   StaticData.CARRITO_DE_COMPRAS);
@@ -588,7 +597,7 @@ public class DashboardActivity extends BaseActionBarActivity
                         //Log.i(TAG,"Sent pedido: "+new JSONObject(new Gson().toJson(send)));
                     } catch (JSONException e) {
                         e.printStackTrace();
-                    }
+                    }*/
 
                 }
 
@@ -611,10 +620,62 @@ public class DashboardActivity extends BaseActionBarActivity
             //Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
             savePreference("car", null);
             savePreference("doneRUC", null);
-            savePreference("sucursal",null);
-            rlayLoading.setVisibility(View.VISIBLE);
-            connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
-            new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
+            savePreference("sucursal", null);
+            CarSendEntity send = new Gson().fromJson(getPreference("send"),CarSendEntity.class);
+            savePreference("send",null);
+            enviarPedidoAll(send);
         }
     }
+
+
+    @Override
+    public void pedidoEnviado(CarSendEntity send) {
+
+        enviarPedidoAll(send);
+
+    }
+
+
+    public void enviarPedidoAll(CarSendEntity send){
+
+        Intent msgIntent = new Intent(DashboardActivity.this, CancelarPedidoService.class);
+        msgIntent.putExtra("send", send);
+        startService(msgIntent);
+        enviando = false;
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(CancelarPedidoService.ACTION_FIN);
+        ProgressReceiver rcv = new ProgressReceiver();
+        registerReceiver(rcv, filter);
+
+        rlayLoading.setVisibility(View.VISIBLE);
+        connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
+        new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
+
+    }
+
+
+    public class ProgressReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(CancelarPedidoService.ACTION_FIN)) {
+                Log.i("[Done]","make it enviado");
+                try {
+                      if(!enviando){
+                          connectPost("http://farmaciaaa.jelasticlw.com.br/carrito",
+                                  new JSONObject(new Gson().toJson(intent.getSerializableExtra("send"))),
+                                  StaticData.CARRITO_DE_COMPRAS);
+                          enviando=true;
+                      }
+
+                        //Log.i(TAG,"Sent pedido: "+new JSONObject(new Gson().toJson(send)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }
+    }
+
+
 }

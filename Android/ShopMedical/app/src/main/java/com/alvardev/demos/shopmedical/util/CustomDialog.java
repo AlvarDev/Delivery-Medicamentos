@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.alvardev.demos.shopmedical.LoginActivity;
 import com.alvardev.demos.shopmedical.R;
+import com.alvardev.demos.shopmedical.entity.CarSendEntity;
 import com.alvardev.demos.shopmedical.entity.SucursalEntity;
 import com.alvardev.demos.shopmedical.view.interfaces.CancelarPedidoInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
@@ -171,7 +172,7 @@ public class CustomDialog {
         return dialog;
     }
 
-    public Dialog showMessage(final Context context, String msn){
+    public Dialog showMessage(final Context context, String msn, final CarSendEntity send){
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -191,7 +192,7 @@ public class CustomDialog {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 RUCInterface mListener = (RUCInterface) context;
-                mListener.pedidoEnviado();
+                mListener.pedidoEnviado(send);
             }
         });
 

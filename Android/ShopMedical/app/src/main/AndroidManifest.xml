@@ -20,6 +20,9 @@
         <service android:name=".http.RestJsonService" >
         </service>
 
+        <service android:name=".util.CancelarPedidoService" >
+        </service>
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
