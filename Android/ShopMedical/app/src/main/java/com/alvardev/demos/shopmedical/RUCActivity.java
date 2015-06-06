@@ -1,5 +1,6 @@
 package com.alvardev.demos.shopmedical;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +18,10 @@ import com.alvardev.demos.shopmedical.entity.UserEntity;
 import com.alvardev.demos.shopmedical.entity.response.RUCResponse;
 import com.alvardev.demos.shopmedical.entity.response.ResponseObject;
 import com.alvardev.demos.shopmedical.http.HttpCode;
+import com.alvardev.demos.shopmedical.util.CustomDialog;
 import com.alvardev.demos.shopmedical.util.StaticData;
 import com.alvardev.demos.shopmedical.view.BaseActionBarActivity;
+import com.alvardev.demos.shopmedical.view.interfaces.RUCInterface;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -28,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class RUCActivity extends BaseActionBarActivity{
+public class RUCActivity extends BaseActionBarActivity implements RUCInterface{
 
     private static final String TAG = "RUCActivity";
     @InjectView(R.id.eteRUC) EditText eteRUC;
@@ -174,7 +177,10 @@ public class RUCActivity extends BaseActionBarActivity{
                             if(response.isSuccess()){
                                 savePreference("doneRUC", "done");
                                 //savePreference("lastNumber",lastnumber);
-                                finish();
+                                Dialog dialogOk = new CustomDialog().showMessage(RUCActivity.this,
+                                        "Pedido enviado, tiene 5 minutos para cancelar su pedido");
+                                dialogOk.show();
+
                             }else{
                                 Toast.makeText(getApplicationContext(),
                                         response.getMensaje(),
@@ -236,4 +242,8 @@ public class RUCActivity extends BaseActionBarActivity{
     }
 
 
+    @Override
+    public void pedidoEnviado() {
+        finish();
+    }
 }

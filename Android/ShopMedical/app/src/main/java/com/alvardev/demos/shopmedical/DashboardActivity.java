@@ -46,6 +46,7 @@ import com.alvardev.demos.shopmedical.view.fragment.SintomasFrecuentesFragment;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.PedidoInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.PedidosInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.RUCInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SearchInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SintomasInterface;
@@ -62,7 +63,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class DashboardActivity extends BaseActionBarActivity
-        implements SesionDialogInterface, DashboardInterface, PedidoDialogFragment.PedidoDialogListener{
+        implements SesionDialogInterface, DashboardInterface,
+        PedidoDialogFragment.PedidoDialogListener, RUCInterface{
 
     private static final String TAG = "DashboardActivity";
     private DrawerLayout mDrawerLayout;
@@ -134,6 +136,13 @@ public class DashboardActivity extends BaseActionBarActivity
             currentSelected = StaticData.SINTOMAS_FRECUENTES;
             new ChangeFragmentsTask(null).execute(StaticData.SINTOMAS_FRECUENTES);
         }
+    }
+
+    @Override
+    public void pedidoEnviado() {
+        rlayLoading.setVisibility(View.VISIBLE);
+        connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
+        new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
     }
 
     /* The click listner for ListView in the navigation drawer */
@@ -459,9 +468,7 @@ public class DashboardActivity extends BaseActionBarActivity
                             savePreference("car", null);
                             savePreference("sucursal", null);
                             //savePreference("lastNumber",lastnumber);
-                            rlayLoading.setVisibility(View.VISIBLE);
-                            connectGet(getString(R.string.url_get_pedidos_proceso) + "" + user.getCodPersona(), StaticData.PEDIDOS_EN_PROCESO);
-                            new ChangeFragmentsTask(null).execute(StaticData.PEDIDOS_EN_PROCESO);
+
                         }else{
                             Toast.makeText(getApplicationContext(),
                                     responseCar.getMensaje(),
@@ -546,15 +553,6 @@ public class DashboardActivity extends BaseActionBarActivity
                 String carString =  getPreference("car");
                 if(!carString.isEmpty()){
 
-
-                    /*String codPedido = user.getCodPersona() <10 ? "0"+user.getCodPersona(): ""+user.getCodPersona();
-                    int lastNumberTemp =  getPreference("lastNumber").isEmpty() ? 1 : Integer.parseInt(getPreference("lastNumber"))+1;
-                    lastnumber  = lastNumberTemp+"";
-
-                    while (lastnumber.length()<6){
-                        lastnumber = "0"+lastnumber;
-                    }*/
-
                     CarEntity car = new Gson().fromJson(carString, CarEntity.class);
                     car.getPedido().setCodPedido("00000000");
                     car.getPedido().setTipoComprobante("Boleta");
@@ -610,9 +608,6 @@ public class DashboardActivity extends BaseActionBarActivity
         super.onResume();
         String doneRUC = getPreference("doneRUC");
         if(!doneRUC.isEmpty()){
-            Dialog dialogOk = new CustomDialog().showMessage(DashboardActivity.this,
-                    "Pedido enviado, tiene 5 minutos para cancelar su pedido");
-            dialogOk.show();
             //Toast.makeText(this, "Pedido enviado", Toast.LENGTH_LONG).show();
             savePreference("car", null);
             savePreference("doneRUC", null);

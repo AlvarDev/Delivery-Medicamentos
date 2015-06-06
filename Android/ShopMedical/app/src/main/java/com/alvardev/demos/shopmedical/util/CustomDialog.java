@@ -19,6 +19,7 @@ import com.alvardev.demos.shopmedical.R;
 import com.alvardev.demos.shopmedical.entity.SucursalEntity;
 import com.alvardev.demos.shopmedical.view.interfaces.CancelarPedidoInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.DashboardInterface;
+import com.alvardev.demos.shopmedical.view.interfaces.RUCInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SesionDialogInterface;
 import com.alvardev.demos.shopmedical.view.interfaces.SucursalInterface;
 
@@ -178,14 +179,22 @@ public class CustomDialog {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //SucursalInterface mListener = (SucursalInterface) context;
-                        //mListener.closeAddDirection();
+
                         dialog.dismiss();
                     }
                 });
 
 
         dialog = builder.create();
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                RUCInterface mListener = (RUCInterface) context;
+                mListener.pedidoEnviado();
+            }
+        });
+
 
         return dialog;
     }
